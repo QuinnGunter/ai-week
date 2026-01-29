@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "cef-cdp": {
+      "command": "node",
+      "args": ["/Users/quinn/Developer/test automation/cef-mcp/dist/index.js"]
+    }
+  }
+}
