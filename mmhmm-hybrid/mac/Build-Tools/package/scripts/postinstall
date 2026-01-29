@@ -1,0 +1,5 @@
+#!/bin/sh
+
+open -b app.mmhmm.hybrid
+
+exit 0

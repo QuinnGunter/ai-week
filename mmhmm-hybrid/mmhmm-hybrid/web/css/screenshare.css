@@ -1,0 +1,108 @@
+
+body {
+    background-color: var(--background-primary);
+    margin: 0px;
+    padding: 0px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    overflow-x: hidden;
+}
+
+.group-text {
+    width: 121px;
+    height: 30px;
+
+    font-family: 'Segoe UI';
+    font-style: normal;
+
+    font-size: 14px;
+    line-height: 30px;
+    color: var(--content-primary);
+    opacity: 1.0;
+    margin: 5px 0px 5px 17px;
+}
+
+div.screenshare-image {
+    display: inline-block;
+    margin: 8px;
+    padding: 8px;
+    width: 160px;
+    height: 88px;
+    border-radius: 10px;
+}
+
+img {
+    display: block;
+    margin: auto;
+    opacity: 0.8;
+    cursor: pointer;
+    border: 2px solid transparent;
+    width: 128px;
+    height: 72px;
+    object-fit: scale-down;
+    padding:2px;
+    background-color: var(--background-secondary);
+}
+
+img:hover, .selected-item {
+    opacity: 1;
+    border: 2px solid var(--action-secondary);
+    border-radius: 10px;
+}
+
+div.screenshare-description {
+    height: 16px;
+
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: var(--content-primary);
+
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.label {
+    text-align: center;
+    width: 100%;
+    padding-top: 6px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--content-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+div.screenshare-container {
+    height: calc(100vh - 75px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 25px;
+}
+
+div.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    gap: 8px;
+}
+
+div.group-header {
+    height: 30px;
+    background: var(--background-secondary);
+}
+
+div.centre-text {
+    line-height: 30px;
+    padding-left: 6px;
+}

@@ -1,0 +1,32 @@
+//
+//  mmhmm.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+PRODUCT_BUNDLE_IDENTIFIER = app.mmhmm.hybrid
+PRODUCT_NAME = Airtime
+CODE_SIGN_ENTITLEMENTS = mmhmm/mmhmm.entitlements
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_IDENTITY[config=Release][sdk=macosx*] = Developer ID Application
+CODE_SIGN_STYLE[config=Debug] = Automatic
+CODE_SIGN_STYLE[config=Release] = Manual
+DEVELOPMENT_TEAM[config=Debug] = M3KUT44L48
+DEVELOPMENT_TEAM[config=Release][sdk=macosx*] = M3KUT44L48
+PROVISIONING_PROFILE_SPECIFIER[config=Release][sdk=macosx*] = Airtime Hybrid Developer ID Application
+INFOPLIST_FILE[config=Debug] = $(SRCROOT)/mmhmm/Info.Debug.plist
+INFOPLIST_FILE[config=Release] = $(SRCROOT)/mmhmm/Info.plist
+MARKETING_VERSION = 2.5.0
+SWIFT_OBJC_BRIDGING_HEADER = $(PROJECT_DIR)/mmhmm/Cxx Interop/mmhmm-hybrid-Bridging-Header.h
+// Maintain `$(inherited)` to ensure the `DEBUG=1` flag transpires through in Debug build configurations.
+GCC_PREPROCESSOR_DEFINITIONS = 'CMAKE_INTDIR="$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)"' __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS CEF_USE_SANDBOX CEF_ENABLE_CHROME_RUNTIME $(inherited)
+// Note that Swift code does not recognize `GCC_PREPROCESSOR_DEFINITIONS`, so to use the same flags as in C++ code, the flags
+// need to be duplicated as `SWIFT_ACTIVE_COMPILATION_CONDITIONS`.
+// Maintain `$(inherited)` to ensure the `DEBUG` flag transpires through in Debug build configurations.
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = CEF_ENABLE_CHROME_RUNTIME CEF_USE_SANDBOX $(inherited)
+OTHER_CPLUSPLUSFLAGS[config=Debug] = -fno-strict-aliasing -fstack-protector -funwind-tables '-fvisibility=hidden' -Wall -Werror -Wextra -Wendif-labels -Wnewline-eof -Wno-missing-field-initializers -Wno-unused-parameter -fobjc-arc -fno-rtti -fno-threadsafe-statics -fobjc-call-cxx-cdtors -fvisibility-inlines-hidden '-std=c++17' -Wno-narrowing -Wsign-compare -Wno-undefined-var-template -Wno-quoted-include-in-framework-header
+OTHER_CPLUSPLUSFLAGS[config=Release] = -DNDEBUG -fno-strict-aliasing -fstack-protector -funwind-tables '-fvisibility=hidden' -Wall -Werror -Wextra -Wendif-labels -Wnewline-eof -Wno-missing-field-initializers -Wno-unused-parameter -fobjc-arc -fno-rtti -fno-threadsafe-statics -fobjc-call-cxx-cdtors -fvisibility-inlines-hidden '-std=c++17' -Wno-narrowing -Wsign-compare -Wno-undefined-var-template -Wno-quoted-include-in-framework-header

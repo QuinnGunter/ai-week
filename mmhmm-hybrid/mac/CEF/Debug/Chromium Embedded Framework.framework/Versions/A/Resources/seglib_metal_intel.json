@@ -1,0 +1,57 @@
+{
+  "seglib": {
+    "mce_config": {
+      "avg_frame_stability_diff_threshold": 0.001,
+      "engine_mode": "nn_only",
+      "frame_converter_config": {
+        "mask_value": 255,
+        "nn_input_mode": "full_frame",
+        "score_threshold": 0.4
+      },
+      "frame_skipping_config": {
+        "high_cpu_usage_duration_ms": 300,
+        "low_cpu_usage_duration_ms": 300,
+        "max_percentage_user_cpu_load": 40
+      },
+      "frames_color_space": "BGRA",
+      "nn_only_engine_config": {
+        "bottom_alpha_threshold": 0.3,
+        "smoothing_size": 0,
+        "upper_alpha_threshold": 0.6
+      },
+      "nn_segmentation": {
+        "nn_segmentation_impl": {
+          "apple_vision": {
+            "depth_type": "32F",
+            "quality_level": "balanced"
+          }
+        },
+        "size": {
+          "height": 360,
+          "width": 640
+        },
+        "target_color_space": "BGRA"
+      },
+      "predictions_stabilization": true
+    },
+    "metal_config": {
+      "confidence": 0.3,
+      "dilate_radius": 4.5,
+      "enable_jbf": true,
+      "enable_morphological_gradient": false,
+      "enable_scene_stabilisation": true,
+      "enable_smoothstep": true,
+      "erode_radius": 3.5,
+      "frame_height": 1920,
+      "frame_width": 1080,
+      "gain_power": 0.5,
+      "kernel_size": 54,
+      "metallib_path": "${SEGLIB_RESOURCES_ROOT_PATH}/seglib.metallib",
+      "processor_type": "passthrough",
+      "segmentor_type": "vision_talk_256",
+      "sigma": 11,
+      "use_strong_blur": true,
+      "vision_talk_mlmodelc_path": "${SEGLIB_RESOURCES_ROOT_PATH}"
+    }
+  }
+}

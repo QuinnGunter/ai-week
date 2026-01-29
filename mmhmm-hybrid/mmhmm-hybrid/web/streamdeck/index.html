@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/streamdeck.css">
+    <title>Elgato Stream Deck</title>
+</head>
+
+<body>
+
+    <div style="display: flex;">
+        <div class="image-pane">
+            <img src="../images/AppIcon.png" />
+        </div>
+
+        <div class="content-pane">
+            <div class="labels">
+                <div class="primary">Would you like to download the Elgato Stream Deck plugin?</div>
+                <div class="secondary">Airtime has been designed to work with Elgato Stream Deck. To get the most out of Airtime and Stream
+                    Deck you'll need to download the plugin.</div>
+            </div>
+            
+
+            <div class="check-container">
+                <input type="checkbox" id="ask" name="ask" value="Bike" onclick='askAgainCheckboxClicked(this);'>
+                <label for="ask">Don't ask again</label><br>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="button-container">
+        <button type="button" class="capsule" onclick="onDownloadPlugin()">Download...</button>
+        <button type="button" class="capsule secondary" onclick="onLearnMore()">Learn More...</button>
+        <button type="button" class="capsule secondary" onclick="onClose()">Close</button>
+    </div>
+
+    <script src="js/streamdeck.js"></script>
+</body>
+
+</html>

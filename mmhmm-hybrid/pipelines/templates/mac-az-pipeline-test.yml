@@ -1,0 +1,149 @@
+# mac-az-pipeline.yml
+#
+# This pipeline runs unit and UI tests against the macOS release build configuration.
+#
+# ### flags
+#
+# * `debugMode` - determines whether debug tasks are added and additional log messages are printed
+# * `pool` - allows selecting one of the available runner images: https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
+
+parameters:
+  - name: pool
+    type: string
+    default: "macOS-15" # Runner image: https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+  - name: debugMode # Switches 'System.Debug': https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemdebug
+    type: boolean
+    default: false
+
+jobs:
+  - job: BuildJob
+    displayName: "Run tests"
+    timeoutInMinutes: 360 # maximum timeout for paid parallel jobs
+    variables:
+      - name: system.debug
+        value: ${{ parameters.debugMode }}
+    pool:
+      vmImage: ${{ parameters.pool }}
+    steps:
+      - checkout: self
+        persistCredentials: true
+        lfs: true
+        submodules: true
+
+      - task: InstallAppleCertificate@2
+        displayName: "Install Developer ID Application certificate"
+        inputs:
+          certSecureFile: "DeveloperApplication.p12"
+          certPwd: "$(p12-password)"
+          keychain: "temp" # For Microsoft-hosted builds, use Temporary Keychain. A temporary keychain will always be deleted after the build or release is complete.
+          signingIdentity: "Developer ID Application: mmhmm inc. (M3KUT44L48)"
+
+      - task: InstallAppleProvisioningProfile@1
+        displayName: "Install app provisioning profile"
+        inputs:
+          provisioningProfileLocation: "sourceRepository"
+          provProfileSourceRepository: "$(Build.SourcesDirectory)/mac/mmhmm/embedded.provisionprofile"
+
+      - task: InstallAppleProvisioningProfile@1
+        displayName: "Install extension provisioning profile"
+        inputs:
+          provisioningProfileLocation: "sourceRepository"
+          provProfileSourceRepository: "$(Build.SourcesDirectory)/mac/CameraExtension/extension.provisionprofile"
+
+      - script: |
+          sysctl machdep.cpu.brand_string
+          machine
+          uname -m
+          sw_vers
+        displayName: "Log build machine specs"
+        condition: always()
+
+      - script: ls /Applications | grep Xcode
+        displayName: "Log available Xcode versions"
+        condition: always()
+
+      - script: |
+          sudo xcode-select -s $(xcodePath)
+          xcrun xcode-select --print-path
+          xcodebuild -version
+        displayName: "Select Xcode Version"
+
+      - script: |
+          brew update
+          brew upgrade xcbeautify || brew install xcbeautify
+          xcbeautify --version
+        displayName: "Update xcbeautify"
+
+      - task: Bash@3
+        displayName: "UI Tests - Vanilla"
+        continueOnError: true
+        inputs:
+          targetType: inline
+          workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools"
+          script:  |
+            ./test.sh \
+            UI-Tests-Release \
+            ui-test-results.xml \
+            -only-test-configuration Vanilla \
+            --ci $(Agent.TempDirectory)
+
+      - task: PublishTestResults@2
+        displayName: "Publish UI Test Results"
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(Build.SourcesDirectory)/mac/Build-Tools/ui-test-results.xml'
+          testRunTitle: 'UI Tests'
+          failTaskOnMissingResultsFile: true
+
+      - task: Bash@3
+        displayName: "Unit Tests"
+        continueOnError: true
+        inputs:
+          targetType: inline
+          workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools"
+          script: |
+            ./test.sh \
+            UnitTests \
+            unit-test-results.xml \
+            --ci $(Agent.TempDirectory)
+
+      - task: PublishTestResults@2
+        displayName: "Publish Unit Test Results"
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: 'JUnit'
+          testResultsFiles: '$(Build.SourcesDirectory)/mac/Build-Tools/unit-test-results.xml'
+          testRunTitle: 'Unit Tests'
+          failTaskOnMissingResultsFile: true
+
+      - task: Bash@3
+        displayName: "Collect test results"
+        inputs:
+          targetType: inline
+          workingDirectory: $(Agent.TempDirectory)
+          script: mkdir all-test-results; find DerivedData -name '*.xcresult' -exec cp -R '{}' all-test-results ';'
+
+      - task: ArchiveFiles@2
+        displayName: "Zip and stage test results in $(Common.TestResultsDirectory)"
+        inputs:
+          rootFolderOrFile: "$(Agent.TempDirectory)/all-test-results"
+          archiveType: "zip"
+          archiveFile: "$(Build.ArtifactStagingDirectory)/TestResults/TestResults.$(Build.BuildId).zip"
+  
+      - ${{ if eq(parameters.debugMode, true) }}:
+          - task: Bash@3
+            displayName: "Debug: list files in $(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+            condition: always()
+            inputs:
+              targetType: inline
+              workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              script: ls -R
+  
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish artifacts"
+        condition: always()
+        inputs:
+          targetPath: "$(Build.ArtifactStagingDirectory)"
+          artifact: "test-results"
+          publishLocation: "pipeline"

@@ -1,0 +1,21 @@
+name: SwiftLint
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/swiftlint.yml'
+      - '.swiftlint.yml'
+      - '**/*.swift'
+
+jobs:
+  SwiftLint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: GitHub Action for SwiftLint # (Only files changed in the PR)
+        uses: norio-nomura/action-swiftlint@master
+        env:
+          WORKING_DIRECTORY: mac
+        # The PR-only check is broken. Its fix is in code review limbo, but could be forked from https://github.com/norio-nomura/action-swiftlint/pull/45
+        # env:
+        #   DIFF_BASE: ${{ github.base_ref }}

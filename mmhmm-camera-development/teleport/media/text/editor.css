@@ -1,0 +1,110 @@
+div.text_editor {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    transform-origin: left top;
+}
+
+div.text_editor div.shape {
+    width: 50%;
+    height: 100%;
+}
+
+div.text_editor div.shape.left {
+    float: left;
+}
+
+div.text_editor div.shape.right {
+    float: right;
+}
+
+div.text_editor div#background {
+    display: flex;
+    align-items: center;
+    cursor: text;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+}
+
+div.text_editor div#background canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -5;
+}
+
+div.text_editor div#background.shaped {
+    display: unset !important;
+}
+
+div.text_editor div.editor {
+    word-break: break-word !important;
+    font-kerning: none !important;
+    white-space: pre-wrap !important;
+    overflow: clip;
+    text-overflow: clip;
+    pointer-events: initial;
+}
+
+div.text_editor div.editor.cutout {
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent !important;
+    caret-color: rgb(149, 188, 231);
+}
+
+div.text_editor div.editor:focus {
+  outline: none;
+}
+
+div.text_editor div.editor span.bold {
+  font-weight: var(--bold-weight);
+}
+
+div.text_editor div.editor span.italic {
+  font-style: italic;
+}
+
+div.text_editor div.editor span.underline {
+  text-decoration: underline;
+}
+
+div.text_editor div.editor span.strikethrough {
+  text-decoration: line-through;
+}
+
+div.text_editor div.editor span.strikethrough.underline {
+  text-decoration: line-through underline;
+}
+
+div.text_editor div.editor span.uppercase {
+  text-transform: uppercase !important;
+}
+
+div.text_editor div.editor span.lowercase {
+  text-transform: lowercase !important;
+}
+
+div.text_editor div.editor span.capitalize {
+  text-transform: capitalize !important;
+}
+
+div.text_editor div.editor span.none {
+  text-transform: none !important;
+}
+
+div.text_editor div.editor span.larger {
+  font-size: larger;
+}
+
+div.text_editor div.editor span.smaller {
+  font-size: smaller;
+}
+

@@ -1,0 +1,19 @@
+diff --git a/tools/v8_context_snapshot/BUILD.gn b/tools/v8_context_snapshot/BUILD.gn
+index 80d4b3d0a6bb2..4bc1a0006c6d8 100644
+--- a/tools/v8_context_snapshot/BUILD.gn
++++ b/tools/v8_context_snapshot/BUILD.gn
+@@ -109,8 +109,14 @@ if (use_v8_context_snapshot) {
+       ldflags = [ "/OPT:NOICF" ]  # link.exe, but also lld-link.exe.
+     } else if (is_apple && !use_lld) {
+       ldflags = [ "-Wl,-no_deduplicate" ]  # ld64.
++      # This fixes dyld failing to load libtpxai_segmentation.dylib when running v8_context_snapshot_generator.
++      ldflags += ["-rpath", "/usr/local/lib"]
+     } else if (use_lld) {
+       ldflags = [ "-Wl,--icf=none" ]
++      if (is_apple){
++        # This fixes dyld failing to load libtpxai_segmentation.dylib when running v8_context_snapshot_generator.
++        ldflags += ["-rpath", "/usr/local/lib"]
++      }
+     }
+   }
+ }

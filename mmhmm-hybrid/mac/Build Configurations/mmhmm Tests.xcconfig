@@ -1,0 +1,13 @@
+//
+//  mmhmm Tests.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.10.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+GCC_PREPROCESSOR_DEFINITIONS = TEST $(inherited)
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = TEST $(inherited)
+SWIFT_OBJC_BRIDGING_HEADER = $(PROJECT_DIR)/mmhmm/Cxx Interop/mmhmm-hybrid-Bridging-Header.h

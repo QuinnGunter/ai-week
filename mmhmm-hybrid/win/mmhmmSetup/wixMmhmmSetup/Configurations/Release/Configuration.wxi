@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Include>
+    <?define MmhmmInstallDir="Airtime" ?>
+    <?define MmhmmProductName="Airtime" ?>
+	<?define MmhmmProductNameShort="Airtime" ?>
+    <?define MmhmmProductUpgradeCode="6fa75845-4f40-4413-bc4f-0cec14414c16" ?>
+    <?define MmhmmShotrcutGuid="85ccdde6-539f-48f2-8614-f76c032938e3" ?>
+	<?define MmhmmStartupMenuGuid="19412720-386b-46b2-99bd-d41fc70571ef" ?>
+	<?define MmhmmApplicationUrlGuid="e12ca891-d8a3-4169-bdca-003393c831fe" ?>
+	<?define MmhmmProtocolName="mmhmm-hybrid" ?>
+</Include>

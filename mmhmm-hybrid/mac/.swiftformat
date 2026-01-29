@@ -1,0 +1,20 @@
+#format options
+--indent tab
+--tabwidth 4
+--modifierorder required,dynamic,override,public,private,private(set),static,lazy
+--ranges no-space
+--ifdef no-indent
+--smarttabs disabled
+--xcodeindentation enabled
+--extensionacl on-declarations
+--stripunusedargs closure-only
+
+#file options
+--exclude **.pb.swift
+--exclude Build-Tools
+--exclude Dependencies/Sparkle
+
+#rules
+--disable blankLinesAroundMark,enumNamespaces,preferForLoop
+--disable redundantReturn,redundantType,redundantClosure
+--disable spaceInsideComments,wrapMultilineStatementBraces

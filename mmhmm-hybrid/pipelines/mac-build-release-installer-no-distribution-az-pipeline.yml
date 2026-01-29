@@ -1,0 +1,43 @@
+# mac-build-release-installer-az-pipeline.yml
+#
+# This pipeline builds the mmhmm hybrid macOS release build configuration and creates a notarized archive.
+# Publishes the build artifacts to the pipeline, but does not distribute them.
+# Release tracks are selectable as parameters, e.g. through Azure DevOps' pipeline UI.
+#
+# Use this pipeline to test-run building, notarization and build artifact creation for any track, without
+# distributing any artifacts.
+
+parameters:
+  - name: debugMode
+    displayName: Pipeline Debug Mode and Verbose Logs
+    type: boolean
+    default: true
+  - name: track
+    type: string
+    default: test
+    values:
+    - engineering
+    - test
+    - beta
+    - alpha
+    - production
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger: none
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+pr: none
+
+variables:
+  - template: templates/mac-az-pipeline-variables.yml
+  - template: templates/mac-branch-variables.yml
+
+stages:
+  - stage: Build
+    displayName: "Build"
+    jobs:
+    - template: templates/mac-az-pipeline.yml
+      parameters:
+        mode: createArchive
+        track: ${{ parameters.track }}
+        debugMode: ${{ parameters.debugMode }}

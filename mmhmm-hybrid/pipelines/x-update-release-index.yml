@@ -1,0 +1,13 @@
+# x-update-release-index.yml
+#
+# This pipeline updates the release index for all hybrid builds.
+# It does not trigger automatically and is intended to be run manually.
+
+trigger: none
+pr: none
+
+stages:
+  - stage: UpdateReleaseIndex
+    displayName: "Update Release Index"
+    jobs:
+      - template: templates/x-az-pipeline-update-releases.yml

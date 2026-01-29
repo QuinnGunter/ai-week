@@ -1,0 +1,82 @@
+div.start_screen div.panel.use_on_call {
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+div.start_screen div.panel.use_on_call div.instructions {
+    gap: 16px;
+    max-width: 560px;
+    padding: 24px 0px;
+
+    border-radius: 6px;
+    background-color: var(--background-tertiary);
+
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+div.start_screen div.panel.use_on_call div.top {
+    gap: 20px;
+    fill: var(--content-primary);
+}
+
+div.start_screen div.panel.use_on_call div.content {
+    gap: 30px;
+    padding: 16px 24px;
+}
+
+/* When we're in the browser */
+div.start_screen div.panel.centered {
+    justify-content: center;
+    align-items: center;
+}
+
+div.use_on_call div.bouncer {
+    max-width: 480px;
+    gap: 48px;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--background-quaternary);
+    background-color: var(--background-secondary);
+    text-align: center;
+}
+
+div.use_on_call div.bouncer div.bouncer_top {
+    gap: 16px;
+}
+
+div.use_on_call div.bouncer div.bouncer_top div.message {
+    gap: 4px;
+    max-width: 320px;
+}
+
+div.use_on_call div.bouncer div.bouncer_bottom {
+    gap: 4px;
+}
+
+div.use_on_call div.bouncer img {
+    width: 72px;
+    height: 72px;
+}
+
+div.use_on_call div.bouncer div.title {
+    color: var(--content-primary);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+div.use_on_call div.bouncer div.description {
+    color: var(--content-secondary);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+div.use_on_call div.bouncer a {
+    color: var(--action-secondary);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}

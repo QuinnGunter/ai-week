@@ -1,0 +1,22 @@
+//
+//  BuildConfigurations.xcconfig
+//  CxxCEF
+//
+//  Created by Beni Federer on 26.06.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+FRAMEWORK_SEARCH_PATHS = $(PROJECT_DIR)/CEF/Release
+
+// https://stackoverflow.com/a/77446701/4408170
+// OTHER_CPLUSPLUSFLAGS = $(OTHER_CFLAGS) -Wno-module-import-in-extern-c
+// Does not work because https://forums.swift.org/t/import-of-c-module-appears-within-extern-c-language-linkage-specification/65606/2
+
+// https://developer.apple.com/documentation/xcode/identifying-and-addressing-framework-module-issues
+ENABLE_MODULE_VERIFIER = NO
+DEFINES_MODULE = YES
+CLANG_CXX_LANGUAGE_STANDARD = c++23
+SWIFT_OBJC_INTEROP_MODE = objcxx
+SWIFT_VERSION = 6.0

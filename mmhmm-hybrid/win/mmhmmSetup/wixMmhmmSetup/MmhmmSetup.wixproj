@@ -1,0 +1,118 @@
+<Project>
+  <Import Project="Sdk.props" Sdk="WixToolset.Sdk" Version="5.0.1" />
+  <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <Configurations>Debug;Release;CameraRelease;CreatorRelease;StacksRelease;ScreenRecorderRelease</Configurations>
+  </PropertyGroup>
+  <Import Project="..\packages\WiX.3.11.2\build\wix.props" Condition="Exists('..\packages\WiX.3.11.2\build\wix.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x64</Platform>
+    <OutputName>Airtime</OutputName>
+    <Name>Airtime Setup</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>True</SuppressValidation>
+    <SuppressIces />
+    <ApplicationConfiguration>Release</ApplicationConfiguration>
+    <LaunchApp>creator</LaunchApp>
+    <AppName>Airtime</AppName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CreatorRelease|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>True</SuppressValidation>
+    <SuppressIces />
+    <ApplicationConfiguration>Release</ApplicationConfiguration>
+    <LaunchApp>creator</LaunchApp>
+    <AppName>Airtime Creator</AppName>
+    <OutputName>AirtimeCreator</OutputName>
+    <Name>Airtime Creator Setup</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CameraRelease|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>True</SuppressValidation>
+    <SuppressIces />
+    <ApplicationConfiguration>Release</ApplicationConfiguration>
+    <LaunchApp>camera</LaunchApp>
+    <AppName>Airtime Camera</AppName>
+    <OutputName>AirtimeCamera</OutputName>
+    <Name>Airtime Camera Setup</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='StacksRelease|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>True</SuppressValidation>
+    <SuppressIces />
+    <ApplicationConfiguration>Release</ApplicationConfiguration>
+    <LaunchApp>stacks</LaunchApp>
+    <AppName>Airtime Stacks</AppName>
+    <OutputName>AirtimeStacks</OutputName>
+    <Name>Airtime Stacks Setup</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ScreenRecorderRelease|x64'">
+    <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
+    <SuppressValidation>True</SuppressValidation>
+    <SuppressIces />
+    <ApplicationConfiguration>Release</ApplicationConfiguration>
+    <LaunchApp>screenrecorder</LaunchApp>
+    <AppName>Airtime Screen Recorder</AppName>
+    <OutputName>AirtimeScreenRecorder</OutputName>
+    <Name>Airtime Screen Recorder Setup</Name>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Files.wxs" />
+    <Compile Include="Product.wxs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Firewall.wixext" Version="5.0.1" />
+    <PackageReference Include="WixToolset.Util.wixext" Version="5.0.1" />
+    <PackageReference Include="WixToolset.UI.wixext" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\background.jpg" />
+    <Content Include="Assets\banner.jpg" />
+    <Content Include="Assets\Airtime.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Util.wixext" Version="5.0.1" />
+    <PackageReference Include="WixToolset.Heat" Version="5.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExtendedInstaller\ExtendedInstaller.csproj">
+      <Name>ExtendedInstaller</Name>
+      <Project>{ff4d3cfa-ad07-4914-bdec-3bd346d80c48}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="WixToolset.Sdk" Version="5.0.1" />
+  <Target Name="BeforeBuild">
+    <Message Importance="high" Text="Building for $(Configuration) configuration" />
+    <PropertyGroup>
+      <AppTrack Condition=" '$(AppTrack)' == '' ">uat</AppTrack>
+      <DefineConstants>
+		  MmhmmHybridApplicationBin=$(ProjectDir)/../../../build/mmhmm-hybrid/$(ApplicationConfiguration);
+		  MmhmmHybridApplicationConfiguration=$(ApplicationConfiguration);
+		  AppTrack=$(AppTrack);
+          AppName=$(AppName);
+          LaunchApp=$(LaunchApp);
+	  </DefineConstants>
+    </PropertyGroup>
+    <Message Importance="high" Text="Setting MmhmmHybridApplicationConfiguration to $(MmhmmHybridApplicationConfiguration)" />
+    <Message Importance="high" Text="Setting AppTrack to $(AppTrack)" />
+    <Message Importance="high" Text="Setting LaunchApp to $(LaunchApp)" />
+    <HeatDirectory OutputFile="$(ProjectDir)\Files.wxs" Directory="$(ProjectDir)/../../../build/mmhmm-hybrid/$(ApplicationConfiguration)" ComponentGroupName="mmhmmHybridComponentGroup" DirectoryRefId="INSTALLFOLDER" AutogenerateGuids="true" SuppressRegistry="true" SuppressCom="true" SuppressRootDirectory="true" ToolPath="$(WixToolPath)" Transforms="mmhmmHybridFiles.xsl" PreprocessorVariable="var.MmhmmHybridApplicationBin" NoLogo="true" />
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+</Project>

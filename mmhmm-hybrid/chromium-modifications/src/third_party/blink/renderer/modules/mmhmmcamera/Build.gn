@@ -1,0 +1,30 @@
+import("//build/buildflag_header.gni")
+import("//third_party/blink/renderer/modules/modules.gni")
+import("//third_party/webrtc/webrtc.gni")
+
+buildflag_header("buildflags") {
+  header = "buildflags.h"
+  flags = [ ]
+}
+
+blink_modules_sources("mmhmmcamera") {
+  sources = [
+    "mmhmm_camera.cc",
+    "mmhmm_camera.h",
+    "mmhmm_camera_handler.cc",
+    "mmhmm_camera_handler.h",
+    "video_track_camera_stream.h",
+    "video_track_camera_stream.cc",
+    "audio_track_camera_stream.h",
+    "audio_track_camera_stream.cc",
+    "task_tracker.cc",
+    "task_tracker.h",
+    "track_camera_stream.h",    
+  ]
+
+  deps = [
+    ":buildflags",
+    "//build:chromeos_buildflags",
+    "//third_party/blink/renderer/modules/mediastream"
+  ]
+}

@@ -1,0 +1,28 @@
+name: Delete hotfix preview
+on:
+  delete:
+
+jobs:
+  cleanup:
+    # Run on any branch like "hotfix/20230310"
+    if: |
+      github.event.ref_type == 'branch' &&
+      startswith(github.event.ref, 'hotfix/')
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ vars.AWS_REGION }}
+
+    # Delete /hotfix/ID, where ID is like 20230310
+    # We include "/hotfix/" in the path explicitly, instead of relying on it being in the branch name,
+    # to ensure that we never mistakenly delete a "real" deployment
+    - name: Delete deployment from S3
+      run: aws s3 rm --recursive s3://${{vars.AWS_S3_BUCKET}}/hotfix/${GITHUB_EVENT_REF##*/}
+      env:
+        GITHUB_EVENT_REF: ${{ github.event.ref }}

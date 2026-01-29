@@ -1,0 +1,39 @@
+{
+  "configurations" : [
+    {
+      "id" : "A5DC3468-1D8E-46A8-AEFF-18FAD3A3EE95",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "--args --remote-debugging-port=9222 --user-data-dir=remote-profile"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:mmhmm.xcodeproj",
+      "identifier" : "D4A6C10B4E284404BFB2B587",
+      "name" : "mmhmm-hybrid"
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "skippedTests" : [
+        "mmhmmUITests\/testUncheckingBackgroundDisablesRooms()"
+      ],
+      "target" : {
+        "containerPath" : "container:mmhmm.xcodeproj",
+        "identifier" : "FD15B17E2C47E38D00D0D5ED",
+        "name" : "mmhmmUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

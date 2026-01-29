@@ -1,0 +1,703 @@
+:root {
+  --slidetrayHeight: 76px;
+  --sidebarWidth: 240px;
+}
+
+/*
+ *
+ */
+div#container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+}
+
+div.split_view {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: row;
+
+  /* Why is this necessary ?! */
+  min-height: 0;
+}
+
+div.split_view .view {
+  overflow: auto;
+}
+
+
+/*
+ * The stage
+ */
+div.split_view div.view#app {
+  flex: 1 1;
+  display: flex;
+  flex-direction: column;
+  /*
+   * Set to visible to ensure media overlay buttons
+   * remain visible when the window is narrow, and
+   * the buttons are displaying above the stage
+   * (where without this, they may be clipped where
+   * the navbar is)
+   */
+  overflow: clip;
+  overflow-clip-margin: 100px;
+  margin-bottom: 0;
+}
+
+div.split_view div.view#app:has(div#call_bar:not(.hidden)) {
+    --callbarHeight: 48px;
+}
+
+div.split_view div.view#app div#workspace {
+  flex-grow: 1;
+  flex-shrink: 1;
+  z-index: 1;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: calc(100% - var(--slidetrayHeight) - var(--callbarHeight, 0px));
+}
+
+div.split_view div.view#app div#workspace div#stage_wrapper {
+  max-width: 100%;
+  max-height: 100%;
+  aspect-ratio: 16 / 9;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.split_view div.view#app div#workspace div#stage_wrapper:focus {
+  outline: none;
+}
+
+div.split_view div.view#app div#workspace div#stage_wrapper canvas#stage {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/*
+ *
+ */
+div#controls div.slider_wrapper {
+  margin-top: 12px;
+}
+
+.sidebar-container {
+  padding-bottom: 16px;
+}
+
+.sidebar-container label {
+  margin: 8px 0 4px;
+  display: block;
+  font-size: 11px;
+  line-height: 19px;
+  color: var(--content-tertiary);
+  font-weight: 500;
+}
+
+body.light .sidebar-container label {
+  color: var(--content-secondary);
+}
+
+.sidebar-container.timing span.number {
+  font-feature-settings: "tnum";
+}
+
+
+/*
+ * Visuals sheets
+ */
+
+div.sheet.visual-select-sheet {
+  padding: 0px !important;
+  border-radius: 12px;
+  z-index: 1;
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list {
+  padding: 4px 8px 8px !important;
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list div.row.button {
+  padding: 0px !important;
+  margin: 4px 0px 0px;
+  border-radius: 4px;
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list div.row.checkbox-right {
+    padding: 0px !important;
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list div.row.checkbox-right span.selection_state {
+    padding-left: 20px;
+    padding-right: 10px;
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list div.row.divider {
+  width: calc(100% - 8px);
+  margin: 4px auto 2px;
+  overflow: hidden;
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list div.row.button:hover {
+  background-color: var(--background-quaternary);
+}
+
+div.sheet.visual-select-sheet div.contents div.option_list div.row > button,
+div.sheet.visual-select-sheet div.contents div.option_list div.row > label {
+  margin: 0px;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  line-height: 16px;
+  padding: 8px !important;
+}
+
+/*
+ * Button Sizing
+ */
+
+.segment.padded button {
+  height: 32px;
+  padding: 4px 12px !important;
+}
+
+/*
+ * Call participants sheet
+ */
+
+div.list-header {
+  font-size: 12px;
+  padding: 6px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--content-tertiary);
+}
+
+div.list-header a {
+  color: var(--action-primary);
+  cursor: pointer;
+}
+
+div.avatar-wrapper {
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+  border-radius: 50%;
+  position: relative;
+  background-color: var(--content-tertiary);
+  flex-shrink: 0;
+}
+
+div.avatar-wrapper.sm {
+  width: 20px;
+  height: 20px;
+}
+
+img.avatar {
+  width: 20px;
+  min-height: 20px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+/*
+ * Thumbnail grid view, used by Rooms & mmhmm TV slides
+ */
+div.gridview {
+  padding: 16px 8px 16px 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 104px);
+  column-gap: 0px;
+  row-gap: 12px;
+  grid-auto-flow: dense;
+  /* what is this for?? */
+  max-height: 332px;
+}
+
+div.gridview button.item {
+  border: 0px none;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0px;
+  margin: 0px;
+  border: 4px solid transparent;
+}
+
+div.gridview button.item.selected {
+  border: 4px solid var(--action-primary);
+}
+
+div.gridview button.item IMG {
+  border-radius: 4px;
+  width: 96px;
+  margin: 4px;
+  height: auto;
+}
+
+div.gridview#rooms button.item IMG {
+  max-width: 100%;
+}
+
+div.gridview button.item DIV.title {
+  font-size: 9pt;
+  font-weight: normal;
+  height: 14px;
+  line-height: 14px;
+  color: var(--content-primary);
+  width: 100%;
+  text-align: center;
+}
+
+div.tab-wrapper {
+  padding: 8px;
+}
+
+span.tabs {
+  --corner-radius: 8px;
+  --min-segment-width: 30px;
+
+  display: flex;
+  align-items: center;
+  border-radius: var(--corner-radius);
+  height: 34px;
+  margin: 0px;
+  overflow: hidden;
+  border: 1px solid var(--border-secondary);
+  background-color: var(--background-secondary);
+}
+
+span.tabs button.tab {
+  flex: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  fill: var(--content-primary);
+  color: var(--content-primary);
+  margin: 0px;
+  padding: 0px 16px;
+  min-width: var(--min-segment-width);
+  background-color: var(--border-secondary);
+  gap: 8px;
+  font-size: 11px;
+}
+
+span.tabs button.tab:hover {
+  background-color: var(--border-primary);
+}
+
+span.tabs button.tab.selected {
+  background-color: var(--action-primary);
+  fill: var(--content-primary);
+  color: var(--content-primary);
+}
+
+body.light button.tab {
+  fill: var(--content-secondary);
+}
+
+body.light span.tabs button.tab.selected {
+  fill: white;
+  color: white;
+}
+
+
+/*
+ * Fatal Errors
+ */
+div#container noscript {
+  flex-grow: 1;
+  width: 100vw;
+  display: flex;
+}
+
+/*
+ * Present menu
+ */
+div.pane-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+div.pane-wrapper div.disabled {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--content-tertiary);
+  min-height: 300px;
+}
+
+div.nav_container {
+  flex: 1;
+  position: relative;
+  padding: 16px;
+}
+
+div.nav_container .label {
+  padding: 16px;
+  border: 1px solid var(--border-primary);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--content-tertiary);
+}
+
+/*
+ * Navigation controller
+ */
+div.nav_controller {
+  height: 100%;
+  overflow: hidden;
+}
+
+/*
+ *
+ */
+div.gridview button.item {
+  padding: 8px;
+  border-radius: 8px;
+  color: var(--content-secondary);
+  overflow: hidden;
+}
+
+
+div.gridview button.item:hover {
+  background-color: var(--border-primary);
+}
+
+div.gridview button.item img {
+  width: 100%;
+  margin: 0px;
+}
+
+div.gridview button.item div.title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 6px;
+}
+
+/*
+ * File upload progress sheet
+ */
+div.upload_progress {
+  display: flex;
+  flex-direction: column;
+  margin: 12px;
+  gap: 8px;
+}
+
+div.upload_progress div.message {
+  font-size: 13pt;
+}
+
+div.upload_progress progress {
+  width: 100%;
+}
+
+div.upload_complete {
+  margin: 12px;
+}
+
+div.upload_complete div.message {
+  font-size: 13pt;
+  padding-bottom: 8px;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: var(--border-secondary);
+  border-radius: 8px;
+}
+
+progress[value]::-webkit-progress-value {
+  background-color: var(--action-secondary);
+}
+
+
+/*
+ *
+ */
+div.sheet div.contents div.option_list.nav_menu {
+  min-width: 280px;
+}
+
+/*
+ * Misc
+ */
+img.empty-img {
+
+}
+
+.loading {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, var(--content-primary));
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 3px), #000 0);
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.platform_selector {
+  margin-bottom: 16px;
+  max-width: fit-content;
+}
+
+.help_hero_image {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.steps_wrapper {
+  margin: 0 -16px;
+  padding: 0 8px;
+  background-color: var(--background-primary);
+  box-shadow: inset 0px 4px 8px -4px rgba(0, 0, 0, 0.24),
+    inset 0px -4px 8px -4px rgba(0, 0, 0, 0.24);
+}
+
+.steps_content {
+  max-height: 210px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 8px 8px;
+  position: relative;
+}
+
+.steps_footer {
+  text-align: center;
+  background: var(--background-secondary);
+  padding: 12px 8px 0;
+}
+
+body.light a.steps_footer_link:hover,
+a.steps_footer_link {
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--action-secondary);
+}
+
+body.light a.steps_footer_link,
+a.steps_footer_link:hover {
+  color: var(--action-primary);
+}
+
+.help_step,
+.help_step_active {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.help_step:hover {
+  background-color: var(--border-secondary-fade);
+}
+
+.help_step_active {
+  background-color: var(--border-secondary);
+}
+
+.help_step_completed {
+  pointer-events: none;
+}
+
+.help_step_completed > .help_step_content,
+.help_step_completed > .help_step_image,
+.help_step_completed > .help_step_image_active {
+  opacity: 0.2;
+}
+
+.help_step_content a,
+body.light .help_step_content a:hover {
+  color: var(--action-secondary);
+}
+
+.help_step_content a:hover,
+body.light .help_step_content a {
+  color: var(--action-primary);
+}
+
+.help_step_completed_icon {
+  position: absolute;
+  top: 32px;
+  left: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  margin-bottom: 20px;
+  background: var(--action-primary);
+  fill: white;
+  border-radius: 25px;
+}
+
+.help_step_image,
+.help_step_image_active {
+  width: 50px;
+  height: 40px;
+  margin-right: 12px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.help_step_image_active {
+  outline: 2px solid var(--action-primary);
+  outline-offset: 2px;
+  overflow: hidden;
+}
+
+.help_step_content {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 16px;
+}
+
+.help_step_title {
+  margin: 0 0 4px;
+  font-weight: 700;
+  color: var(--content-primary);
+}
+
+.help_step_description {
+  margin: 0;
+  font-weight: 400;
+  color: var(--content-secondary);
+}
+
+.help_step_back_button {
+  align-items: center;
+  justify-content: center;
+  margin: 3px 2px 0 -8px;
+}
+
+.help_step_back_button svg {
+  fill: var(--content-primary);
+}
+
+.help_step_other_description {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.help_step_other_list_title {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  color: var(--content-primary);
+}
+
+ul.help_step_other_list {
+  font-size: 12px;
+  line-height: 16px;
+  margin: 4px 0 12px;
+  padding-inline-start: 24px;
+}
+
+/*
+  Copy Button
+*/
+
+button.copyLinkButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: var(--action-primary);
+  color: white;
+  fill: white;
+  stroke: none;
+  flex-shrink: 0;
+  transition: background-color 0.33s ease-in-out;
+}
+
+button.copyLinkButton svg {
+  width: 16px;
+  height: auto;
+}
+
+div.copyLinkButtonMessage {
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0px;
+  font-size: 12px;
+}
+
+/*
+  Warning Text In Locales Dropdown
+*/
+
+div.disabled_locale_warning {
+  max-width: 170px;
+  padding: 6px 8px 14px;
+  line-height: 16px;
+  font-size: 12px;
+  color: var(--content-tertiary);
+}
+
+/*
+  Warning Text In Account Dropdown
+*/
+
+div.disabled_sign_out_warning {
+    max-width: 170px;
+    padding: 6px 8px 4px;
+    line-height: 16px;
+    font-size: 12px;
+    color: var(--content-tertiary);
+}
+
+div.sheet .all_icons svg {
+    height: 64px;
+    width: auto;
+}

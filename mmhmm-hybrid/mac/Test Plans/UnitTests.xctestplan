@@ -1,0 +1,30 @@
+{
+  "configurations" : [
+    {
+      "id" : "FCBF4DE8-9FC7-45B6-9027-5BD6BF5E9C86",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "--args --remote-debugging-port=9222 --user-data-dir=remote-profile"
+      }
+    ],
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:mmhmm.xcodeproj",
+        "identifier" : "FD15B1602C47DDA700D0D5ED",
+        "name" : "mmhmmTests"
+      }
+    }
+  ],
+  "version" : 1
+}

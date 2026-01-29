@@ -1,0 +1,18 @@
+name: linter
+
+# Runs your workflow when activity on a pull request
+# in the workflow's repository occurs. For example,
+# if no activity types are specified, the workflow
+# runs when a pull request is opened or reopened or
+# when the head branch of the pull request is updated.
+on: pull_request
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+        - run: npm ci
+        - run: npm run localize
+        - run: npm run lint

@@ -1,0 +1,80 @@
+[
+  {
+    "metadataOutputVersion" : "3.0",
+    "storagePrecision" : "Mixed (Float16, Float32)",
+    "outputSchema" : [
+      {
+        "hasShapeFlexibility" : "0",
+        "isOptional" : "0",
+        "dataType" : "Float32",
+        "formattedType" : "MultiArray (Float32 1 × 320 × 576 × 1)",
+        "shortDescription" : "",
+        "shape" : "[1, 320, 576, 1]",
+        "name" : "Identity",
+        "type" : "MultiArray"
+      }
+    ],
+    "modelParameters" : [
+
+    ],
+    "specificationVersion" : 6,
+    "mlProgramOperationTypeHistogram" : {
+      "Transpose" : 14,
+      "ReduceMax" : 10,
+      "Sub" : 8,
+      "ReduceMean" : 23,
+      "ResizeNearestNeighbor" : 4,
+      "Sigmoid" : 32,
+      "Relu6" : 28,
+      "Reshape" : 12,
+      "Cast" : 6,
+      "Concat" : 20,
+      "Minimum" : 4,
+      "Add" : 50,
+      "ConvTranspose" : 5,
+      "Pad" : 4,
+      "Linear" : 20,
+      "Relu" : 56,
+      "Conv" : 127,
+      "Maximum" : 4,
+      "BatchNorm" : 17,
+      "Mul" : 86
+    },
+    "computePrecision" : "Mixed (Float16, Float32, Int32)",
+    "isUpdatable" : "0",
+    "stateSchema" : [
+
+    ],
+    "availability" : {
+      "macOS" : "12.0",
+      "tvOS" : "15.0",
+      "visionOS" : "1.0",
+      "watchOS" : "8.0",
+      "iOS" : "15.0",
+      "macCatalyst" : "15.0"
+    },
+    "modelType" : {
+      "name" : "MLModelType_mlProgram"
+    },
+    "userDefinedMetadata" : {
+      "com.github.apple.coremltools.version" : "8.2",
+      "com.github.apple.coremltools.source" : "tensorflow==2.16.2"
+    },
+    "inputSchema" : [
+      {
+        "height" : "320",
+        "colorspace" : "RGB",
+        "isOptional" : "0",
+        "width" : "576",
+        "isColor" : "1",
+        "formattedType" : "Image (Color 576 × 320)",
+        "hasSizeFlexibility" : "0",
+        "type" : "Image",
+        "shortDescription" : "",
+        "name" : "input"
+      }
+    ],
+    "generatedClassName" : "vtl576V1",
+    "method" : "predict"
+  }
+]

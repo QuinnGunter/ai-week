@@ -1,0 +1,446 @@
+/* Mobile Safari doesn't deal well with variable fonts.
+ * Desktops continue use use variable via hover:hover selector
+ * but switch to individual files on mobile via hover:none  */
+
+/*
+ * Billboard theme
+ */
+@media (hover: hover) {
+    @font-face {
+        font-family: "Inter";
+        src: url("assets/fonts/Inter-VariableFont_slnt,wght.woff2");
+    }
+}
+
+@media (hover: none) {
+    @font-face {
+        font-family: "Inter";
+        font-weight: 100 900;
+        src: url("assets/fonts/Inter-Bold.woff2");
+    }
+
+    @font-face {
+        font-family: "Inter";
+        font-weight: 900 999;
+        src: url("assets/fonts/Inter-Black.woff2");
+    }
+}
+
+/*
+ * Classic theme
+ */
+@media (hover: hover) {
+    @font-face {
+        font-family: "LibreBaskerville";
+        src: url("assets/fonts/LibreBaskerville-Regular.woff2");
+    }
+}
+
+@media (hover: none) {
+    @font-face {
+        font-family: "LibreBaskerville";
+        font-weight: 600 900;
+        src: url("assets/fonts/LibreBaskerville-Bold.woff2");
+    }
+
+    @font-face {
+        font-family: "LibreBaskerville";
+        font-style: italic;
+        src: url("assets/fonts/LibreBaskerville-Italic.woff2");
+    }
+
+    @font-face {
+        font-family: "LibreBaskerville";
+        font-weight: 100 600;
+        src: url("assets/fonts/LibreBaskerville-Regular.woff2");
+    }
+}
+
+/*
+ * Glossy theme
+ */
+@media (hover: hover) {
+    @font-face {
+        font-family: "Mulish";
+        src: url("assets/fonts/Mulish-VariableFont_wght.woff2");
+    }
+}
+
+@media (hover: none) {
+    @font-face {
+        font-family: "Mulish";
+        font-weight: 700 900;
+        src: url("assets/fonts/Mulish-Black.woff2");
+    }
+
+    @font-face {
+        font-family: "Mulish";
+        font-weight: 100 700;
+        src: url("assets/fonts/Mulish-Bold.woff2");
+    }
+
+}
+
+/*
+ * Modern theme
+ */
+@media (hover: hover) {
+    @font-face {
+        font-family: "NunitoSans";
+        src: url("assets/fonts/NunitoSans-VariableFont_YTLC,opsz,wdth,wght.woff2");
+    }
+}
+
+@media (hover: none) {
+    @font-face {
+        font-family: "NunitoSans";
+        font-weight: 100 700;
+        src: url("assets/fonts/NunitoSans-SemiBold.woff2");
+    }
+
+    @font-face {
+        font-family: "NunitoSans";
+        font-weight: 700 900;
+        src: url("assets/fonts/NunitoSans-ExtraBold.woff2");
+    }
+}
+
+/*
+ * Cutout theme
+ */
+@font-face {
+    font-family: "BeniBlack";
+    src: url("assets/fonts/BeniBlack.woff2");
+}
+
+/*
+ *
+ */
+@font-face {
+    font-family: "KomikaHand";
+    font-weight: 100 700;
+    src: url("assets/fonts/KomikaHand.woff2");
+}
+
+@font-face {
+    font-family: "KomikaHand";
+    font-weight: 700 900;
+    src: url("assets/fonts/KomikaHand-Bold.woff2");
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("assets/fonts/Montserrat-VariableFont_wght.woff2");
+}
+
+/*
+ * Title card theme
+ */
+@media (hover: hover) {
+    @font-face {
+        font-family: "Merriweather";
+        src: url("assets/fonts/Merriweather-VariableFont_opsz,wdth,wght.woff2");
+    }
+}
+
+@media (hover: none) {
+    @font-face {
+        font-family: "Merriweather";
+        font-weight: 100 600;
+        src: url("assets/fonts/Merriweather-Regular.woff2");
+    }
+    @font-face {
+        font-family: "Merriweather";
+        font-weight: 600 900;
+        src: url("assets/fonts/Merriweather-Bold.woff2");
+    }
+    @font-face {
+        font-family: "Merriweather";
+        font-style: italic;
+        src: url("assets/fonts/Merriweather-Italic.woff2");
+    }
+}
+
+/*
+* ===========
+*
+* Airtime Camera fonts
+*
+*/
+
+/* archivo-black-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Archivo Black';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/archivo-black-v21-latin-regular.woff2') format('woff2');
+}
+
+/* bebas-neue-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/bebas-neue-v14-latin-regular.woff2') format('woff2');
+}
+
+/* roboto-serif-200 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Serif';
+  font-style: normal;
+  font-weight: 200;
+  src: url('assets/fonts/roboto-serif-v15-latin-200.woff2') format('woff2');
+}
+
+/* rubik-800 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 800;
+  src: url('assets/fonts/rubik-v28-latin-800.woff2') format('woff2');
+}
+
+/* figtree-900 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 900;
+  src: url('assets/fonts/figtree-v7-latin-900.woff2') format('woff2');
+}
+
+/* figtree-900italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Figtree Italic';
+  font-style: normal;
+  font-weight: 900;
+  src: url('assets/fonts/figtree-v7-latin-900italic.woff2') format('woff2');
+}
+
+/* ibm-plex-mono-regular-400 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'IBM Plex Mono';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/ibm-plex-mono-v19-latin-regular.woff2') format('woff2');
+}
+
+/* michroma-regular-400 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Michroma Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/michroma-v19-latin-regular.woff2') format('woff2');
+}
+
+/* oswald-regular-400 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Oswald';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/oswald-v53-latin-regular.woff2') format('woff2');
+}
+
+/* Montagu-Slab-SemiBold-600 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Montagu Slab SemiBold';
+    font-style: normal;
+    font-weight: 600;
+    src: url('assets/fonts/montagu-slab-v16-latin-600.woff2') format('woff2');
+}
+
+/* source-serif-4-black-900 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Source Serif Black';
+    font-style: normal;
+    font-weight: 900;
+    src: url('assets/fonts/source-serif-4-v13-latin-900.woff2') format('woff2');
+}
+
+/* libre-bodoni-italic-400 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Libre Bodoni Italic';
+    font-style: italic;
+    font-weight: 400;
+    src: url('assets/fonts/libre-bodoni-v5-latin-italic.woff2') format('woff2');
+}
+
+/* Instrument Serif - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Instrument Serif';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/instrument-serif-v5-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Dune Rise';
+    font-style: normal;
+    src: url('assets/fonts/DuneRise.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Jacquard';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/jacquard-24-v4-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Freeman';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/freeman-v1-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Rye';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/rye-v15-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Solitreo';
+    font-style: normal;
+    font-weight: 400;
+    src: url('assets/fonts/solitreo-v2-latin-regular.woff2') format('woff2');
+}
+
+/* Archivo Black */
+.archivo-black-regular {
+  font-family: 'Archivo Black', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Bebas Neue */
+.bebas-neue-regular {
+  font-family: 'Bebas Neue', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Figtree */
+.figtree-900 {
+  font-family: 'Figtree', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+}
+
+/* Figtree Italic */
+.figtree-900-italic {
+  font-family: 'Figtree Italic', sans-serif;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.ibm-plex-mono-regular {
+  font-family: 'IBM Plex Mono', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Inter Regular */
+.inter-regular {
+  font-family: 'Inter', sans-serif;
+  font-style: normal;
+}
+
+.libre-bodoni-italic {
+  font-family: 'Libre Bodoni Italic', serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.michroma-regular {
+  font-family: 'Michroma Regular', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.montagu-slab-semibold {
+  font-family: 'Montagu Slab SemiBold', serif;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.oswald-regular {
+  font-family: 'Oswald', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+}
+
+/* Roboto Serif Variants */
+.roboto-serif-light {
+  font-family: 'Roboto Serif', serif;
+  font-style: normal;
+  font-weight: 200;
+}
+
+/* Rubik Variants */
+.rubik-bold {
+  font-family: 'Rubik', sans-serif;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.source-serif-black {
+    font-family: 'Source Serif Black', serif;
+    font-style: normal;
+    font-weight: 900;
+}
+
+/* Instrument Serif */
+.instrument-serif-regular {
+    font-family: 'Instrument Serif', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.dune-rise {
+    font-family: 'Dune Rise', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.jacquard-regular {
+    font-family: 'Jacquard', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.freeman-regular {
+    font-family: 'Freeman', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.rye-regular {
+    font-family: 'Rye', serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.solitreo-regular {
+    font-family: 'Solitreo', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}

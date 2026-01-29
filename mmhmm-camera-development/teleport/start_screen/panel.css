@@ -1,0 +1,100 @@
+/** Shared start screen panel styling */
+
+div.start_screen div.panel {
+    height: 100%;
+    width: 100%;
+}
+
+/* Vertically split panel */
+
+div.start_screen div.split_panel {
+    height: 100%;
+    width: 100%;
+}
+
+div.start_screen div.split_panel > div.left {
+    width: 100%;
+    overflow: hidden;
+}
+
+div.start_screen div.split_panel > div.right {
+    width: 256px;
+    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-shrink: 0;
+
+    border-left: 1px solid var(--background-tertiary);
+}
+
+/* Action buttons - a large button with a description below it */
+
+@media only screen and (max-width: 720px) {
+    div.start_screen div.split_panel.slide_actions > div.left {
+        padding-right: 32px;
+    }
+    div.start_screen div.split_panel.slide_actions > div.right.hidable {
+        display: none;
+    }
+}
+
+div.start_screen div.slide_actions div.action {
+    width: clamp(100px, 100%, 240px);
+    gap: 16px;
+}
+
+div.start_screen div.slide_actions div.action button {
+    width: 100%;
+    gap: 16px;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 0px;
+
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+div.start_screen div.slide_actions div.action button div.thumbnail {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+}
+
+div.start_screen div.slide_actions div.action button div.thumbnail img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+div.start_screen div.slide_actions div.action button div.thumbnail img.background {
+    z-index: 0;
+    border-radius: 6px;
+}
+
+div.start_screen div.slide_actions div.action button div.thumbnail img.foreground {
+    z-index: 1;
+    border-radius: 6px;
+    border: 1px solid var(--background-quaternary);
+}
+
+div.start_screen div.slide_actions div.action button div.label {
+    display: none;
+}
+
+div.start_screen div.slide_actions div.action div.description {
+    padding: 0px 8px;
+
+    color: var(--content-tertiary);
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+
+    text-align: center;
+}

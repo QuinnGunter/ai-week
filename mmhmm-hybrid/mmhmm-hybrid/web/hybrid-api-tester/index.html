@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>"Hybrid API Tester"</title>
+    <link rel="stylesheet" href="../css/hybrid-api-tester.css">
+</head>
+<body>
+    <div id="hybrid-api-tester">
+        
+        <div id="overview">
+            <h2>Hybrid API <span class="api-version-major">0</span>.<span class="api-version-minor">0</span>.<span class="api-version-patch">0</span></h2>
+            <p>This page showcases all JavaScript API exposed as <code>gHybrid</code> members by the Airtime browser.</p>
+            <h4>Availability</h4>
+            <p>API has been available prior to version 1.0.0., unless documented otherwise.</p>
+            <button class="button">Show all</button>
+        </div>
+        
+        <h3>Basic State</h3>
+        <div id="api-version" class="property">
+            <details>
+                <summary><code>gHybrid.apiVersion</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>The current version of <code>gHybrid</code> API.</p>
+                <h4>Demo</h4>
+                <p><span>gHybrid.apiVersion.major <label class="api-version-major">unknown</label></span></p>
+                <p><span>gHybrid.apiVersion.minor <label class="api-version-minor">unknown</label></span></p>
+                <p><span>gHybrid.apiVersion.patch <label class="api-version-patch">unknown</label></span></p>
+                <h4>Availability</h4>
+                <p><code class="version-info">1.0.0</code></p>
+            </details>
+        </div>
+        
+        <div id="hardware-info" class="property">
+            <details>
+                <summary><code>gHybrid.capabilities.hardwareInfo</code></summary>
+                <h4>macOS</h4>
+                <p>Static information about the hardware running this software.</p>
+                <h4>Windows</h4>
+                <p>TODO</p>
+                <h4>Demo</h4>
+                <p><span>gHybrid.capabilities.hardwareInfo.cpuArch <label class="cpuArch">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.hardwareInfo.cpuCores <label class="cpuCores">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.hardwareInfo.gpuName <label class="gpuName">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.hardwareInfo.memory <label class="memory">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.hardwareInfo.model <label class="model">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.hardwareInfo.os <label class="os">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.hardwareInfo.osVersion <label class="osVersion">unknown</label></span></p>
+            </details>
+        </div>
+        
+        <h3>Capture Devices</h3>
+        
+        <div id="camera-capture-authorization-status" class="property">
+            <details>
+                <summary><code>gHybrid.capabilities.camera.authorization</code></summary>
+                <h4>macOS</h4>
+                <p>Exposes the <code>AVAuthorizationStatus</code> for the <code>AVMediaType</code> of type <code>video</code>.</p>
+                <p>Possible values: <code>notDetermined, restricted, denied, authorized</code></p>
+                <h4>Windows</h4>
+                <p>Possible values: <code>authorized</code></p>
+                <h4>Notification</h4>
+                <p>
+                    Call <code>gHybrid.capabilities.camera.setAuthorizationChangeCallback(onAuthorizationChange)</code> to register a callback handler
+                    of the form <code>onAuthorizationChange(state)</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.capabilities.camera.setAuthorizationChangeCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <button class="button">Get <code>gHybrid.capabilities.camera.authorization</code></button>
+                <p><span>gHybrid.capabilities.camera.authorization.rawState <label class="rawState">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.camera.authorization.description <label class="description">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.camera.authorization.additionalInfo <label class="additionalInfo">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="authorize-camera" class="function">
+            <details>
+                <summary><code>gHybrid.capabilities.camera.authorize()</code></summary>
+                <h4>macOS</h4>
+                <p>
+                    Prompts the user to authorize video capture. If the user was already prompted, for example by the system when the process
+                    first tried to access the camera, calling this function requests access to the user decision instead. Without explicitly
+                    calling this function, the authorization status will always come back as <code>notDetermined</code>.
+                </p>
+                <h4>Windows</h4>            
+                <p>Triggers a runtime assertion.</p>
+                <h4>Live Demo</h4>
+                <button class="button"><code>gHybrid.capabilities.camera.authorize()</code></button>
+                <p><span>gHybrid.capabilities.camera.authorization.description <label class="state">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="microphone-capture-authorization-status" class="property">
+            <details>
+                <summary><code>gHybrid.capabilities.microphone.authorization</code></summary>
+                <h4>macOS</h4>
+                <p>Exposes the <code>AVAuthorizationStatus</code> for the <code>AVMediaType</code> of type <code>audio</code>.</p>
+                <p>Possible values: <code>notDetermined, restricted, denied, authorized</code></p>
+                <h4>Windows</h4>
+                <p>Possible values: <code>authorized</code></p>
+                <h4>Notification</h4>
+                <p>
+                    Call <code>gHybrid.capabilities.microphone.setAuthorizationChangeCallback(onAuthorizationChange)</code> to register a callback handler
+                    of the form <code>onAuthorizationChange(state)</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.capabilities.microphone.setAuthorizationChangeCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <button class="button">Get <code>gHybrid.capabilities.microphone.authorization</code></button>
+                <p><span>gHybrid.capabilities.microphone.authorization.rawState <label class="rawState">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.microphone.authorization.description <label class="description">unknown</label></span></p>
+                <p><span>gHybrid.capabilities.microphone.authorization.additionalInfo <label class="additionalInfo">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="authorize-microphone" class="function">
+            <details>
+                <summary><code>gHybrid.capabilities.microphone.authorize()</code></summary>
+                <h4>macOS</h4>
+                <p>
+                    Prompts the user to authorize audio capture. If the user was already prompted, for example by the system when the process
+                    first tried to access the microphone, calling this function requests access to the user decision instead. Without explicitly
+                    calling this function, the authorization status will always come back as <code>notDetermined</code>.
+                </p>
+                <h4>Windows</h4>            
+                <p>Triggers a runtime assertion.</p>
+                <h4>Live Demo</h4>
+                <button class="button"><code>gHybrid.capabilities.microphone.authorize()</code></button>
+                <p><span>gHybrid.capabilities.microphone.authorization.description <label class="state">unknown</label></span></p>
+            </details>
+        </div>
+        
+        <h3>Virtual Camera</h3>
+        
+        <div id="install-virtual-camera" class="function">
+            <details>
+                <summary><code>gHybrid.virtualCamera</code></summary>
+                <h4>macOS</h4>
+                <p>Exposes the interaction with <code>OSSystemExtensionManager</code> through <code>OSSystemExtensionRequest</code>s.</p>
+                <h4>Windows</h4>
+                <p>Exposes the interaction with the virtual camera installer.</p>
+                <h4>Live Demo</h4>
+                <button class="button" id="install-virtual-camera-button">gHybrid.virtualCamera.install()</button>
+                <button class="button" id="authorize-virtual-camera">gHybrid.virtualCamera.authorize()</button>
+                <button class="button" id="uninstall-virtual-camera">gHybrid.virtualCamera.uninstall()</button>
+                <button class="button" id="request-relaunch">gHybrid.requestRelaunch()</button>
+                <button class="button" id="request-reboot">gHybrid.requestReboot()</button>
+                <p><span>gHybrid.virtualCamera.state.description <label class="state">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="virtual-camera-state-property" class="property">
+            <details>
+                <summary><code>gHybrid.virtualCamera.state</code></summary>
+                <h4>macOS</h4>
+                <p>Exposes the result of <code>OSSystemExtensionRequestDelegate</code> callbacks.</p>
+                <p>Possible values: <code>notInstalled, notInstallable, awaitingUserApproval, installing, installed, needsUpdate, needsReboot, uninstalling, error</code></p>
+                <p><code>needsUpdate</code> may appear briefly, but is handled by native code by automatic re-authorization requiring no user interaction.</p>
+                <h4>Windows</h4>
+                <p>Possible values: <code>notInstalled, installing, installed, needsUpdate, uninstalling, error</code></p>
+                <h4>Notification</h4>
+                <p>
+                    Call <code>gHybrid.virtualCamera.setStateChangeCallback(onStateChange)</code> to register a callback handler
+                    of the form <code>onStateChange(state)</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.virtualCamera.setStateChangeCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <button class="button">Get <code>gHybrid.virtualCamera.state</code></button>
+                <p><span>gHybrid.virtualCamera.state.rawState <label class="rawState">unknown</label></span></p>
+                <p><span>gHybrid.virtualCamera.state.description <label class="description">unknown</label></span></p>
+                <p><span>gHybrid.virtualCamera.state.additionalInfo <label class="additionalInfo">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="stream-clients-list" class="property">
+            <details>
+                <summary><code>gHybrid.virtualCamera.clients</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>The currently connected virtual camera stream clients.</p>
+                <h4>Notification</h4>
+                <p>
+                    Call <code>gHybrid.virtualCamera.setStateChangeCallback(onClientsChange)</code> to register a callback handler
+                    of the form <code>onClientsChange([clients])</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.virtualCamera.setStateChangeCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <button class="button">Get <code>gHybrid.virtualCamera.clients</code></button>
+                <p><span>gHybrid.virtualCamera.clients <label class="state">unknown</label></span></p>
+                <p><span>gHybrid.virtualCamera.clients (auto update) <label class="auto-state">unknown</label></span></p>
+            </details>
+        </div>
+        
+        <h3>Titlebar Button</h3>
+        
+        <div id="titlebar-toolbox-button" class="property">
+            <details>
+                <summary><code>gHybrid.titlebar.toolboxButton</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>Customizes the titlebar's toolbox button.</p>
+                <h4>Live Demo</h4>
+                <p><span>gHybrid.titlebar.toolboxButton.isEnabled <label class="isEnabled">unknown</label></span></p>
+                <p><span>gHybrid.titlebar.toolboxButton.info <label class="info">unknown</label></span></p>
+                <p><span>gHybrid.titlebar.toolboxButton.tooltip <label class="tooltip">unknown</label></span></p>
+                <button class="button">Disable <code>gHybrid.titlebar.toolboxButton</code></button>
+            </details>
+        </div>
+        <div id="titlebar" class="function">
+            <details>
+                <summary><code>gHybrid.setTitlebarButtonClickedCallback(callback)</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>
+                    Call <code>gHybrid.setTitlebarButtonClickedCallback(onButtonClicked)</code> to register a callback handler
+                    of the form <code>onButtonClicked()</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.setTitlebarButtonClickedCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <p><span>Titlebar button clicked count <label class="state">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="titlebar-toolbox-button-callback" class="function">
+            <details>
+                <summary><code>gHybrid.setTitlebarToolboxButtonClickedCallback(callback)</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>
+                    Call <code>gHybrid.setTitlebarToolboxButtonClickedCallback(onButtonClicked)</code> to register a callback handler
+                    of the form <code>onButtonClicked()</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.setTitlebarToolboxButtonClickedCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <p><span>Toolbox button clicked count <label class="state">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="titlebar-mode-change" class="function">
+            <details>
+                <summary><code>gHybrid.setTitlebarModeSelectionChangedCallback(callback)</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>
+                    Call <code>gHybrid.setTitlebarModeSelectionChangedCallback(onModeChanged)</code> to register a callback handler
+                    of the form <code>onModeChanged(mode)</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.onModeChanged(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <p><span>Mode <label class="state">unknown</label></span></p>
+            </details>
+        </div>
+        <div id="titlebar-onAfterVirtualCameraSupportViewOpened" class="function">
+            <details>
+                <summary><code>gHybrid.onAfterVirtualCameraSupportViewOpened()</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>Switches the disclosure button into a state indicating a support view for the virtual camera was opened.</p>
+                <h4>Live Demo</h4>
+                <button class="button" id="virtual-camera-support-view-did-appear">gHybrid.onAfterVirtualCameraSupportViewOpened()</button><br/>
+            </details>
+        </div>
+        <div id="titlebar-onBeforeVirtualCameraSupportViewCloses" class="function">
+            <details>
+                <summary><code>gHybrid.onBeforeVirtualCameraSupportViewCloses()</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>Switches the disclosure button into a state indicating a support view for the virtual camera was closed.</p>
+                <h4>Live Demo</h4>
+                <button class="button" id="virtual-camera-support-view-will-disappear">gHybrid.onBeforeVirtualCameraSupportViewCloses()</button>
+            </details>
+        </div>
+        
+        <h3>Window Management</h3>
+        
+        <div id="window-management-is-floating" class="property">
+            <details>
+                <summary><code>gHybrid.windows.mainAppWindow.isFloating</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>Gets and sets the floating style on the main app window.</p>
+                <h4>Live Demo</h4>
+                <p><span>gHybrid.windows.mainAppWindow.isFloating <label class="state">unknown</label></span></p>
+                <button class="button" id="toggle-floating-style">Toggle gHybrid.windows.mainAppWindow.isFloating</button><br/>
+            </details>
+        </div>
+        <div id="window-management-is-hidden" class="property">
+            <details>
+                <summary><code>gHybrid.windows.mainAppWindow.isHidden</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>Gets and sets the visibility of the main app window.</p>
+                <h4>Notification</h4>
+                <p>
+                    Call <code>gHybrid.windows.mainAppWindow.setIsHiddenChangedCallback(onIsHiddenChange)</code> to register a callback handler
+                    of the form <code>onIsHiddenChange(isHidden)</code> and receive live updates.
+                </p>
+                <p>Call <code>gHybrid.windows.mainAppWindow.setIsHiddenChangedCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <p><span>gHybrid.windows.mainAppWindow.isHidden <label class="state">unknown</label></span></p>
+                <button class="button" id="toggle-isHidden">Toggle gHybrid.windows.mainAppWindow.isHidden</button><br/>
+            </details>
+        </div>
+        <div id="window-management-resize-to" class="function">
+            <details>
+                <summary><code>gHybrid.windows.mainAppWindow.resizeTo(int width, int height)</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>Resizes the main app window to the specified dimensions.</p>
+                <h4>Live Demo</h4>
+                <p><button class="button" id="resize-to-1">gHybrid.windows.mainAppWindow.resizeTo(800, 800)</button></p>
+                <p><button class="button" id="resize-to-2">gHybrid.windows.mainAppWindow.resizeTo(1800, 1000)</button></p>
+            </details>
+        </div>
+        <div id="power-monitor-section">
+            <h3>Power Monitor</h3>
+            <div id="power-monitor-state" class="property">
+                <details>
+                    <summary><code>gHybrid.powerMonitor.powerState</code></summary>
+                    <h4>macOS, Windows</h4>
+                    <p>Gets the current powerState <code>{Unknown, Suspended, Normal, Shutdown}</code>.</p>
+                    <h4>Notification</h4>
+                    <p>
+                        Call <code>gHybrid.powerMonitor.setPowerStateChangedCallback(onPowerStateChanged)</code> to register a callback handler
+                        of the form <code>onPowerStateChanged()</code> and receive live updates.
+                    </p>
+                    <p>Call <code>gHybrid.powerMonitor.setPowerStateChangedCallback(null)</code> to unregister a callback handler.</p>
+                    <p><span>gHybrid.powerMonitor.powerState <label class="state">Unknown</label></span></p>
+                    <h4>Availability</h4>
+                    <p>macOS: <code class="version-info">1.7.0</code></p>
+                    <p>Windows: <code class="version-info">1.3.0</code></p>
+                </details>
+            </div>
+            <div id="power-monitor-method" class="property">
+                <details>
+                    <summary><code>gHybrid.powerMonitor.powerMethod</code></summary>
+                    <h4>macOS, Windows</h4>
+                    <p>Gets the current powerMethod <code>{Unknown, AC, Battery}</code>.</p>
+                    <h4>Notification</h4>
+                    <p>
+                        Call <code>gHybrid.powerMonitor.setPowerMethodChangedCallback(onPowerMethodChanged)</code> to register a callback handler
+                        of the form <code>onPowerMethodChanged()</code> and receive live updates.
+                    </p>
+                    <p>Call <code>gHybrid.powerMonitor.setPowerMethodChangedCallback(null)</code> to unregister a callback handler.</p>
+                    <p><span>gHybrid.powerMonitor.powerMethod <label class="state">Unknown</label></span></p>
+                    <h4>Availability</h4>
+                    <p>macOS: <code class="version-info">1.7.0</code></p>
+                    <p>Windows: <code class="version-info">1.3.0</code></p>
+                </details>
+            </div>
+            <div id="power-monitor-lock-state" class="property">
+                <details>
+                    <summary><code>gHybrid.powerMonitor.lockState</code></summary>
+                    <h4>macOS, Windows</h4>
+                    <p>Gets the current lockState <code>{Unknown, Locked, Unlocked}</code>.</p>
+                    <h4>Notification</h4>
+                    <p>
+                        Call <code>gHybrid.powerMonitor.setLockStateChangedCallback(onLockStateChanged)</code> to register a callback handler
+                        of the form <code>onLockStateChanged()</code> and receive live updates.
+                    </p>
+                    <p>Call <code>gHybrid.powerMonitor.setLockStateChangedCallback(null)</code> to unregister a callback handler.</p>
+                    <p><span>gHybrid.powerMonitor.lockState <label class="state">Unknown</label></span></p>
+                    <h4>Availability</h4>
+                    <p>macOS: <code class="version-info">1.7.0</code></p>
+                    <p>Windows: <code class="version-info">1.3.0</code></p>
+                </details>
+            </div>
+        </div>
+        <div id="login-item-installer-section">
+            <h3>Login Item Installer</h3>
+            <div id="login-item-installer" class="property">
+                <details>
+                    <summary><code>gHybrid.loginItemInstaller</code></summary>
+                    <h4>macOS</h4>
+                    <p>Represents the login item installer.</p>
+                    <p>Possible status values: <code>unavailable, notInstalled, enabled, disabled</code></p>
+                    <h4>Notification</h4>
+                    <p>
+                        Call <code>gHybrid.loginItemInstaller.setStatusChangedCallback(onStatusChanged)</code> to register a callback handler
+                        of the form <code>onStatusChanged(status)</code> and receive live updates.
+                    </p>
+                    <p>Call <code>gHybrid.loginItemInstaller.setStatusChangedCallback(null)</code> to unregister a callback handler.</p>
+                    <h4>Live Demo</h4>
+                    <p><span>gHybrid.loginItemInstaller.status <label class="state">unknown</label></span></p>
+                    <button class="button">Foo</button>
+                    <h4>Availability</h4>
+                    <p><code class="version-info">1.4.0</code></p>
+                </details>
+            </div>
+        </div>
+        <div id="system-video-effects-monitor-section">
+            <h3>System Video Effects Monitor</h3>
+            <div id="system-video-effects-monitor" class="property">
+                <details>
+                    <summary><code>gHybrid.systemVideoEffectsMonitor</code></summary>
+                    <h4>macOS</h4>
+                    <p>Represents the FaceTime system video effects.</p>
+                    <h4>Notification</h4>
+                    <p>
+                        Call <code>gHybrid.systemVideoEffectsMonitor.setStatusChangedCallback(onStatusChanged)</code> to register a callback handler
+                        of the form <code>onStatusChanged(status)</code> and receive live updates.
+                    </p>
+                    <p>Call <code>gHybrid.systemVideoEffectsMonitor.setStatusChangedCallback(null)</code> to unregister a callback handler.</p>
+                    <h4>Live Demo</h4>
+                    <p><span>gHybrid.systemVideoEffectsMonitor.status.isPortraitEffectEnabled <label class="state" id="isPortraitEffectEnabled">unknown</label></span></p>
+                    <p><span>gHybrid.systemVideoEffectsMonitor.status.isCenterStageEnabled <label class="state" id="isCenterStageEnabled">unknown</label></span></p>
+                    <p><span>gHybrid.systemVideoEffectsMonitor.status.isStudioLightEnabled <label class="state" id="isStudioLightEnabled">unknown</label></span></p>
+                    <p><span>gHybrid.systemVideoEffectsMonitor.status.isBackgroundReplacementEnabled <label class="state" id="isBackgroundReplacementEnabled">unknown</label></span></p>
+                    <p><span>gHybrid.systemVideoEffectsMonitor.status.reactionEffectGesturesEnabled <label class="state" id="reactionEffectGesturesEnabled">unknown</label></span></p>
+                    <button class="button">Show Video Effects System UI</button>
+                    <h4>Availability</h4>
+                    <p><code class="version-info">1.8.0</code></p>
+                </details>
+            </div>
+        </div>
+        <h3>Event Proxy</h3>
+        
+        <div id="event-proxy-emit-event" class="function">
+            <details>
+                <summary><code>gHybrid.eventProxy.setEventEmitterCallback(callback)</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>
+                    Registers a callback to receive events emitted from the native application.
+                    Call <code>gHybrid.eventProxy.setEventEmitterCallback(onEvent)</code> to register a callback handler
+                    of the form <code>onEvent(event)</code> where <code>event</code> is an object with the structure:
+                </p>
+                <pre><code>{
+    name: string,      // Event name
+    payload: object    // Event data
+}</code></pre>
+                <p>Call <code>gHybrid.eventProxy.setEventEmitterCallback(null)</code> to unregister a callback handler.</p>
+                <h4>Live Demo</h4>
+                <p>Emit a test event from the hybrid app's Tests menu to see it being received here:</p>
+                <pre id="event-proxy-received-event" class="state">Waiting for event...</pre>
+                <h4>Availability</h4>
+                <p><code class="version-info">1.9.0</code></p>
+            </details>
+        </div>
+        <div id="event-proxy-handle-event" class="function">
+            <details>
+                <summary><code>gHybrid.eventProxy.handleEvent(event)</code></summary>
+                <h4>macOS, Windows</h4>
+                <p>
+                    Sends an event from JavaScript to the hybrid application. The <code>event</code> parameter is an object with the structure:
+                </p>
+                <pre><code>{
+    name: string,      // Event name
+    payload: object    // Event data
+}</code></pre>
+                <h4>Live Demo</h4>
+                <p>Click below and find <code>{ name: 'test', payload: { foo: "bar", number: 42 } }</code> in the hybrid log file.</p>
+                <button class="button" id="event-proxy-send-test-event">Send test event to hybrid</button>
+                <h4>Availability</h4>
+                <p><code class="version-info">1.9.0</code></p>
+            </details>
+        </div>
+    </div>
+    <script src="js/hybrid-api-tester.js"></script>
+</body>
+</html>
+

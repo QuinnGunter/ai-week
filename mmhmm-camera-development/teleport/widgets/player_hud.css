@@ -1,0 +1,344 @@
+div.player_hud {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+div.player_hud.bar {
+  background: transparent;
+  border: initial;
+  border-radius: initial;
+  left: initial;
+  transform: initial;
+  backdrop-filter: initial;
+  -webkit-backdrop-filter: initial;
+  position: initial;
+  bottom: initial;
+}
+
+div.player_hud div.controls {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 8px;
+  padding-right: 8px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+div.player_hud div.controls div.timeline {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  color: #ffffff;
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+  min-width: 320px;
+  flex-grow: 1;
+}
+
+div.player_hud div.controls button {
+  flex-grow: 0;
+}
+
+div.player_hud.bar div.controls div.timeline {
+  color: var(--content-primary);
+  width: 100%;
+}
+
+div.player_hud div.controls div.timeline div.labels {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+div.player_hud div.controls div.timeline span {
+  font-feature-settings: "tnum";
+}
+
+div.player_hud div.controls div.timeline span.title {
+  flex-grow: 1;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding-left: 8px;
+  padding-right: 8px;
+  color: #a4a7b2;
+  max-width: 240px;
+}
+
+div.player_hud div.controls div.timeline input[type="range"] {
+  width: 100%;
+}
+
+div.player_hud div.controls div.timeline input[type="range"] {
+  --fillAmount: 0%;
+  --tint-color: #3d80f5;
+  -webkit-appearance: none;
+  background-color: rgba(0, 0, 0, 0);
+  height: 14px;
+}
+
+div.player_hud
+  div.controls
+  div.timeline
+  input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 2px;
+
+  background: linear-gradient(
+    to right,
+    var(--action-primary) 0%,
+    var(--action-primary) var(--fillAmount),
+    #bebfbf var(--fillAmount),
+    #bebfbf 100%
+  );
+  border-radius: 1px;
+}
+
+div.player_hud div.controls div.timeline input[type="range"]::-moz-range-track {
+  height: 2px;
+
+  background: linear-gradient(
+    to right,
+    var(--action-primary) 0%,
+    var(--action-primary) var(--fillAmount),
+    #bebfbf var(--fillAmount),
+    #bebfbf 100%
+  );
+  border-radius: 1px;
+}
+
+div.player_hud
+  div.controls
+  div.timeline
+  input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 3px;
+  height: 14px;
+  transform: translateY(-6px);
+  background: #ffffff;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0.5px 1px rgba(0, 0, 0, 0.27);
+  border-radius: 8px;
+}
+
+body.light
+  div.player_hud.bar
+  div.controls
+  div.timeline
+  input[type="range"]::-webkit-slider-thumb {
+  background: #000000;
+  box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.1),
+    0px 0.5px 1px rgba(255, 255, 255, 0.27);
+}
+
+div.player_hud
+  div.controls
+  div.timeline
+  input[type="range"]::-webkit-slider-thumb:active {
+  filter: brightness(70%);
+}
+
+div.player_hud div.controls div.timeline input[type="range"]::-moz-range-thumb {
+  -webkit-appearance: none;
+  width: 3px;
+  height: 14px;
+  background: #ffffff;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0.5px 1px rgba(0, 0, 0, 0.27);
+  border-radius: 8px;
+  border: 0px none;
+}
+
+body.light
+  div.player_hud.bar
+  div.controls
+  div.timeline
+  input[type="range"]::-moz-range-thumb {
+  background: #000000;
+  box-shadow: 0px 0px 0px rgba(255, 255, 255, 0.1),
+    0px 0.5px 1px rgba(255, 255, 255, 0.27);
+}
+
+div.player_hud
+  div.controls
+  div.timeline
+  input[type="range"]::-moz-range-thumb:active {
+  filter: brightness(70%);
+}
+
+div.player_hud div.controls button {
+  border: 0px none;
+  width: 32px;
+  background-color: rgba(0, 0, 0, 0);
+  fill: white;
+  color: white;
+}
+
+div.player_hud.bar div.controls button {
+  fill: var(--content-primary);
+}
+
+div.player_hud div.controls button:active {
+  filter: brightness(70%);
+}
+
+div.player_hud div.auxiliary {
+  grid-row: 1;
+  grid-column: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.player_hud div.auxiliary button {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  font-style: normal;
+  font-weight: 590;
+  font-size: 14px;
+  background: transparent;
+  fill: white;
+  color: white;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 100%;
+  border: 0px none;
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+div.player_hud div.auxiliary button svg {
+  padding-right: 6px;
+  height: 16px;
+  width: auto;
+}
+
+div.player_hud div.mmhmmTV {
+  grid-row: 2;
+  grid-column: 1/3;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 6px;
+  overflow: hidden;
+}
+
+div.player_hud div.mmhmmTV div.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+div.player_hud div.mmhmmTV div.buttons button {
+  border: 0px none;
+  background-color: rgba(0, 0, 0, 0);
+  color: white;
+  stroke: white;
+  fill: none;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+div.player_hud div.mmhmmTV div.buttons button:active {
+  opacity: 60%;
+}
+
+div.player_hud div.mmhmmTV div.buttons button span.label {
+  padding-right: 4px;
+}
+
+div.player_hud div.mmhmmTV div.buttons button svg {
+  transition: transform 0.33s ease-in-out;
+}
+
+div.player_hud div.mmhmmTV div.buttons button span.value {
+  color: #a4a7b2;
+}
+
+div.player_hud div.mmhmmTV div.buttons button span.value.number {
+  font-feature-settings: "tnum";
+}
+
+div.player_hud div.mmhmmTV div.slides {
+  margin-top: 15px;
+  transition: height 0.33s ease-in-out;
+  display: flex;
+  flex-direction: row;
+  column-gap: 14px;
+  overflow-x: auto;
+  /* Height here is important for the expand/collapse animation :( */
+  height: 107px;
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide {
+  border: 0px none;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  align-items: center;
+  max-width: 114px;
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide:active {
+  opacity: 60%;
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide:nth-child(1) {
+  margin-left: 26px;
+}
+div.player_hud div.mmhmmTV div.slides button.slide:nth-last-child(1) {
+  margin-right: 26px;
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide div.thumbnail {
+  border: 2px solid rgba(0, 0, 0, 0);
+  border-radius: 6px;
+  padding: 4px;
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide.selected div.thumbnail {
+  border: 2px solid var(--action-primary);
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide div.thumbnail img {
+  max-width: 114px;
+  height: 64px;
+  object-fit: contain;
+
+  border-radius: 4px;
+
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+div.player_hud div.mmhmmTV div.slides button.slide div.title {
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-feature-settings: "tnum";
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  min-width: 64px;
+}

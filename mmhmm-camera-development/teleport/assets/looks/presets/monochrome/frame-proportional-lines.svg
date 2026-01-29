@@ -1,0 +1,50 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+    :root {
+        --tint: #FFFFFF;
+        --tint-dark: #000000;
+    }
+	.tinted {
+		fill: var(--tint);
+	}
+	.element {
+	    fill: var(--tint-dark);
+	}
+</style>
+<g clip-path="url(#clip0_658_1289)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1920 1083H0V3H1920V1083ZM123 126V960H1797V126H123Z" class="tinted"/>
+<rect x="1986" y="310.163" width="13.1861" height="132" transform="rotate(90 1986 310.163)" class="element"/>
+<rect x="1986" y="292.581" width="4.39537" height="132" transform="rotate(90 1986 292.581)" class="element"/>
+<rect x="1986" y="735.049" width="4.39537" height="132" transform="rotate(90 1986 735.049)" class="element"/>
+<rect x="1986" y="275" width="4.39537" height="132" transform="rotate(90 1986 275)" class="element"/>
+<rect x="1986" y="717.468" width="4.39537" height="132" transform="rotate(90 1986 717.468)" class="element"/>
+<rect x="1986" y="664.724" width="13.1861" height="132" transform="rotate(90 1986 664.724)" class="element"/>
+<rect x="1986" y="362.907" width="26.3722" height="132" transform="rotate(90 1986 362.907)" class="element"/>
+<rect x="1986" y="585.606" width="26.3722" height="132" transform="rotate(90 1986 585.606)" class="element"/>
+<rect x="1986" y="336.535" width="13.1861" height="132" transform="rotate(90 1986 336.535)" class="element"/>
+<rect x="1986" y="691.095" width="13.1861" height="132" transform="rotate(90 1986 691.095)" class="element"/>
+<rect x="1986" y="402.466" width="26.3722" height="132" transform="rotate(90 1986 402.466)" class="element"/>
+<rect x="1986" y="625.165" width="26.3722" height="132" transform="rotate(90 1986 625.165)" class="element"/>
+<rect x="1986" y="442.024" width="58.605" height="132" transform="rotate(90 1986 442.024)" class="element"/>
+<rect x="1986" y="513.815" width="58.605" height="132" transform="rotate(90 1986 513.815)" class="element"/>
+<rect x="66" y="310.163" width="13.1861" height="132" transform="rotate(90 66 310.163)" class="element"/>
+<rect x="66" y="292.581" width="4.39537" height="132" transform="rotate(90 66 292.581)" class="element"/>
+<rect x="66" y="735.049" width="4.39537" height="132" transform="rotate(90 66 735.049)" class="element"/>
+<rect x="66" y="275" width="4.39537" height="132" transform="rotate(90 66 275)" class="element"/>
+<rect x="66" y="717.468" width="4.39537" height="132" transform="rotate(90 66 717.468)" class="element"/>
+<rect x="66" y="664.724" width="13.1861" height="132" transform="rotate(90 66 664.724)" class="element"/>
+<rect x="66" y="362.907" width="26.3722" height="132" transform="rotate(90 66 362.907)" class="element"/>
+<rect x="66" y="585.606" width="26.3722" height="132" transform="rotate(90 66 585.606)" class="element"/>
+<rect x="66" y="336.535" width="13.1861" height="132" transform="rotate(90 66 336.535)" class="element"/>
+<rect x="66" y="691.095" width="13.1861" height="132" transform="rotate(90 66 691.095)" class="element"/>
+<rect x="66" y="402.466" width="26.3722" height="132" transform="rotate(90 66 402.466)" class="element"/>
+<rect x="66" y="625.165" width="26.3722" height="132" transform="rotate(90 66 625.165)" class="element"/>
+<rect x="66" y="442.024" width="58.605" height="132" transform="rotate(90 66 442.024)" class="element"/>
+<rect x="66" y="513.815" width="58.605" height="132" transform="rotate(90 66 513.815)" class="element"/>
+</g>
+<defs>
+<clipPath id="clip0_658_1289">
+<rect width="1920" height="1080"/>
+</clipPath>
+</defs>
+</svg>

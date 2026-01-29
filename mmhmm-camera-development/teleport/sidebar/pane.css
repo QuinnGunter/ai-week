@@ -1,0 +1,53 @@
+div.split_view div.view#sidebar_pane {
+  --sidebar-gap: 0px;
+  overflow: unset;
+  width: calc(var(--sidebarWidth) - var(--sidebar-gap));
+  transition: margin-left 0.2s ease-in-out, margin-right 0.2s ease-in-out;
+  color: var(--content-tertiary);
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  background-color: var(--background-secondary);
+  border-left: 1px solid var(--background-tertiary);
+}
+
+body.light div.view#sidebar_pane {
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-secondary);
+}
+
+div#sidebar_pane div.contents {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.mini div#sidebar_pane {
+    height: 100%;
+    width: 100% !important;
+    background-color: unset !important;
+    border-left: unset !important;
+    align-items: center !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+.mini div#sidebar_pane > div.contents {
+    width: 100%;
+    max-width: var(--looks-pane-max-width);
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+}
+
+.mini div#sidebar_pane > div.contents > div {
+    padding: 0;
+    width: 100% !important;
+}
+
+.mini.side-by-side div#sidebar_pane {
+    width: var(--sidebar-width) !important;
+    flex: 0 0 auto;
+}
+

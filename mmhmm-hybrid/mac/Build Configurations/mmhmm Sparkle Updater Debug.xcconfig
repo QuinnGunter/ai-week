@@ -1,0 +1,14 @@
+//
+//  mmhmm.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "mmhmm.xcconfig"
+
+GCC_PREPROCESSOR_DEFINITIONS = SPARKLE_DEBUG $(inherited)
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = SPARKLE_DEBUG $(inherited)

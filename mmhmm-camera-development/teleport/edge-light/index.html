@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edge Light</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --brightness: 0.7;
+            --width: 10%;
+            --color-temp: 0.5; /* 0 = warm (orange), 1 = cool (blue) */
+            --glow-color: rgb(255, 247, 240);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        .edge-light-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        /* Edge gradients */
+        .edge {
+            position: absolute;
+        }
+
+        .edge.top {
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--width);
+            background: linear-gradient(
+                to bottom,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.9)) 0%,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.5)) 30%,
+                rgba(var(--glow-rgb), 0) 100%
+            );
+        }
+
+        .edge.bottom {
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: var(--width);
+            background: linear-gradient(
+                to top,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.9)) 0%,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.5)) 30%,
+                rgba(var(--glow-rgb), 0) 100%
+            );
+        }
+
+        .edge.left {
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: var(--width);
+            background: linear-gradient(
+                to right,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.9)) 0%,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.5)) 30%,
+                rgba(var(--glow-rgb), 0) 100%
+            );
+        }
+
+        .edge.right {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: var(--width);
+            background: linear-gradient(
+                to left,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.9)) 0%,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.5)) 30%,
+                rgba(var(--glow-rgb), 0) 100%
+            );
+        }
+
+        /* Corner glow spots for extra realism */
+        .corner {
+            position: absolute;
+            width: calc(var(--width) * 1.5);
+            height: calc(var(--width) * 1.5);
+            border-radius: 50%;
+            filter: blur(calc(var(--width) * 0.3));
+        }
+
+        .corner.top-left {
+            top: 0;
+            left: 0;
+            transform: translate(-30%, -30%);
+            background: radial-gradient(
+                circle,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.7)) 0%,
+                rgba(var(--glow-rgb), 0) 70%
+            );
+        }
+
+        .corner.top-right {
+            top: 0;
+            right: 0;
+            transform: translate(30%, -30%);
+            background: radial-gradient(
+                circle,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.7)) 0%,
+                rgba(var(--glow-rgb), 0) 70%
+            );
+        }
+
+        .corner.bottom-left {
+            bottom: 0;
+            left: 0;
+            transform: translate(-30%, 30%);
+            background: radial-gradient(
+                circle,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.7)) 0%,
+                rgba(var(--glow-rgb), 0) 70%
+            );
+        }
+
+        .corner.bottom-right {
+            bottom: 0;
+            right: 0;
+            transform: translate(30%, 30%);
+            background: radial-gradient(
+                circle,
+                rgba(var(--glow-rgb), calc(var(--brightness) * 0.7)) 0%,
+                rgba(var(--glow-rgb), 0) 70%
+            );
+        }
+
+        /* Controls overlay */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 16px 24px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 300px;
+            pointer-events: auto;
+            z-index: 1000;
+        }
+
+        .controls.hidden {
+            display: none;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .control-row label {
+            color: #fff;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 13px;
+            min-width: 100px;
+        }
+
+        .control-row input[type="range"] {
+            flex: 1;
+            height: 4px;
+            -webkit-appearance: none;
+            background: #444;
+            border-radius: 2px;
+        }
+
+        .control-row input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .control-row .value {
+            color: #888;
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 12px;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        .toggle-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            pointer-events: auto;
+            z-index: 1001;
+        }
+
+        .toggle-controls:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="edge-light-container">
+        <div class="edge top"></div>
+        <div class="edge bottom"></div>
+        <div class="edge left"></div>
+        <div class="edge right"></div>
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+    </div>
+
+    <button class="toggle-controls">Hide Controls</button>
+
+    <div class="controls">
+        <div class="control-row">
+            <label>Brightness</label>
+            <input type="range" id="brightness" min="0" max="100" value="70">
+            <span class="value" id="brightness-value">70%</span>
+        </div>
+        <div class="control-row">
+            <label>Width</label>
+            <input type="range" id="width" min="1" max="30" value="10">
+            <span class="value" id="width-value">10%</span>
+        </div>
+        <div class="control-row">
+            <label>Temperature</label>
+            <input type="range" id="temperature" min="0" max="100" value="50">
+            <span class="value" id="temperature-value">Neutral</span>
+        </div>
+    </div>
+
+    <script>
+        class EdgeLightController {
+            constructor() {
+                this.config = {
+                    brightness: 70,
+                    width: 10,
+                    colorTemperature: 50
+                };
+
+                this.init();
+                this.setupEventListeners();
+                this.parseUrlParams();
+            }
+
+            init() {
+                this.updateGlowColor();
+                this.updateCSS();
+            }
+
+            setupEventListeners() {
+                // Slider controls
+                document.getElementById('brightness').addEventListener('input', (e) => {
+                    this.config.brightness = parseInt(e.target.value);
+                    document.getElementById('brightness-value').textContent = `${this.config.brightness}%`;
+                    this.updateCSS();
+                    this.notifyParent();
+                });
+
+                document.getElementById('width').addEventListener('input', (e) => {
+                    this.config.width = parseInt(e.target.value);
+                    document.getElementById('width-value').textContent = `${this.config.width}%`;
+                    this.updateCSS();
+                    this.notifyParent();
+                });
+
+                document.getElementById('temperature').addEventListener('input', (e) => {
+                    this.config.colorTemperature = parseInt(e.target.value);
+                    this.updateTemperatureLabel();
+                    this.updateGlowColor();
+                    this.updateCSS();
+                    this.notifyParent();
+                });
+
+                // Toggle controls visibility
+                document.querySelector('.toggle-controls').addEventListener('click', () => {
+                    const controls = document.querySelector('.controls');
+                    const btn = document.querySelector('.toggle-controls');
+                    controls.classList.toggle('hidden');
+                    btn.textContent = controls.classList.contains('hidden') ? 'Show Controls' : 'Hide Controls';
+                });
+
+                // Listen for messages from parent window
+                window.addEventListener('message', (e) => {
+                    if (e.data.type === 'edge-light-config') {
+                        this.setConfig(e.data.config);
+                    } else if (e.data.type === 'edge-light-close') {
+                        window.close();
+                    }
+                });
+
+                // Notify parent when closing
+                window.addEventListener('beforeunload', () => {
+                    if (window.opener) {
+                        window.opener.postMessage({ type: 'edge-light-closed' }, '*');
+                    }
+                });
+            }
+
+            parseUrlParams() {
+                const params = new URLSearchParams(window.location.search);
+
+                if (params.has('brightness')) {
+                    this.config.brightness = parseInt(params.get('brightness'));
+                    document.getElementById('brightness').value = this.config.brightness;
+                    document.getElementById('brightness-value').textContent = `${this.config.brightness}%`;
+                }
+
+                if (params.has('width')) {
+                    this.config.width = parseInt(params.get('width'));
+                    document.getElementById('width').value = this.config.width;
+                    document.getElementById('width-value').textContent = `${this.config.width}%`;
+                }
+
+                if (params.has('temperature')) {
+                    this.config.colorTemperature = parseInt(params.get('temperature'));
+                    document.getElementById('temperature').value = this.config.colorTemperature;
+                    this.updateTemperatureLabel();
+                }
+
+                if (params.has('hideControls')) {
+                    document.querySelector('.controls').classList.add('hidden');
+                    document.querySelector('.toggle-controls').textContent = 'Show Controls';
+                }
+
+                this.updateGlowColor();
+                this.updateCSS();
+            }
+
+            setConfig(config) {
+                if (config.brightness !== undefined) {
+                    this.config.brightness = config.brightness;
+                    document.getElementById('brightness').value = config.brightness;
+                    document.getElementById('brightness-value').textContent = `${config.brightness}%`;
+                }
+                if (config.width !== undefined) {
+                    this.config.width = config.width;
+                    document.getElementById('width').value = config.width;
+                    document.getElementById('width-value').textContent = `${config.width}%`;
+                }
+                if (config.colorTemperature !== undefined) {
+                    this.config.colorTemperature = config.colorTemperature;
+                    document.getElementById('temperature').value = config.colorTemperature;
+                    this.updateTemperatureLabel();
+                }
+                this.updateGlowColor();
+                this.updateCSS();
+            }
+
+            updateTemperatureLabel() {
+                const temp = this.config.colorTemperature;
+                let label;
+                if (temp < 25) label = 'Warm';
+                else if (temp < 45) label = 'Warm-Neutral';
+                else if (temp < 55) label = 'Neutral';
+                else if (temp < 75) label = 'Cool-Neutral';
+                else label = 'Cool';
+                document.getElementById('temperature-value').textContent = label;
+            }
+
+            updateGlowColor() {
+                // Temperature: 0 = warm (orange-ish), 100 = cool (blue-ish)
+                const temp = this.config.colorTemperature / 100;
+
+                // Warm: 255, 230, 200 (warm white/orange tint)
+                // Cool: 220, 240, 255 (cool white/blue tint)
+                const r = Math.round(255 - (temp * 35));
+                const g = Math.round(230 + (temp * 10));
+                const b = Math.round(200 + (temp * 55));
+
+                document.documentElement.style.setProperty('--glow-rgb', `${r}, ${g}, ${b}`);
+            }
+
+            updateCSS() {
+                const root = document.documentElement;
+                root.style.setProperty('--brightness', this.config.brightness / 100);
+                root.style.setProperty('--width', `${this.config.width}%`);
+            }
+
+            notifyParent() {
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'edge-light-config-changed',
+                        config: this.config
+                    }, '*');
+                }
+            }
+        }
+
+        // Initialize
+        const controller = new EdgeLightController();
+    </script>
+</body>
+</html>

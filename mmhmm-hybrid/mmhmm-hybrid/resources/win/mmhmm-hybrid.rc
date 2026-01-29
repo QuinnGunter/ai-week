@@ -1,0 +1,425 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "../../browser/resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#define APSTUDIO_HIDDEN_SYMBOLS
+#include "windows.h"
+#undef APSTUDIO_HIDDEN_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// 256
+//
+
+IDS_BINDING_HTML        256                     "..\\binding.html"
+
+IDS_DIALOGS_HTML        256                     "..\\dialogs.html"
+
+IDS_DRAGGABLE_HTML      256                     "..\\draggable.html"
+
+IDS_LOCALSTORAGE_HTML   256                     "..\\localstorage.html"
+
+IDS_LOGO_PNG            256                     "..\\logo.png"
+
+IDS_MEDIA_ROUTER_HTML   256                     "..\\media_router.html"
+
+IDS_MENU_ICON_1X_PNG    256                     "..\\menu_icon.1x.png"
+
+IDS_MENU_ICON_2X_PNG    256                     "..\\menu_icon.2x.png"
+
+IDS_OSRTEST_HTML        256                     "..\\osr_test.html"
+
+IDS_OTHER_TESTS_HTML    256                     "..\\other_tests.html"
+
+IDS_PDF_HTML            256                     "..\\pdf.html"
+
+IDS_PDF_PDF             256                     "..\\pdf.pdf"
+
+IDS_PERFORMANCE_HTML    256                     "..\\performance.html"
+
+IDS_PERFORMANCE2_HTML   256                     "..\\performance2.html"
+
+IDS_PREFERENCES_HTML    256                     "..\\preferences.html"
+
+IDS_RESPONSE_FILTER_HTML 256                     "..\\response_filter.html"
+
+IDS_SERVER_HTML         256                     "..\\server.html"
+
+IDS_TRANSPARENCY_HTML   256                     "..\\transparency.html"
+
+IDS_URLREQUEST_HTML     256                     "..\\urlrequest.html"
+
+IDS_WEBSOCKET_HTML      256                     "..\\websocket.html"
+
+IDS_WINDOW_HTML         256                     "..\\window.html"
+
+IDS_WINDOW_ICON_1X_PNG  256                     "..\\window_icon.1x.png"
+
+IDS_WINDOW_ICON_2X_PNG  256                     "..\\window_icon.2x.png"
+
+IDS_XMLHTTPREQUEST_HTML 256                     "..\\xmlhttprequest.html"
+
+IDS_EXTENSIONS_SET_PAGE_COLOR_ICON_PNG 256                     "..\\extensions\\set_page_color\\icon.png"
+
+IDS_EXTENSIONS_SET_PAGE_COLOR_MANIFEST_JSON 256                     "..\\extensions\\set_page_color\\manifest.json"
+
+IDS_EXTENSIONS_SET_PAGE_COLOR_POPUP_HTML 256                     "..\\extensions\\set_page_color\\popup.html"
+
+IDS_EXTENSIONS_SET_PAGE_COLOR_POPUP_JS 256                     "..\\extensions\\set_page_color\\popup.js"
+
+// SVG Icons for toolbar
+IDSVG_CAMERA_CONFIG 256 "camera_config.svg"
+IDSVG_CAMERA_CONNECTED 256 "camera_connected.svg"
+IDSVG_CAMERA_DISCONNECTED 256 "camera_disconnected.svg"
+IDSVG_CHEVRON 256 "chevron.svg"
+IDSVG_CLOSE 256 "close.svg"
+IDSVG_CURSOR 256 "cursor.svg"
+IDSVG_MAXIMIZE 256 "maximize.svg"
+IDSVG_MENU 256 "menu.svg"
+IDSVG_MINIMIZE 256 "minimize.svg"
+IDSVG_RESTORE 256 "restore.svg"
+IDSVG_AIRTIME 256 "airtime.svg"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDI_CEFCLIENT           ICON                    "mmhmm-hybrid.ico"
+
+IDI_SMALL               ICON                    "small.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDC_CEFCLIENT MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+      POPUP "Edit"
+        BEGIN
+          MENUITEM "Cut\tCtrl+X", ID_EDIT_CUT
+          MENUITEM "Copy\tCtrl+C" ID_EDIT_COPY
+          MENUITEM "Paste\tCtrl+V" ID_EDIT_PASTE
+          MENUITEM SEPARATOR
+          MENUITEM "Undo\tCtrl+Z" ID_EDIT_UNDO
+          MENUITEM "Redo\tCtrl+Y or F4" ID_EDIT_REDO
+        END
+      MENUITEM SEPARATOR
+      MENUITEM SEPARATOR
+      MENUITEM "Reload", ID_VIEW_RELOAD
+      MENUITEM SEPARATOR
+      MENUITEM "Show Speaker Notes" ID_MINI_REMOTE
+      MENUITEM "Show Broadcast Window\tCtrl+B" ID_BROADCAST
+      MENUITEM SEPARATOR
+      MENUITEM "Install Airtime Camera", ID_INSTALL_CAMERA
+      MENUITEM "Uninstall Airtime Camera", ID_UNINSTALL_CAMERA
+      MENUITEM SEPARATOR
+      POPUP "&Help"
+        BEGIN
+        MENUITEM "Check for updates...", IDM_UPDATES
+        MENUITEM "Release notes", ID_HELP_RELEASENOTES
+        MENUITEM "Submit a help request...", ID_HELP_CENTER
+        MENUITEM "Activity log", ID_HELP_ACTIVITY
+        MENUITEM "Save logs to file..."         ID_SAVE_LOGS_TO_ZIP
+        MENUITEM "&About Us", IDM_ABOUT
+        END
+      MENUITEM SEPARATOR
+      MENUITEM "Settings", ID_SETTINGS
+      MENUITEM SEPARATOR
+      MENUITEM "E&xit",                       IDM_EXIT
+    END
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Stacks Menu
+//
+
+IDC_STACKSMENU MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+      POPUP "Edit"
+        BEGIN
+          MENUITEM "Cut\tCtrl+X", ID_EDIT_CUT
+          MENUITEM "Copy\tCtrl+C" ID_EDIT_COPY
+          MENUITEM "Paste\tCtrl+V" ID_EDIT_PASTE
+          MENUITEM SEPARATOR
+          MENUITEM "Undo\tCtrl+Z" ID_EDIT_UNDO
+          MENUITEM "Redo\tCtrl+Y or F4" ID_EDIT_REDO
+        END
+      MENUITEM SEPARATOR
+      MENUITEM "Reload", ID_VIEW_RELOAD
+      MENUITEM SEPARATOR
+      POPUP "&Help"
+        BEGIN
+        MENUITEM "Check for updates...", IDM_UPDATES
+        MENUITEM "Release notes", ID_HELP_RELEASENOTES
+        MENUITEM "Submit a help request...", ID_HELP_CENTER
+        MENUITEM "Activity log", ID_HELP_ACTIVITY
+        MENUITEM "Save logs to file...", ID_SAVE_LOGS_TO_ZIP
+        MENUITEM "&About Us", IDM_ABOUT
+        END
+      MENUITEM SEPARATOR
+      MENUITEM "Settings", ID_SETTINGS
+      MENUITEM SEPARATOR
+      MENUITEM "E&xit",                       IDM_EXIT
+    END
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Tray Menu
+//
+
+IDC_TRAY_MENU MENU DISCARDABLE
+BEGIN
+    POPUP "TrayMenu"
+    BEGIN
+      MENUITEM "Open Camera", ID_OPEN_CAMERA
+      MENUITEM "Open Creator", ID_OPEN_CREATOR
+      MENUITEM "Open Screen Recorder", ID_OPEN_SCREEN_RECORDER
+      MENUITEM "Open Stacks", ID_OPEN_STACKS
+      MENUITEM SEPARATOR
+      MENUITEM "New Recording\tCtrl+Shift+2", ID_REC_NEW_RECORDING
+      MENUITEM "Record Screen\tCtrl+Shift+6", ID_REC_RECORD_SCREEN
+      MENUITEM "Record Window\tCtrl+Shift+7", ID_REC_RECORD_WINDOW
+      MENUITEM SEPARATOR
+      MENUITEM "Quit", ID_QUIT
+    END
+   
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDC_CEFCLIENT ACCELERATORS
+BEGIN
+    "?",            IDM_ABOUT,              ASCII,  ALT
+    "/",            IDM_ABOUT,              ASCII,  ALT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 22, 17, 295, 80
+STYLE DS_SETFONT | DS_MODALFRAME | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 10, "Segoe UI", 400, 0, 0x0
+BEGIN
+    ICON            IDI_CEFCLIENT,IDC_MYICON,14,10,20,20
+    PUSHBUTTON      "OK",IDOK,234,9,50,15
+    EDITTEXT        IDC_EDIT_VERSION,48,10,183,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
+    LTEXT           "Copyright (C) 2025",IDC_STATIC,50,26,119,10
+    PUSHBUTTON      "Credits...",ID_CREDITS,234,28,50,15
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 0,0,0,0
+ PRODUCTVERSION 0,0,0,0
+ FILEFLAGSMASK 0x17L
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription", "Airtime"
+            VALUE "FileVersion", "0.0.0.0"
+            VALUE "InternalName", "Airtime"
+            VALUE "LegalCopyright", "Copyright © 2020-2025 mmhmm inc. All rights reserved."
+            VALUE "OriginalFilename", "Airtime.exe"
+            VALUE "ProductName", "Airtime"
+            VALUE "ProductVersion", "0.0.0.0"
+            VALUE "CompanyName", "mmhmm"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#define APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "#include ""windows.h""\r\n"
+    "#undef APSTUDIO_HIDDEN_SYMBOLS\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        RIGHTMARGIN, 260
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_DOWNLOADPROGRESS DIALOGEX 0, 0, 277, 101
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Airtime update"
+FONT 10, "Segoe UI", 400, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_PROGRESSBAR,"msctls_progress32",PBS_SMOOTH | WS_BORDER,25,47,226,14
+    LTEXT           "Update is downloading",IDC_DOWNLOADINGTEXT,95,24,82,8
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_DOWNLOADPROGRESS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 94
+    END
+END
+#endif  // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_APP_TITLE               "Airtime"
+    IDC_CEFCLIENT               "MMHMM-DESKTOP"
+    IDS_BROADCAST_APP_TITLE     "Broadcast"
+    IDS_MINI_REMOTE_APP_TITLE   ""
+    IDS_STACKS_APP_TITLE        "Airtime Stacks"
+    IDS_RECORDER_APP_TITLE      "Airtime Recorder"
+    IDS_STATUS_DISCONNECTED     "Camera is on standby"
+    IDS_STATUS_NONE             ""
+    IDS_STATUS_CONNECTED        "Connected to "
+    IDS_STATUS_INSTALLING       "Installing Airtime Camera"
+    IDS_STATUS_UNINSTALLING     "Uninstalling Airtime Camera"
+    IDS_STATUS_INSTALL_REQUIRED "Enable the Airtime Camera"
+    IDS_VERSION_DESC            "Airtime, version "
+    IDS_POPUP_SYSTEM_REPORT     "Copy system report"
+    IDS_MESSAGE_JOIN_BETA_DESC       "After you join the Airtime Beta we'll check to see if there is an update available. If there is we'll update you straight away."
+    IDS_MESSAGE_JOIN_BETA_CAPTION    "Join the Airtime Beta?"
+    IDS_MESSAGE_LEAVE_BETA_DESC "Leave the Airtime Beta?"
+    IDS_MESSAGE_LEAVE_BETA_CAPTION "Leave the Airtime Beta?"
+    IDS_MESSAGE_UPDATE_DESC "A new version of Airtime is available.\nDo you want to download?"
+    IDS_MESSAGE_UPDATE_CAPTION "New version available"
+    IDS_MESSAGE_NO_UPDATE_DESC "You are up to date.\nNo new versions available."
+    IDS_MESSAGE_NO_UPDATE_CAPTION "You are up to date"
+    IDS_MESSAGE_UPDATE_INSTALL_DESC "The latest version has finished downloading.\nDo you wish to install now?"
+    IDS_MESSAGE_UPDATE_INSTALL_CAPTION "New version available"
+    IDS_MENU_JOIN_BETA "Join the Airtime Beta..."
+    IDS_MENU_LEAVE_BETA "Leave the Airtime Beta..."
+    IDS_MENU_HYBRID_TESTER "Open Hybrid API Tester"
+    IDS_MENU_DEV_TOOLS "Developer tools\tCtrl+Shift+I"
+    IDS_MENU_PERFORMANCE "Performance"
+    IDS_MENU_PERFORMANCE_NONE "Let Windows decide - "
+    IDS_MENU_PERFORMANCE_POWER_SAVING "Power saving - "
+    IDS_MENU_PERFORMANCE_HIGH "High performance - "
+    IDS_MENU_PERFORMANCE_BALANCED "Balanced mode"
+    IDS_MESSAGE_PERFORMANCE_CHANGE_DESC "Please restart Airtime at your earliest convenience to apply this performance setting."
+    IDS_MESSAGE_PERFORMANCE_CHANGE_CAPTION "Restart required"
+    IDS_MESSAGE_STREAM_DECK_DESC "Please update the Airtime Stream Deck Plugin from the Elgato Stream Deck application."
+    IDS_MESSAGE_STREAM_DECK_CAPTION "Airtime Stream Deck Plugin Needs Update"
+    IDS_SYSTEM_REPORT_NAME "Airtime_logs"
+    IDS_SCREEN_CAPTURE_PRIMARY_MONITOR "Primary monitor"
+    IDS_SEGMENTATION_WARUP_MESSAGE "Processing..."
+    IDS_CONTROLS_TOOBOX_CAPTION "Tools"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United Kingdom) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENG)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_UK
+#pragma code_page(1252)
+
+
+#endif    // English (United Kingdom) resources
+/////////////////////////////////////////////////////////////////////////////
+
+

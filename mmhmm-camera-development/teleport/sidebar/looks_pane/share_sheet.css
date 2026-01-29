@@ -1,0 +1,97 @@
+.looks_share_sheet {
+    width: 296px;
+    padding: 12px;
+    gap: 12px;
+    border-top: 1px solid var(--background-tertiary);
+}
+
+.looks_share_sheet div.divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--background-tertiary);
+}
+
+.looks_share_sheet div.border-top {
+    padding-top: 12px;
+    border-top: 1px solid var(--background-tertiary);
+}
+
+.looks_share_sheet div.border-bottom {
+    padding: 12px 0px;
+    border-top: 1px solid var(--background-tertiary);
+    border-bottom: 1px solid var(--background-tertiary);
+}
+
+.looks_share_sheet .loading_overlay {
+    background-color: var(--background-secondary);
+}
+
+.looks_share_sheet:not(.loading) .loading_overlay {
+    display: none;
+}
+
+.looks_share_sheet div.name {
+    gap: 4px;
+}
+
+.looks_share_sheet div.name input {
+    padding: 4px 8px;
+}
+
+.looks_share_sheet div.thumbnail {
+    gap: 8px;
+}
+
+.looks_share_sheet div.thumbnail_image {
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    aspect-ratio: 16/9;
+
+    border-radius: 10px;
+    background-color: var(--background-tertiary);
+}
+
+
+.looks_share_sheet .inputs {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+}
+
+
+.looks_share_sheet div.inputs button {
+    display: flex;
+}
+
+.looks_share_sheet div.inputs button:enabled:hover {
+    background-color: var(--background-quaternary);
+}
+
+.looks_share_sheet div.inputs button:disabled {
+    cursor: not-allowed;
+    opacity: 30%;
+}
+
+.looks_share_sheet div.inputs button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.looks_share_sheet div.inputs button svg path {
+    opacity: 1;
+}
+
+
+
+.looks_share_sheet div.actions {
+    gap: 12px;
+}
+
+.looks_share_sheet div.actions button {
+    display: block;
+}
+
+.looks_share_sheet div.actions .destructive button {
+    color: var(--action-destructive);
+}

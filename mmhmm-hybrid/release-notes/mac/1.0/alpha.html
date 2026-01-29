@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Version Release Notes</title>
+    <style>
+        body.light {
+            --background-primary: #ffffff;
+            --background-secondary: #f5f5f5;
+            --content-primary: #0a0a0e;
+            --content-secondary: #3b3b3e;
+            --action-primary: #79DDE8;
+        }
+        body.dark {
+            --background-primary: #0a0a0e;
+            --background-secondary: #16161a;
+            --content-primary: #ffffff;
+            --content-secondary: #d4d2d6;
+            --action-secondary: #79DDE8;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+            Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            color: var(--content-secondary);
+            background-color: var(--background-primary);
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--content-primary);
+        }
+        h3, h4 {
+            margin: 16px 0 4px;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 24px;
+            color: var(--content-primary);
+        }
+        ul, p {
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            color: var(--content-secondary);
+        }
+        a.info_link {
+            font-weight: 500;
+        }
+        body.light a.info_link {
+            color: var(--action-primary);
+        }
+        
+        body.dark a.info_link {
+            color: var(--action-secondary);
+        }
+    </style>
+</head>
+<body>
+    <h1>####PRODUCT_NAME#### ####VERSION_INFO####</h1>
+    <h2>What's new</h2>
+    <h3>mmhmm is now Airtime.</h3>
+    <ul>
+        <li>The app name and icon have changed.</li>
+        <li>The new app includes two tools: <b>Airtime Camera</b> and <b>Airtime Creator</b>. </li>
+        <li>The name of the virtual camera that connects to Zoom and other apps has changed from "mmhmm Camera" to "Airtime". This change is applied automatically but requires a reboot to take effect.</li>
+    </ul>
+    <p><b>Airtime Camera</b> is a new tool to upgrade your video calls. It's an easy way to show up how you want on video, stay on brand and instantly react to your team on Zoom, Meet, Teams, and other platforms. <a class="info_link" href="https://airtimetools.com/blog/introducing-airtime-camera">Learn more →</a></p>
+    <p><b>Airtime Creator</b> All the features you know and love are still there: building slides, showing content over your shoulder, making polished recordings. And yes, you can take it to meetings, too.</p>
+    <p><a class="info_link" href="https://airtimetools.com/blog/mmhmm-becomes-airtime">Visit our blog</a> for all the details.</p>
+    <script>
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.remove('light');
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+            document.body.classList.add('light');
+        }
+    </script>
+</body>
+</html>

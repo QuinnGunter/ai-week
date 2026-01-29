@@ -1,0 +1,300 @@
+# mac-az-pipeline-distribute.yml
+#
+# This pipeline distributes macOS build artifacts to a variety of endpoints. It expects a host of existing variables and so
+# must be used as a template in another pipeline, see https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates
+#
+# The key ingredient of this pipeline is an `environment`, which allows introducing checks and approvals on the Azure DevOps UI level.
+
+parameters:
+  - name: pool
+    type: string
+    default: "macOS-15" # Runner image: https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+  - name: buildVersion
+    type: string
+  - name: gitTagName
+    type: string
+  - name: bundleArchiveName
+    type: string
+  - name: createGitTag
+    type: boolean
+    default: false
+  - name: requiresApproval
+    type: boolean
+    default: true
+  - name: debugMode
+    type: boolean
+    default: false
+  - name: track
+    type: string
+    values:
+    - engineering
+    - test
+    - beta
+    - alpha
+    - production
+
+jobs:
+  - deployment: Distribute_macOS
+    displayName: Distribute for macOS platforms
+    variables:
+      - template: x-az-storage-variables.yml
+      - name: sentryOrganizationID
+        value: "mmhmm"
+      - name: sentryProjectID
+        value: "mmhmm-hybrid-mac"
+      - name: buildVersion
+        value: ${{ parameters.buildVersion }}
+      - name: gitTagName
+        value: ${{ parameters.gitTagName }}
+      - name: bundleArchiveName
+        value: ${{ parameters.bundleArchiveName }}
+      - name: track
+        value: ${{ parameters.track }}
+    ${{ if eq(parameters.requiresApproval, true) }}:
+      environment: 'macos-distribution-requires-approval'
+    ${{ else }}:
+      environment: 'macos-distribution-without-approval'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+
+          - task: DownloadPipelineArtifact@2
+            displayName: "Download build artifacts"
+            inputs:
+              buildType: 'current'
+              targetPath: '$(Pipeline.Workspace)'
+              artifact: drop
+
+          - script: ls -R "$(Pipeline.Workspace)/"
+            displayName: "Debug: List files in $(Pipeline.Workspace)"
+
+          - script: |
+              echo "buildVersion: $(buildVersion)"
+              echo "gitTagName: $(gitTagName)"
+              echo "branch: $(branch)"
+              echo "track: $(track)"
+              echo "bundleArchiveName: $(bundleArchiveName)"
+            displayName: "Debug: print template variables"
+
+          - script: |
+              mkdir $(Pipeline.Workspace)/s3upload-update
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(bundleArchiveName).zip $(Pipeline.Workspace)/s3upload-update
+              cp $(Pipeline.Workspace)/drop/Sparkle/sparkle-appcast.xml $(Pipeline.Workspace)/s3upload-update/sparkle.xml
+              ls $(Pipeline.Workspace)/s3upload-update
+            displayName: "S3: Prepare update files"
+            condition: and(succeeded(), eq(variables['awsS3UpdateUpload'], true))
+
+          - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1
+            displayName: "S3: Distribute update release and Sparkle appcast"
+            condition: and(succeeded(), eq(variables['awsS3UpdateUpload'], true))
+            inputs:
+              awsCredentials: $(awsServiceConnection)
+              regionName: $(awsRegionName)
+              bucketName: $(awsS3Bucket)
+              sourceFolder: "$(Pipeline.Workspace)/s3upload-update"
+              targetFolder: $(awsS3UpdateTargetFolder)
+
+          - task: AmazonWebServices.aws-vsts-tools.AWSCLI.AWSCLI@1
+            displayName: 'AWS: Invalidate update CloudFront cache'
+            condition: and(succeeded(), eq(variables['awsS3UpdateUpload'], true))
+            inputs:
+              awsCredentials: $(awsServiceConnection)
+              regionName: $(awsRegionName)
+              awsCommand: cloudfront
+              awsSubCommand: 'create-invalidation'
+              awsArguments: '--distribution-id EF901B5LG1OFY --paths "/$(awsS3UpdateTargetFolder)/*"'
+              failOnStandardError: false
+
+          - script: |
+              mkdir $(Pipeline.Workspace)/s3upload-installer
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(bundleArchiveName).zip $(Pipeline.Workspace)/s3upload-installer
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(productName).dmg $(Pipeline.Workspace)/s3upload-installer
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(creatorDMGName).dmg $(Pipeline.Workspace)/s3upload-installer
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(cameraDMGName).dmg $(Pipeline.Workspace)/s3upload-installer
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(stacksDMGName).dmg $(Pipeline.Workspace)/s3upload-installer
+              cp $(Pipeline.Workspace)/drop/BuildProducts/$(recorderDMGName).dmg $(Pipeline.Workspace)/s3upload-installer
+              ls $(Pipeline.Workspace)/s3upload-installer
+            displayName: "S3: Prepare installer files"
+            condition: and(succeeded(), eq(variables['awsS3InstallerUpload'], true))
+
+          - task: AmazonWebServices.aws-vsts-tools.S3Upload.S3Upload@1
+            displayName: "S3: Distribute release archive and installer"
+            condition: and(succeeded(), eq(variables['awsS3InstallerUpload'], true))
+            inputs:
+              awsCredentials: $(awsServiceConnection)
+              regionName: $(awsRegionName)
+              bucketName: $(awsS3Bucket)
+              sourceFolder: "$(Pipeline.Workspace)/s3upload-installer"
+              targetFolder: $(awsS3InstallerTargetFolder)
+
+          - task: AmazonWebServices.aws-vsts-tools.AWSCLI.AWSCLI@1
+            displayName: 'AWS: Invalidate installer CloudFront cache'
+            condition: and(succeeded(), eq(variables['awsS3InstallerUpload'], true))
+            inputs:
+              awsCredentials: $(awsServiceConnection)
+              regionName: $(awsRegionName)
+              awsCommand: cloudfront
+              awsSubCommand: 'create-invalidation'
+              awsArguments: '--distribution-id EF901B5LG1OFY --paths "/$(awsS3InstallerTargetFolder)/*"'
+              failOnStandardError: false
+
+          - task: Bash@3
+            displayName: "Sentry: Upload symbols"
+            condition: and(succeeded(), eq(variables['debugSymbolUpload'], true))
+            inputs:
+              targetType: inline
+              script: |
+                curl -sL https://sentry.io/get-cli/ | sh
+                export SENTRY_LOG_LEVEL=debug
+                sentry-cli --auth-token $(sentry_auth_token) upload-dif --force-foreground --org $(sentryOrganizationID) --project $(sentryProjectID) $(Pipeline.Workspace)/drop/Symbols
+              failOnStderr: false
+
+          - task: AzureCLI@2
+            displayName: "AZ (private): Archive all build artifacts"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload-batch \
+                --source "$(Pipeline.Workspace)/drop" \
+                --destination $(archiveStorageContainer) \
+                --destination-path $(branch)/$(gitTagName) \
+                --account-name $(mmhmminstallableStorageAccount) \
+                --account-key $(az_storage_mmhmminstallables_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish Sparkle appcast XML file"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload-batch \
+                --source "$(Pipeline.Workspace)/drop/Sparkle" \
+                --destination $(sparkleStorageContainerName) \
+                --destination-path $(track) \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish Sparkle update app bundle archive"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/BuildProducts/$(bundleArchiveName).zip" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(bundleArchiveName).zip" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish $(productName) DMG"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/BuildProducts/$(productName).dmg" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/$(productName).dmg" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish $(cameraDMGName) DMG"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/BuildProducts/$(cameraDMGName).dmg" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/$(cameraDMGName).dmg" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish $(creatorDMGName) DMG"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/BuildProducts/$(creatorDMGName).dmg" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/$(creatorDMGName).dmg" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish $(stacksDMGName) DMG"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/BuildProducts/$(stacksDMGName).dmg" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/$(stacksDMGName).dmg" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish $(recorderDMGName) DMG"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/BuildProducts/$(recorderDMGName).dmg" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/$(recorderDMGName).dmg" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish release notes HTML"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/ReleaseNotes/release-notes.html" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/release-notes.html" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --content-type "text/html" \
+                --verbose
+                
+                echo "Release notes available at:"
+                echo "https://$(mmhmmStorageAccount).blob.core.windows.net/$(releaseStorageContainerName)/$(branch)/$(gitTagName)/release-notes.html"
+
+          - ${{ if eq(parameters.createGitTag, true) }}:
+
+            - checkout: self
+              persistCredentials: true
+
+            # Requires a variable named `gitTagName`.
+            - template: x-git-tag.yml

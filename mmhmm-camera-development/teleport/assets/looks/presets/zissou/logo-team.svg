@@ -1,0 +1,25 @@
+<svg width="215" height="215" viewBox="0 0 215 215" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+    :root {
+        --background: #0C3A5C;
+    }
+    .background {
+    	fill: var(--background);
+    }
+</style>
+
+<g clip-path="url(#clip0_397_554)">
+<circle cx="107.023" cy="107.023" r="100.023" class="background"/>
+<circle cx="107.023" cy="107.025" r="88.2556" stroke="#EBF928" stroke-width="2.38248"/>
+<path d="M72.2305 75.5215H91.4842L72.5514 99.5887H91.4842" stroke="white" stroke-width="2.38248"/>
+<path d="M123.26 113.712H142.514L123.581 137.779H142.514" stroke="white" stroke-width="2.38248"/>
+<path d="M71.9141 64.9319H139.302L72.8714 149.013H142.511" stroke="#EBF928" stroke-width="2.38248"/>
+<circle cx="107.025" cy="107.024" r="73.902" stroke="white" stroke-width="2.38248"/>
+</g>
+<defs>
+<clipPath id="clip0_397_554">
+<rect width="215" height="215" fill="white"/>
+</clipPath>
+</defs>
+</svg>

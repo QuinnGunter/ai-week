@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="../css/mini-remote.css">
+</head>
+
+<body>
+  <div id="remote" class="remote-container">
+
+    <div id="slide-container" class="slide-container">
+      <label id="no-slides-label" class="no-slides-label">No slides</label>
+      <button id="current-slide-button" type="button" class="slide-button hidden" disabled>
+        <label id="current-no-slide-label" class="no-slide-label">No slide</label>
+        <div id="current-slide-image-container">
+          <img id="current-slide-img" src="">
+          <label class="slide-label">current</label>
+        </div>
+      </button>
+      <button id="next-slide-button" type="button" class="slide-button hidden" onclick="nextSlide()">
+        <label id="next-no-slide-label" class="no-slide-label">No slide</label>
+        <label id="end-of-presentation-label" class="no-slide-label">End of presentation</label>
+        <div id="next-slide-image-container">
+          <img id="next-slide-img" src="">
+          <label class="slide-label">next</label>
+        </div>
+      </button>
+    </div>
+
+    <details id="speaker-notes-details">
+      <summary>
+        <div class="speaker-notes-container">
+          <span>
+          <image class="icon" src="../images/MiniRemote.OpenNotes.png"></image>
+        </span>
+        <div class="notes-label">Notes</div>
+          <div class="status-container"><label class="speaker-notes-label" id="status-label"></label></div>
+          <button id="decrease-font-button" class="font-button"
+            style="border-right: 2px solid rgba(255, 255, 255, .36);;">a</button>
+          <button id="increase-font-button" class="font-button">A</button>
+        </div>
+      </summary>
+      <textarea class="text-editor" id="speaker-notes-text" disabled></textarea>
+    </details>
+
+    <div class="remote-button-container">
+      <button type="button" class="action-button" id="previous-slide-action-button" title="Previous Slide">
+      </button>
+      <button type="button" class="action-button" id="next-slide-action-button" title="Next Slide">
+      </button>
+      <button type="button" class="action-button" id="toggle-slide-button" onclick="toggleSlide()" title="Show / Hide Slide"></button>
+      <button type="button" class="action-button" id="toggle-camera-button" onclick="toggleCamera()" title="Enable / Disable Camera">
+      </button>
+      <button type="button" class="action-button" id="toggle-fullscreen-presenter-button"onclick="presenterFullscreen()" title="Presenter Fullscreen">
+      </button>
+      <button type="button" class="action-button" id="toggle-big-hands-button" onclick="toggleBighands()" title="Enable / Disable Big Hands">
+      </button>
+      <button type="button" class="action-button" id="toggle-broadcast-button" onclick="toggleBroadcastMode()" title="Show Broadcast Window">
+      </button>
+    </div>
+  </div>
+  <script src="js/mini-remote.js"></script>
+</body>
+
+</html>

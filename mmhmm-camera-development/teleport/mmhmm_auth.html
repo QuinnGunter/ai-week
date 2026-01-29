@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+    <title>mmhmm</title>
+    <script src="utils/cookies.js"></script>
+    <script src="services/cognito.js"></script>
+    <script src="core/localization.js"></script>
+    <script>
+      function displayError(title, body) {
+        document.title = title;
+
+        var header = document.createElement("h3");
+        header.innerText = title;
+        document.body.appendChild(header);
+
+        var message = document.createElement("div");
+        message.innerText = body;
+        document.body.appendChild(message);
+      }
+
+      window.addEventListener("load", evt => {
+        var opener = window.opener;
+        var targetOrigin = null;
+
+        var names = window.location.hostname.split(".");
+        if (names.length > 0 && names[0].indexOf("-") != -1) {
+          // mmhmm used a pattern lik ooo-dev.mmhmm.app
+          targetOrigin = "*";
+        } else if (names.length > 2 && names[0] == "app" && names[2] == "airtimetools") {
+          // airtime uses a pattern like app.dev.airtimetools.com
+          targetOrigin = "*";
+        }
+
+        //
+        var url = new URL(window.location);
+        var params = {};
+        if (url != null) {
+          var searchParams = url.searchParams;
+          var keys = Array.from(searchParams.keys());
+          keys.forEach(key => {
+            var value = searchParams.get(key);
+            params[key] = value;
+          })
+        }
+
+        //
+        var numParams = Object.keys(params).length;
+        if (numParams == 2 && params.action == "signout") {
+          CognitoCookies.shared.setCookiesFromAccount(null, params.clientID);
+          opener.postMessage("success", targetOrigin);
+          return;
+        }
+
+        if (numParams == 0 || (numParams == 1 && params.newAccount != null)) {
+          params = CognitoCookies.shared.getAccountsFromCookies();
+        }
+
+        if (opener != null && opener != window) {
+          try {
+            opener.postMessage(params, targetOrigin);
+          }
+          catch (e) {
+            displayError("Error 400: Bad request!", "Your browser (or proxy) sent a request that this server could not understand.");
+          }
+          return;
+        }
+
+        window.localStorage.setItem("params", JSON.stringify(params));
+        displayError("Success!", "You can safely close this window");
+      })
+    </script>
+  </head>
+  <body>
+  <noscript>
+    This site requires JavaScript to be enabled.
+  </noscript>
+  </body>
+</html>

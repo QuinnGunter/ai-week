@@ -1,0 +1,9 @@
+$(SRCROOT)/../mmhmm-hybrid/web/css/style.css
+$(SRCROOT)/../mmhmm-hybrid/web/css/offline.css
+$(SRCROOT)/../mmhmm-hybrid/web/css/hybrid-api-tester.css
+$(SRCROOT)/../mmhmm-hybrid/web/css/segmentation-panel.css
+$(SRCROOT)/../mmhmm-hybrid/web/css/toolbox.css
+$(SRCROOT)/../mmhmm-hybrid/web/hybrid-api-tester
+$(SRCROOT)/../mmhmm-hybrid/web/toolbox
+$(SRCROOT)/../mmhmm-hybrid/web/offline
+$(SRCROOT)/../mmhmm-hybrid/web/segmentation-panel

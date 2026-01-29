@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/screenshare.css">
+  <title>Pick a window or screen</title>
+</head>
+
+<body class="base">
+  <div id="screenshare" class="screenshare-container">
+    <div class="group-header">
+      <div class="primary centre-text">Share entire screen</div>
+    </div>
+    <div id="screens">
+    </div>
+    <div class=group-header>
+      <div class="primary centre-text">Share a window</div>
+    </div>
+    <div id="windows">
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button type="button" class="capsule secondary" onclick="window.close()">Cancel</button>
+    <button id="shareButton" type="button" class="capsule" disabled onclick="onShare()">Share</button>
+  </div>
+  <script src="js/screenshare.js"></script>
+</body>
+
+</html>

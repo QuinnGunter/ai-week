@@ -1,0 +1,84 @@
+div.vcam_education_sheet {
+    --padding: 8px;
+    height: calc(100vh - (2 * var(--padding)));
+    max-width: min(352px, calc(100vw - (2 * var(--padding))));
+    border-radius: 8px;
+}
+
+div.vcam_education_sheet.windows {
+    left: var(--padding);
+}
+
+div.vcam_education_sheet.macos {
+    right: var(--padding);
+}
+
+div.vcam_education_sheet div.titlebar div.title {
+    font-size: 14px;
+}
+
+div.vcam_education_sheet div.contents {
+    /* 56px is the sheet titlebar height */
+    /* There's got to be a better way to do this */
+    height: calc(100% - 56px) !important;
+    padding-bottom: 8px;
+}
+
+div.vcam_education_sheet div.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+
+    border-top: 1px solid var(--background-tertiary);
+    border-bottom: 1px solid var(--background-tertiary);
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+div.vcam_education_sheet div.settings > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+div.vcam_education_sheet div.settings > div select {
+    width: fit-content;
+    padding: 6px 40px 6px 8px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+div.vcam_education_sheet div.vcam_education {
+    overflow-y: scroll;
+}
+
+div.vcam_education_sheet div.vcam_education img {
+    max-width: 320px;
+}
+
+div.vcam_education_sheet div.camera_status {
+    align-items: center;
+}
+
+div.vcam_education_sheet div.camera_status div.message {
+    justify-content: center;
+}
+
+div.vcam_education_sheet .hidden {
+    display: none !important;
+}
+
+div.vcam_education_sheet .row {
+    display: flex;
+    flex-direction: row;
+}
+
+div.vcam_education_sheet .column {
+    display: flex;
+    flex-direction: column;
+}

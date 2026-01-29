@@ -1,0 +1,72 @@
+[
+  {
+    "metadataOutputVersion" : "3.0",
+    "storagePrecision" : "Float16",
+    "outputSchema" : [
+      {
+        "hasShapeFlexibility" : "0",
+        "isOptional" : "0",
+        "dataType" : "Float32",
+        "formattedType" : "MultiArray (Float32 1 × 288 × 512 × 1)",
+        "shortDescription" : "",
+        "shape" : "[1, 288, 512, 1]",
+        "name" : "Identity",
+        "type" : "MultiArray"
+      }
+    ],
+    "modelParameters" : [
+
+    ],
+    "specificationVersion" : 6,
+    "mlProgramOperationTypeHistogram" : {
+      "Concat" : 4,
+      "Transpose" : 1,
+      "Relu6" : 28,
+      "Relu" : 35,
+      "Mul" : 55,
+      "Cast" : 2,
+      "ConvTranspose" : 5,
+      "Add" : 30,
+      "ReduceMean" : 8,
+      "Sigmoid" : 1,
+      "Conv" : 79,
+      "Pad" : 4
+    },
+    "computePrecision" : "Mixed (Float16, Float32, Int32)",
+    "isUpdatable" : "0",
+    "stateSchema" : [
+
+    ],
+    "availability" : {
+      "macOS" : "12.0",
+      "tvOS" : "15.0",
+      "visionOS" : "1.0",
+      "watchOS" : "8.0",
+      "iOS" : "15.0",
+      "macCatalyst" : "15.0"
+    },
+    "modelType" : {
+      "name" : "MLModelType_mlProgram"
+    },
+    "userDefinedMetadata" : {
+      "com.github.apple.coremltools.version" : "8.2",
+      "com.github.apple.coremltools.source" : "tensorflow==2.16.2"
+    },
+    "inputSchema" : [
+      {
+        "height" : "288",
+        "colorspace" : "RGB",
+        "isOptional" : "0",
+        "width" : "512",
+        "isColor" : "1",
+        "formattedType" : "Image (Color 512 × 288)",
+        "hasSizeFlexibility" : "0",
+        "type" : "Image",
+        "shortDescription" : "",
+        "name" : "input"
+      }
+    ],
+    "generatedClassName" : "vt512V1",
+    "method" : "predict"
+  }
+]

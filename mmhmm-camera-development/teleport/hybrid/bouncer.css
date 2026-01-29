@@ -1,0 +1,91 @@
+body.page_wall {
+    background-color: var(--background-primary);
+}
+
+body.page_wall.light {
+    --link-color: var(--action-secondary);
+}
+
+body.page_wall.dark {
+    --link-color: var(--action-primary);
+}
+
+div.native_bounce {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    gap: 24px;
+    padding: 32px 24px;
+}
+
+div.native_bounce div.middle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--background-tertiary);
+    border-radius: 12px;
+}
+
+div.native_bounce svg {
+  width: 48px;
+  height: 55px;
+  fill: var(--action-primary);
+}
+
+
+div.native_bounce div.header {
+  margin-top: 24px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--content-primary);
+}
+
+div.native_bounce div.message {
+  margin-top: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  color: var(--content-primary);
+}
+
+div.native_bounce .secondary {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+div.native_bounce button {
+  margin-top: 24px;
+}
+
+div.native_bounce a {
+  color: var(--link-color);
+}
+
+div.native_bounce a:visited {
+  color: var(--link-color);
+}
+
+div.native_bounce div.bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+
+    align-self: end;
+    justify-self: center;
+    text-align: center;
+    margin: 30px 0px;
+}
+
+div.native_bounce a.secondary {
+    text-decoration: none;
+}
+
+div.native_bounce a.secondary:last-of-type {
+    margin-top: 12px;
+}

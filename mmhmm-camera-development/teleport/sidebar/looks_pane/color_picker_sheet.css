@@ -1,0 +1,103 @@
+/* =================================
+ * LooksColorPickerSheet START
+ *
+ **/
+
+ .mini [data-id="layer-options"] .colorpicker__sheet {
+    padding: unset;
+    width: 100%;
+ }
+
+ .colorpicker__sheet {
+    width: fit-content;
+    padding: var(--size-2);
+    border-radius: var(--size-3);
+}
+
+ .colorpicker__sheet li {
+    padding: var(--size-0-5);
+    display: grid;
+    place-content: center;
+
+
+    border-radius: var(--size-1);
+    border: 2px solid transparent;
+}
+
+ .colorpicker__sheet li.selected {
+    border: 2px solid var(--content-primary);
+}
+
+ .colorpicker__sheet li button {
+    border-radius: var(--size-1);
+    height: var(--size-6) !important;
+    width: var(--size-6) !important;
+    border: none;
+    cursor: pointer;
+}
+
+ .colorpicker__sheet .colorpicker__add_color,
+ .colorpicker__sheet .colorpicker__eyedropper {
+    background-color: var(--background-secondary);
+    color: var(--content-primary);
+    fill: var(--content-primary);
+    display: grid;
+    place-content: center;
+}
+
+
+/* ========================================
+ *
+ * Color picker modal (Pickr library)
+ *
+ * =======================================*/
+
+ .pcr-app {
+    /* NOTE: z-index is controlled via JS */
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 10%);
+    border: 1px solid var(--border-primary);
+    padding: var(--size-2);
+    background-color: var(--background-quaternary);
+    border-radius: var(--size-3);
+}
+
+/* Overriding Pickr Nano theme styles */
+ .pcr-app[data-theme=nano] .pcr-swatches {
+    padding: 0 .4em;
+}
+
+ .pcr-app[data-theme=nano] .pcr-selection .pcr-color-preview {
+    margin-left: 0.4em;
+}
+
+
+/* button */
+ .pcr-app .pcr-interaction .pcr-type.active,
+ .pcr-app .pcr-interaction .pcr-save,
+ .pcr-app .pcr-interaction input[type="button"] {
+    font-size: var(--font-size-xs);
+    background: var(--background-tertiary);
+    border: 1px solid var(--background-quaternary);
+    border-radius: var(--size-1-5);
+    color: var(--content-primary);
+}
+ .pcr-app .pcr-interaction input {
+    color: var(--content-primary);
+    letter-spacing: 0;
+    background-color: var(--background-primary);
+    font-size: var(--font-size-xs);
+}
+
+ .pcr-app .pcr-interaction input:focus-visible {
+    outline: 2px solid var(--action-secondary);
+    outline-offset: -2px;
+}
+ .pcr-app .pcr-interaction input:focus {
+    box-shadow: none;
+}
+
+.pcr-app .pcr-interaction .pcr-result {
+    width: 100%;
+    flex: 1 100%;
+}
+

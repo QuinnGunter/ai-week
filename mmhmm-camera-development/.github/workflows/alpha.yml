@@ -1,0 +1,14 @@
+on:
+    pull_request:
+        types: [closed]
+        branches:
+        - alpha
+
+jobs:
+    deploy:
+        if: github.event.pull_request.merged == true
+        uses: ./.github/workflows/deploy.yml
+        with:
+            MMHMM_ENV: alpha
+        secrets:
+            inherit

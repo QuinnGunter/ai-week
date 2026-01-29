@@ -1,0 +1,47 @@
+name: Deploy hotfix preview
+on:
+  push:
+    # Run on any branch like "hotfix/20230310"
+    branches:
+      - hotfix/[0-9]+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # checkout the repo
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set build identifier
+        run: echo "BUILD_ID=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+
+      - name: Build the distribution
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: npm run build-internal
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Deploy to /hotfix/ID, where ID is like 20230310
+      # We include "/hotfix/" in the path explicitly, instead of relying on it being in the branch name,
+      # to ensure that we never mistakenly overwrite a "real" deployment.
+      - name: Deploy to S3
+        run: aws s3 cp --recursive ./deploy/ s3://${{vars.AWS_S3_BUCKET}}/hotfix/${GITHUB_REF##*/}
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/hotfix/${GITHUB_REF##*/}/*"

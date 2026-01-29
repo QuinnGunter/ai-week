@@ -1,0 +1,388 @@
+# win-az-pipeline.yml
+#
+# This pipeline builds the Windows hybrid app.
+# It is meant to be used as a template by other pipelines which specify the triggers.
+
+parameters:
+  - name: appTrack
+    type: string
+    default: qa
+    values:
+    - qa
+    - beta
+    - uat
+    - prod
+  - name: isDistributionBuild
+    type: boolean
+    default: false
+  - name: distributeArtifacts
+    type: boolean
+    default: true  # When true, does inline distribution. Set false when using staged distribute pipeline.
+  - name: track
+    type: string
+    default: ''  # Track for git tags and release notes (matches branch path segment). If empty, falls back to appTrack.
+
+jobs:
+  - job: Build
+    displayName: "Build"
+    variables:
+    - group: TrustedSigning
+    - group: VersionGroup
+    - group: Tokens
+    - template: x-az-storage-variables.yml
+    - name: buildNum
+      value: $[counter(format('{0}.{1}.{2}', variables['marketing_major'], variables['marketing_minor'], variables['marketing_revision']), 0)]
+    - name: version
+      value: $(marketing_major).$(marketing_minor).$(marketing_revision).$(buildNum)
+    - name: fileVersionWithCommas
+      value: $(marketing_major),$(marketing_minor),$(marketing_revision),$(buildNum)
+    - name: gitTagName
+      value: $(version)
+    - name: pdb_full_path
+      value: $(Build.SourcesDirectory)/build/mmhmm-hybrid/Release/Airtime.pdb
+    - name: camera_client_pdb
+      value: $(Build.SourcesDirectory)/build/mmhmm-hybrid/Release/mmhmmCameraClient.pdb
+
+    - name: StableOrBetaChromium
+      ${{ if contains(variables['Build.SourceBranch'], 'windows/chromium_beta') }}:
+        value: 'BETA'
+      ${{ else }}:
+        value: 'STABLE'
+
+    - name: StableOrBetaChromiumUniversalPackageViewId
+      ${{ if eq(variables['StableOrBetaChromium'], 'BETA') }}:
+        value: 'cbac98cb-861b-40fb-889f-f5a586adca3e' #prerelease
+      ${{ else }}:
+        value: 'a9bc6dd6-5680-42e8-99ff-6138f9ad1362' #release
+
+    pool:
+      vmImage: 'windows-2022'
+    steps:
+      - checkout: self
+        persistCredentials: true
+        lfs: true
+        submodules: true
+        fetchDepth: 200 # Required for release notes generation
+
+      - script: |
+          echo Starting build $(version)
+          echo CEF Chromium build $(StableOrBetaChromium)
+          echo CEF Chromium universal package view $(StableOrBetaChromiumUniversalPackageViewId)
+          echo Upload symbols? $(symbolsUpload)
+          echo Build Number $(Build.BuildNumber)
+        displayName: "Log build parameters"
+
+      # Output version info for use by downstream stages
+      - script: |
+          echo "##vso[task.setvariable variable=gitTagName;isOutput=true]$(gitTagName)"
+          echo "##vso[task.setvariable variable=version;isOutput=true]$(version)"
+          echo "Exported gitTagName: $(gitTagName)"
+          echo "Exported version: $(version)"
+        name: VersionInfo
+        displayName: "Export version info for downstream stages"
+
+      - powershell: Get-ChildItem "HKLM:\Software\Microsoft\Windows Kits\Installed Roots" | Select -Property PSChildName
+        displayName: Show preinstalled Windows SDKs
+
+      - task: NuGetToolInstaller@1
+        displayName: 'Install NuGet tools'
+
+      - task: CMake@1
+        inputs:
+          workingDirectory: $(Build.SourcesDirectory)
+          cmakeArgs: CMakeLists.txt -B build -DMMHMM_WIN_TRACK=${{ parameters.appTrack }}
+        displayName: Create a VS solution
+        env:
+          GH_TOKEN: $(github_releases_token)
+        
+      # For debugging
+      #- script: |
+      #    type build\CMakeCache.txt
+      #  displayName: Show cmake file
+
+      # For debugging
+      - script: |
+          tree $(Build.SourcesDirectory) /f /a
+        displayName: Show build directory tree   
+
+      - powershell: |
+          ((Get-Content -path mmhmm-hybrid.rc -Raw) -replace '0,0,0,0','$(fileVersionWithCommas)') | Set-Content -Path mmhmm-hybrid.rc
+          ((Get-Content -path mmhmm-hybrid.rc -Raw) -replace '0.0.0.0','$(version)') | Set-Content -Path mmhmm-hybrid.rc
+        workingDirectory: '$(Build.SourcesDirectory)/mmhmm-hybrid/resources/win'
+        displayName: Set app version
+
+      - powershell: (Get-Content -path mmhmm-hybrid.rc -Raw) 
+        workingDirectory: '$(Build.SourcesDirectory)/mmhmm-hybrid/resources/win'
+        displayName: View app resource file
+
+      - task: NuGetCommand@2
+        displayName: 'Restore NuGet packages for the hybrid app and wix setup'
+        inputs:
+          command: 'restore'
+          restoreSolution: '$(Build.SourcesDirectory)/build/Airtime.sln;$(Build.SourcesDirectory)/win/mmhmmSetup/mmhmmSetup.sln'
+          
+      - task: VSBuild@1
+        inputs:
+          solution: '$(Build.SourcesDirectory)/build/Airtime.sln'
+          vsVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 11.0
+          platform: 'x64'
+          configuration: 'Release'
+          clean: true
+          msbuildArgs: '/p:VersionNumber=$(version)'
+        displayName: 'Build X64 hybrid app'
+
+      - script: |
+         call "$(Build.SourcesDirectory)\pipelines\win\copyVSDependencies.cmd" "$(Build.SourcesDirectory)\build\mmhmm-hybrid\Release"
+        displayName: 'Copy C++ Runtime Files for x64'
+        
+      - script: |
+          tree $(Build.SourcesDirectory) /f /a
+        displayName: Show build directory tree   
+
+      - task: TrustedSigning@0
+        displayName: 'Sign executable and libraries with Trusted Signing'
+        inputs:
+          AzureTenantID: '$(AZURE_TENANT_ID)'
+          AzureClientID: '$(AZURE_CLIENT_ID)'
+          AzureClientSecret: '$(AZURE_CLIENT_SECRET)'
+          Endpoint: '$(AZURE_ENDPOINT)'
+          TrustedSigningAccountName: '$(AZURE_CODE_SIGNING_NAME)'
+          CertificateProfileName: '$(AZURE_CERT_PROFILE_NAME)'
+          FilesFolder: '$(Build.SourcesDirectory)/build/mmhmm-hybrid/Release/'
+          FilesFolderFilter: 'exe,dll,cat'
+          FilesFolderRecurse: true
+          FilesFolderDepth: 3
+          FileDigest: 'SHA256'
+          TimestampRfc3161: 'http://timestamp.acs.microsoft.com'
+          TimestampDigest: 'SHA256'
+
+
+      - task: VSBuild@1
+        inputs:
+          solution: 'win/mmhmmSetup/mmhmmSetup.sln'
+          vsVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 11.0
+          platform: 'x64'
+          configuration: 'Release'
+          msbuildArgs: '/p:RunWixToolsOutOfProc=true;VersionNumber=$(version);appTrack=${{ parameters.appTrack }}'
+        displayName: 'Build Airtime installer'
+
+      - task: VSBuild@1
+        inputs:
+          solution: 'win/mmhmmSetup/mmhmmSetup.sln'
+          vsVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 11.0
+          platform: 'x64'
+          configuration: 'CameraRelease'
+          msbuildArgs: '/p:RunWixToolsOutOfProc=true;VersionNumber=$(version);appTrack=${{ parameters.appTrack }}'
+        displayName: 'Build Airtime Camera installer'
+
+      - task: VSBuild@1
+        inputs:
+          solution: 'win/mmhmmSetup/mmhmmSetup.sln'
+          vsVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 11.0
+          platform: 'x64'
+          configuration: 'CreatorRelease'
+          msbuildArgs: '/p:RunWixToolsOutOfProc=true;VersionNumber=$(version);appTrack=${{ parameters.appTrack }}'
+        displayName: 'Build Airtime Creator installer'
+
+      - task: VSBuild@1
+        inputs:
+          solution: 'win/mmhmmSetup/mmhmmSetup.sln'
+          vsVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 11.0
+          platform: 'x64'
+          configuration: 'StacksRelease'
+          msbuildArgs: '/p:RunWixToolsOutOfProc=true;VersionNumber=$(version);appTrack=${{ parameters.appTrack }}'
+        displayName: 'Build Airtime Stacks installer' 
+        
+      - task: VSBuild@1
+        inputs:
+          solution: 'win/mmhmmSetup/mmhmmSetup.sln'
+          vsVersion: 'latest' # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 11.0
+          platform: 'x64'
+          configuration: 'ScreenRecorderRelease'
+          msbuildArgs: '/p:RunWixToolsOutOfProc=true;VersionNumber=$(version);appTrack=${{ parameters.appTrack }}'
+        displayName: 'Build Airtime Screen Recorder installer' 
+
+      - task: TrustedSigning@0
+        displayName: 'Sign installer with Trusted Signing'
+        inputs:
+          AzureTenantID: '$(AZURE_TENANT_ID)'
+          AzureClientID: '$(AZURE_CLIENT_ID)'
+          AzureClientSecret: '$(AZURE_CLIENT_SECRET)'
+          Endpoint: '$(AZURE_ENDPOINT)'
+          TrustedSigningAccountName: '$(AZURE_CODE_SIGNING_NAME)'
+          CertificateProfileName: '$(AZURE_CERT_PROFILE_NAME)'
+          FilesFolder: '$(Build.SourcesDirectory)/win/mmhmmSetup/wixMmhmmSetup/bin/'
+          FilesFolderFilter: 'msi'
+          FilesFolderRecurse: true
+          FilesFolderDepth: 3
+          FileDigest: 'SHA256'
+          TimestampRfc3161: 'http://timestamp.acs.microsoft.com'
+          TimestampDigest: 'SHA256'
+          Description: "mmhmmSetup.msi"
+
+      - task: CopyFiles@2
+        displayName: 'Copy installer file'
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)/win/mmhmmSetup/wixMmhmmSetup/bin/x64'
+          Contents: '**/*.msi'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+          flattenFolders: true 
+
+      - powershell: |
+          $assemblyVersion=(Get-Item '$(Build.SourcesDirectory)/build/mmhmm-hybrid/Release/Airtime.exe').VersionInfo.FileVersionRaw
+          $versionMajor=$(major)
+          $versionMinor=$(minor)
+          $versionBuild=$(buildNum)
+          $versionRevision=$(revision)
+          $marketingVersionMajor=$(marketing_major)
+          $marketingVersionMinor=$(marketing_minor)
+          $marketingVersionBuild=$(buildNum)
+          $marketingVersionRevision=$(marketing_revision)
+          $currentDateTime=Get-Date -Format 'dddd MM/dd/yyyy HH:mm:ss K'
+          "{
+            ""metadataVersion"": 1,
+            ""build"": {
+              ""Major"": $versionMajor,
+              ""Minor"": $versionMinor,
+              ""Build"": $versionRevision,
+              ""Revision"": $versionBuild,
+              ""MarketingMajor"": $marketingVersionMajor,
+              ""MarketingMinor"": $marketingVersionMinor,
+              ""MarketingBuild"": $marketingVersionRevision,
+              ""MarketingRevision"": $marketingVersionBuild
+            },
+            ""title"": null,
+            ""fileName"": ""Airtime.msi"",
+            ""timestamp"": ""$currentDateTime""
+          }" | Out-File "$(Build.ArtifactStagingDirectory)\build-info.json"
+        name: SetVersion
+        displayName: 'Create build-info.json file'
+
+      - task: CopyFiles@2
+        displayName: Copy build-info.json file
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)\'
+          Contents: 'build-info.json'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+      - task: CopyFiles@2
+        displayName: 'Copy symbols files'
+        inputs:
+          SourceFolder: '$(Build.SourcesDirectory)/build/mmhmm-hybrid/Release'
+          Contents: '*.pdb'
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+      # Generate release notes BEFORE publishing artifacts so they're included
+      - ${{ if eq(parameters.isDistributionBuild, true) }}:
+
+        # Find latest git tag for release notes
+        # Use 'track' parameter for git tag lookup (falls back to appTrack if not provided)
+        - task: Bash@3
+          displayName: "Find latest git tag for release notes"
+          inputs:
+            targetType: inline
+            script: |
+              # Use track parameter if provided, otherwise fall back to appTrack
+              track="${{ parameters.track }}"
+              if [ -z "$track" ]; then
+                track="${{ parameters.appTrack }}"
+              fi
+              echo "Using track: $track"
+
+              script_path="$(Build.SourcesDirectory)/mac/Build-Tools/latest_git_tag.sh"
+              latestGitTagName="$($script_path $track windows 2>/dev/null | tail -1)"
+              if [ -z "$latestGitTagName" ]; then
+                echo "##vso[task.logissue type=warning]No previous tag found for track $track"
+                echo "##vso[task.setvariable variable=latestGitTagName]"
+              else
+                echo "Found latest tag: $latestGitTagName"
+                echo "##vso[task.setvariable variable=latestGitTagName]$latestGitTagName"
+              fi
+
+              # Export track for use in subsequent steps
+              echo "##vso[task.setvariable variable=releaseTrack]$track"
+
+        # Generate release notes HTML
+        - task: Bash@3
+          displayName: "Generate release notes HTML"
+          condition: and(succeeded(), ne(variables['latestGitTagName'], ''))
+          inputs:
+            targetType: inline
+            script: |
+              mkdir -p "$(Build.ArtifactStagingDirectory)/ReleaseNotes"
+              storageBaseUrl="https://$(mmhmmStorageAccount).blob.core.windows.net/$(releaseStorageContainerName)"
+              $(Build.SourcesDirectory)/mac/Build-Tools/process_commits.sh \
+                "$(latestGitTagName)" \
+                "$(Build.ArtifactStagingDirectory)/ReleaseNotes/release-notes.html" \
+                "$(gitTagName)" \
+                "$(releaseTrack)" \
+                "$storageBaseUrl"
+
+              echo "Release notes generated at: $(Build.ArtifactStagingDirectory)/ReleaseNotes/release-notes.html"
+              ls -la "$(Build.ArtifactStagingDirectory)/ReleaseNotes/"
+          env:
+            GITHUB_TOKEN: $(github_read_write_issues_token)
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
+
+      - ${{ if eq(parameters.isDistributionBuild, true) }}:
+
+        # Inline distribution steps - only run when distributeArtifacts is true
+        # When using staged pipeline (win-build-release-installer-az-pipeline.yml),
+        # set distributeArtifacts: false and let win-az-pipeline-distribute.yml handle distribution
+        - ${{ if eq(parameters.distributeArtifacts, true) }}:
+
+          - task: PublishSymbols@2
+            inputs:
+              SymbolsFolder: '$(Build.SourcesDirectory)/build/mmhmm-hybrid/Release'
+              SearchPattern: '*.pdb'
+              SymbolServerType: 'TeamServices'
+              SymbolsVersion: '$(version)'
+            condition: and(succeeded(), eq(variables['symbolsUpload'], true))
+
+          - task: AzureCLI@2
+            displayName: "AZ Upload: Archive all build artifacts to private storage"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload-batch \
+                --source "$(Build.ArtifactStagingDirectory)" \
+                --destination $(archiveStorageContainer) \
+                --destination-path $(branch)/$(gitTagName) \
+                --account-name $(mmhmminstallableStorageAccount) \
+                --account-key $(az_storage_mmhmminstallables_key) \
+                --verbose
+
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: Invoke-WebRequest "https://release-registry.services.sentry.io/apps/sentry-cli/latest?response=download&arch=x86-64&platform=Windows&package=sentry-cli" -OutFile $(Agent.ToolsDirectory)/sentry-cli.exe
+            displayName: install sentry CLI
+            condition: and(succeeded(), eq(variables['symbolsUpload'], true))
+
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                  $(Agent.ToolsDirectory)/sentry-cli.exe difutil check $(pdb_full_path)
+                  $(Agent.ToolsDirectory)/sentry-cli.exe difutil check $(camera_client_pdb)
+            displayName: check PDB
+            condition: and(succeeded(), eq(variables['symbolsUpload'], true))
+
+          - task: PowerShell@2
+            inputs:
+              targetType: 'inline'
+              script: |
+                  $(Agent.ToolsDirectory)/sentry-cli.exe upload-dif -o mmhmm -p mmhmm-hybrid-win  $(pdb_full_path) --auth-token $(sentry_auth_token)
+                  $(Agent.ToolsDirectory)/sentry-cli.exe upload-dif -o mmhmm -p mmhmm-hybrid-win  $(camera_client_pdb) --auth-token $(sentry_auth_token)
+            displayName: Upload PDB
+            condition: and(succeeded(), eq(variables['symbolsUpload'], true))
+
+          - template: x-git-tag.yml

@@ -1,0 +1,110 @@
+div.full_screen_modal {
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+}
+
+div.full_screen_modal.inset {
+    width: calc(100% - 72px);
+    height: calc(100% - 72px);
+}
+
+@media only screen and (min-width: 640px) and (min-height: 600px) {
+    div.full_screen_modal.inset {
+        width: calc(100% - 112px);
+        height: calc(100% - 112px);
+    }
+}
+
+div.full_screen_modal > div.contents {
+    height: 100%;
+}
+
+div.full_screen_modal_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    color: var(--content-primary);
+    background-color: var(--background-primary);
+}
+
+/** Shared layout */
+
+div.full_screen_modal_container .hidden {
+    display: none !important;
+}
+
+div.full_screen_modal_container .row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+div.full_screen_modal_container .column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/** Header */
+
+div.full_screen_modal_container > div.header {
+    width: 100%;
+    flex-shrink: 0;
+    overflow: hidden;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    padding: 12px;
+
+    border-bottom: 1px solid var(--background-tertiary);
+}
+
+div.full_screen_modal_container > div.header div {
+    display: flex;
+    flex-direction: row;
+}
+
+div.full_screen_modal_container > div.header div.left {
+    justify-content: flex-start;
+}
+
+div.full_screen_modal_container > div.header div.center {
+    justify-content: center;
+}
+
+div.full_screen_modal_container > div.header div.center div.title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: unset;
+}
+
+div.full_screen_modal_container > div.header div.right {
+    justify-content: flex-end;
+}
+
+div.full_screen_modal_container > div.header button.close {
+    padding: 4px 8px;
+}
+
+div.full_screen_modal_container > div.header button.close svg {
+    width: 16px;
+    height: 16px;
+}
+
+/** Body */
+
+div.full_screen_modal_container > div.body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

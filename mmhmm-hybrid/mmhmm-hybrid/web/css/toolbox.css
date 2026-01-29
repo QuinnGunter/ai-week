@@ -1,0 +1,205 @@
+
+.light {
+    --bg: white;
+    --bg-secondary: #F5F5F5;
+    --bg-tertiary: #ebebeb;
+    --color: black;
+    --border: #E0E0E0;
+}
+
+.dark {
+    --bg: black;
+    --bg-secondary: #16161A;
+    --bg-tertiary: #212127;
+    --color: white;
+    --border: #2C2C30;
+}
+
+body {
+    --bg: var(--bg);
+    --bg-secondary: var(--bg-secondary);
+    --bg-tertiary: var(--bg-tertiary);
+    --color: var(--color);
+    --border: var(--border);
+
+    background-color: var(--bg);
+    color: var(--color);
+
+    font-family: "SF Pro";
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow: hidden;
+}
+    .tool button {
+        background-color: var(--bg) !important;
+        color: var(--color) !important;
+    }
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    width: 100%;
+    padding: 8px 8px 16px 8px;
+
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.tools {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+
+    width: 100%;
+}
+
+.tool {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+
+    padding: 24px 0px;
+
+    border-radius: 6px;
+    background: var(--bg-tertiary);
+
+    transition: opacity 0.3s;
+}
+
+.tool:hover {
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    width: 100%;
+    padding: 16px 24px;
+}
+
+.tool-icon {
+    width: 157px;
+    height: 75px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tool-icon svg:last-child path {
+    fill: var(--color);
+}
+
+.floating-nav-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.floating-nav-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color);
+}
+
+.description {
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    opacity: 0.6;
+    text-align: center;
+    padding: 0px 12px;
+}
+
+.label {
+    background-color: transparent;
+    border: 4px solid var(--color);
+    padding: 10px 20px;
+    font-size: 24px;
+    color: var(--color);
+    display: inline-block;
+    white-space: nowrap;
+    width: max-content;
+    border-radius: 12px;
+    font-weight: 300;
+}
+
+.bold-word {
+    font-weight: 700;
+}
+
+.tool button {
+    background-color: var(--dark-bg);
+    color: var(--dark-color);
+    border: none;
+
+    margin-top: auto;
+    padding: 8px 16px;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 590;
+    line-height: 20px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    color: var(--color);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 590;
+    line-height: 20px;
+}
+
+.footer svg path {
+    fill: var(--color);
+}
+
+.footer > div {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.footer .settings {
+    padding-left: 12px;
+}
+
+.footer .help {
+    padding-right: 12px;
+}
+
+.footer .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 2px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border);
+    border-radius: 62px;
+}

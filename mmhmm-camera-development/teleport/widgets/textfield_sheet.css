@@ -1,0 +1,26 @@
+/*
+ * Text field dialogs
+ */
+div.textfield_dialog {
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 12px;
+  line-height: 150%;
+  color: var(--content-secondary);
+}
+
+div.textfield_dialog.progress_sheet {
+    min-width: unset;
+}
+
+div.textfield_dialog div.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding-top: 32px;
+}
+
+div.textfield_dialog div.buttons button:nth-child(n + 1) {
+  margin-left: 12px;
+}

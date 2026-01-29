@@ -1,0 +1,16 @@
+button.look-preset {
+    display: flex;
+
+    background: none;
+    outline: none;
+    padding: 2px;
+
+    max-width: 256px;
+
+    border: none;
+}
+
+button.look-preset img {
+    border-radius: 6px;
+    border: 1px solid var(--highlight-primary);
+}

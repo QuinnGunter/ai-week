@@ -1,0 +1,22 @@
+//
+//  mmhmm.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+PRODUCT_BUNDLE_IDENTIFIER = M3KUT44L48.app.mmhmm.hybrid.menu
+PRODUCT_NAME = Airtime Menu Bar Helper
+CODE_SIGN_ENTITLEMENTS = Airtime Menu/AirtimeMenu.entitlements
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_IDENTITY[config=Release][sdk=macosx*] = Developer ID Application
+CODE_SIGN_STYLE[config=Debug] = Automatic
+CODE_SIGN_STYLE[config=Release] = Manual
+// Used in update checks.
+CURRENT_PROJECT_VERSION = 15
+DEVELOPMENT_TEAM[config=Debug] = M3KUT44L48
+DEVELOPMENT_TEAM[config=Release][sdk=macosx*] = M3KUT44L48
+INFOPLIST_FILE = Airtime Menu/Info.plist

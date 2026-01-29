@@ -1,0 +1,281 @@
+/*
+ * LUT Panel Styles
+ * Styles for the color grade LUT selection panel
+ */
+
+/* Panel container */
+.lut-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-2);
+    padding: var(--size-2);
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Header section */
+.lut-panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--size-1) 0;
+}
+
+.lut-panel__header .ghost_button {
+    display: flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1) var(--size-2);
+    font-size: var(--text-xs);
+}
+
+/* Intensity section */
+.lut-panel__intensity {
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-1);
+    padding: var(--size-2);
+    background: var(--background-secondary);
+    border-radius: var(--size-1);
+}
+
+.lut-panel__intensity label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.lut-panel__intensity.hidden {
+    display: none;
+}
+
+/* Slider */
+.lut-panel__slider {
+    --fillAmount: 100%;
+    width: 100%;
+    height: var(--size-3);
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+/* Track styles */
+.lut-panel__slider::-webkit-slider-runnable-track {
+    height: var(--size-1);
+    background: linear-gradient(
+        to right,
+        var(--foreground-primary) 0%,
+        var(--foreground-primary) var(--fillAmount),
+        var(--background-quaternary) var(--fillAmount),
+        var(--background-quaternary) 100%
+    );
+    border-radius: var(--size-0-5);
+}
+
+.lut-panel__slider::-moz-range-track {
+    height: var(--size-1);
+    background: linear-gradient(
+        to right,
+        var(--foreground-primary) 0%,
+        var(--foreground-primary) var(--fillAmount),
+        var(--background-quaternary) var(--fillAmount),
+        var(--background-quaternary) 100%
+    );
+    border-radius: var(--size-0-5);
+}
+
+/* Webkit thumb */
+.lut-panel__slider::-webkit-slider-thumb {
+    appearance: none;
+    width: var(--size-3);
+    height: var(--size-3);
+    margin-top: calc((var(--size-3) - var(--size-1)) / -2);
+    background: var(--foreground-primary);
+    border-radius: 50%;
+    cursor: grab;
+    transition: transform 0.1s ease;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0.5px 1px rgba(0, 0, 0, 0.27);
+}
+
+.lut-panel__slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.lut-panel__slider::-webkit-slider-thumb:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+/* Firefox thumb */
+.lut-panel__slider::-moz-range-thumb {
+    width: var(--size-3);
+    height: var(--size-3);
+    border: none;
+    background: var(--foreground-primary);
+    border-radius: 50%;
+    cursor: grab;
+    transition: transform 0.1s ease;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0.5px 1px rgba(0, 0, 0, 0.27);
+}
+
+.lut-panel__slider::-moz-range-thumb:hover {
+    transform: scale(1.1);
+}
+
+.lut-panel__slider::-moz-range-thumb:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+/* Drop zone */
+.lut-panel__drop-zone {
+    flex: 1;
+    position: relative;
+    overflow-y: auto;
+    border-radius: var(--size-1);
+    transition: background-color 0.2s ease;
+}
+
+.lut-panel__drop-zone--active {
+    background-color: var(--background-secondary);
+}
+
+.lut-panel__drop-zone .drop-overlay {
+    display: none;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--size-2);
+    background: var(--background-tertiary);
+    border: 2px dashed var(--border-accent);
+    border-radius: var(--size-1);
+    color: var(--foreground-secondary);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.lut-panel__drop-zone--active .drop-overlay {
+    display: flex;
+}
+
+.lut-panel__drop-zone .drop-overlay .icon {
+    font-size: var(--text-2xl);
+}
+
+/* LUT Grid */
+.lut-panel__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: var(--size-2);
+    padding: var(--size-1);
+}
+
+/* LUT Card */
+.lut-panel__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-1);
+    background: var(--background-secondary);
+    border: 2px solid transparent;
+    border-radius: var(--size-1);
+    cursor: pointer;
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.lut-panel__card:hover {
+    background: var(--background-tertiary);
+    transform: translateY(-2px);
+}
+
+.lut-panel__card--selected {
+    border-color: var(--border-accent);
+    background: var(--background-tertiary);
+}
+
+/* Card thumbnail */
+.lut-panel__card-thumbnail {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--background-quaternary);
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--size-0-5);
+    overflow: hidden;
+}
+
+.lut-panel__card-thumbnail .icon {
+    font-size: var(--text-xl);
+    color: var(--foreground-tertiary);
+}
+
+.lut-panel__card--none .lut-panel__card-thumbnail {
+    background: var(--background-tertiary);
+}
+
+.lut-panel__card--none .lut-panel__card-thumbnail .icon {
+    color: var(--foreground-secondary);
+}
+
+/* Card title */
+.lut-panel__card-title {
+    font-size: var(--text-xs);
+    color: var(--foreground-secondary);
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lut-panel__card--selected .lut-panel__card-title {
+    color: var(--foreground-primary);
+}
+
+/* Delete button */
+.lut-panel__card-delete {
+    position: absolute;
+    top: var(--size-0-5);
+    right: var(--size-0-5);
+    display: none;
+    padding: var(--size-0-5);
+    background: var(--background-secondary);
+    border: none;
+    border-radius: var(--size-0-5);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.15s ease;
+}
+
+.lut-panel__card:hover .lut-panel__card-delete {
+    display: flex;
+}
+
+.lut-panel__card-delete:hover {
+    opacity: 1;
+    background: var(--error-background);
+}
+
+.lut-panel__card-delete .icon {
+    font-size: var(--text-sm);
+    color: var(--foreground-secondary);
+}
+
+.lut-panel__card-delete:hover .icon {
+    color: var(--error-foreground);
+}
+
+/* Hidden utility */
+.lut-panel .hidden {
+    display: none !important;
+}

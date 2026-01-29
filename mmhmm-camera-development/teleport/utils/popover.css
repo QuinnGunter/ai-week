@@ -1,0 +1,20 @@
+div.popover_tooltip {
+    display: none;
+    width: max-content;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--content-primary);
+    color: var(--background-primary);
+    padding: 5px;
+    border-radius: 4px;
+    font-size: x-small;
+}
+
+div.popover_tooltip_arrow {
+    position: absolute;
+    background: var(--content-primary);
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+}

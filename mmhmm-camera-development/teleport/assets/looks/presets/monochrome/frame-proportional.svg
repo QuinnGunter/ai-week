@@ -1,0 +1,18 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+    :root {
+        --tint: #FFFFFF;
+    }
+	.tinted {
+		fill: var(--tint);
+	}
+</style>
+<g clip-path="url(#clip0_617_1018)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M1920 1080H0V0H1920V1080ZM123 123V957H1797V123H123Z" class="tinted"/>
+</g>
+<defs>
+<clipPath id="clip0_617_1018">
+<rect width="1920" height="1080"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,0 +1,14 @@
+mac/CEF/Debug/Chromium[[:space:]]Embedded[[:space:]]Framework.framework/Frameworks/libtpxai_segmentation.dylib filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Debug/Chromium[[:space:]]Embedded[[:space:]]Framework.framework/Libraries/** filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Debug/**/*.dylib filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Debug/**/*.so filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Debug/**/*.pak filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Debug/**/Chromium[[:space:]]Embedded[[:space:]]Framework filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Release/**/*.dylib filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Release/**/*.so filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Release/**/*.pak filter=lfs diff=lfs merge=lfs -text
+mac/CEF/Release/**/Chromium[[:space:]]Embedded[[:space:]]Framework filter=lfs diff=lfs merge=lfs -text
+mac/Dependencies/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/dSYMs/** filter=lfs diff=lfs merge=lfs -text
+win/CEF/Resources/** filter=lfs diff=lfs merge=lfs -text
+win/CEF/Release/** filter=lfs diff=lfs merge=lfs -text
+win/CEF/Debug/** filter=lfs diff=lfs merge=lfs -text

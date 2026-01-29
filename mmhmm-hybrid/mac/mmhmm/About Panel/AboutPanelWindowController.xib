@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24408" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24408"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AboutPanelWindowController">
+            <connections>
+                <outlet property="appBuildLabel" destination="QnI-YM-qmv" id="K4b-dT-rtw"/>
+                <outlet property="appVersionLabel" destination="Oes-gf-ENT" id="t5a-Hw-0PF"/>
+                <outlet property="copyrightLabel" destination="Ta5-H7-i3T" id="osi-7i-Alq"/>
+                <outlet property="osVersionLabel" destination="33h-tW-4ho" id="pLz-RW-wy6"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" titlebarAppearsTransparent="YES" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" fullSizeContentView="YES"/>
+            <rect key="contentRect" x="196" y="240" width="443" height="343"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3200" height="1319"/>
+            <view key="contentView" id="se5-gp-TjO" customClass="AboutPanelBackgroundView" customModule="Airtime" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="443" height="343"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <box boxType="custom" borderType="line" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Ze0-U4-HQ2">
+                        <rect key="frame" x="-1" y="-1" width="445" height="85"/>
+                        <view key="contentView" id="vrH-Rr-u5H">
+                            <rect key="frame" x="1" y="1" width="443" height="83"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ta5-H7-i3T">
+                                    <rect key="frame" x="95" y="54" width="254" height="13"/>
+                                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" alignment="center" title="Copyright © 2020 mmhmm inc. All rights reserved." id="Cd6-Go-ic3">
+                                        <font key="font" metaFont="system" size="10"/>
+                                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XGL-9L-6V0">
+                                    <rect key="frame" x="141" y="16" width="162" height="24"/>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="about-panel-at-slug" id="HPq-pu-3jM"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="XGL-9L-6V0" secondAttribute="bottom" constant="16" id="0bR-dJ-Tsr"/>
+                                <constraint firstItem="XGL-9L-6V0" firstAttribute="centerX" secondItem="vrH-Rr-u5H" secondAttribute="centerX" id="9v5-Lo-ElJ"/>
+                                <constraint firstItem="Ta5-H7-i3T" firstAttribute="top" secondItem="vrH-Rr-u5H" secondAttribute="top" constant="16" id="cUx-gT-QcT"/>
+                                <constraint firstItem="Ta5-H7-i3T" firstAttribute="centerX" secondItem="vrH-Rr-u5H" secondAttribute="centerX" id="ntk-vn-cDm"/>
+                            </constraints>
+                        </view>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="85" id="L0W-QI-zs2"/>
+                        </constraints>
+                        <color key="borderColor" name="about-panel-footer-border"/>
+                        <color key="fillColor" name="about-panel-footer-background"/>
+                    </box>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="9ff-Cj-NIz">
+                        <rect key="frame" x="106" y="153" width="232" height="120"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vma-dn-hQH">
+                                <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="ASP-NF-73z"/>
+                                    <constraint firstAttribute="width" constant="120" id="EFa-t7-6NI"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSApplicationIcon" id="dRB-Lh-ulW"/>
+                            </imageView>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ueS-fs-4kS">
+                                <rect key="frame" x="150" y="78" width="84" height="28"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Airtime" id="a94-Gt-xLB">
+                                    <font key="font" metaFont="systemSemibold" size="24"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oes-gf-ENT">
+                                <rect key="frame" x="150" y="54" width="84" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="appVersion" id="0RO-5U-lEd">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QnI-YM-qmv">
+                                <rect key="frame" x="150" y="34" width="84" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="appBuild" id="cfO-VJ-QcQ">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="33h-tW-4ho">
+                                <rect key="frame" x="150" y="14" width="84" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="osVersion" id="mpX-hL-4iw">
+                                    <font key="font" usesAppearanceFont="YES"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="QnI-YM-qmv" secondAttribute="trailing" id="9dk-Ru-rPh"/>
+                            <constraint firstItem="Oes-gf-ENT" firstAttribute="trailing" secondItem="ueS-fs-4kS" secondAttribute="trailing" id="FGM-cr-mPl"/>
+                            <constraint firstItem="QnI-YM-qmv" firstAttribute="trailing" secondItem="ueS-fs-4kS" secondAttribute="trailing" id="GDn-AV-za0"/>
+                            <constraint firstItem="33h-tW-4ho" firstAttribute="trailing" secondItem="ueS-fs-4kS" secondAttribute="trailing" id="JfM-Fb-aZ4"/>
+                            <constraint firstItem="QnI-YM-qmv" firstAttribute="leading" secondItem="ueS-fs-4kS" secondAttribute="leading" id="M35-ts-fdH"/>
+                            <constraint firstAttribute="trailing" secondItem="ueS-fs-4kS" secondAttribute="trailing" id="NB2-6H-Y0J"/>
+                            <constraint firstAttribute="bottom" secondItem="Vma-dn-hQH" secondAttribute="bottom" id="Px5-N2-Efy"/>
+                            <constraint firstItem="ueS-fs-4kS" firstAttribute="leading" secondItem="Vma-dn-hQH" secondAttribute="trailing" constant="32" id="RmV-7A-WvV"/>
+                            <constraint firstItem="Vma-dn-hQH" firstAttribute="leading" secondItem="9ff-Cj-NIz" secondAttribute="leading" id="WcW-qz-z6v"/>
+                            <constraint firstItem="QnI-YM-qmv" firstAttribute="top" secondItem="Oes-gf-ENT" secondAttribute="bottom" constant="4" id="c4p-ol-ye4"/>
+                            <constraint firstItem="33h-tW-4ho" firstAttribute="leading" secondItem="ueS-fs-4kS" secondAttribute="leading" id="fh5-GW-YBe"/>
+                            <constraint firstItem="Oes-gf-ENT" firstAttribute="top" secondItem="ueS-fs-4kS" secondAttribute="bottom" constant="8" symbolic="YES" id="if7-yg-bVk"/>
+                            <constraint firstItem="ueS-fs-4kS" firstAttribute="bottom" secondItem="Vma-dn-hQH" secondAttribute="centerY" constant="-18" id="jRp-pC-gJS"/>
+                            <constraint firstItem="Oes-gf-ENT" firstAttribute="leading" secondItem="ueS-fs-4kS" secondAttribute="leading" id="kkO-UG-8Tn"/>
+                            <constraint firstItem="33h-tW-4ho" firstAttribute="top" secondItem="QnI-YM-qmv" secondAttribute="bottom" constant="4" id="nKk-H1-r8W"/>
+                            <constraint firstItem="Vma-dn-hQH" firstAttribute="top" secondItem="9ff-Cj-NIz" secondAttribute="top" id="oDw-qz-8k9"/>
+                            <constraint firstAttribute="trailing" secondItem="Oes-gf-ENT" secondAttribute="trailing" id="wc3-Sk-fIG"/>
+                        </constraints>
+                        <gestureRecognizers>
+                            <clickGestureRecognizer delaysPrimaryMouseButtonEvents="YES" numberOfClicksRequired="1" id="xfF-Ix-c0w">
+                                <connections>
+                                    <action selector="toggleAppBuildDisplayMode:" target="-2" id="dxt-vV-VOA"/>
+                                </connections>
+                            </clickGestureRecognizer>
+                        </gestureRecognizers>
+                        <connections>
+                            <outlet property="menu" destination="iUU-uK-rS4" id="hLY-OV-iUa"/>
+                        </connections>
+                    </customView>
+                    <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P7U-4O-6wp">
+                        <rect key="frame" x="150" y="100" width="143" height="24"/>
+                        <buttonCell key="cell" type="push" title="Acknowledgements" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fXr-2f-Zfl">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="showAcknowledgements:" target="-2" id="ckG-fe-SFY"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="Ze0-U4-HQ2" secondAttribute="bottom" constant="-1" id="6Oi-ZJ-2Uy"/>
+                    <constraint firstItem="Ze0-U4-HQ2" firstAttribute="top" secondItem="P7U-4O-6wp" secondAttribute="bottom" constant="16" id="ETc-gP-6kJ"/>
+                    <constraint firstItem="P7U-4O-6wp" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="GGC-Wc-MQ5"/>
+                    <constraint firstItem="9ff-Cj-NIz" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="70" id="NLd-dh-Ug9"/>
+                    <constraint firstItem="9ff-Cj-NIz" firstAttribute="centerX" secondItem="se5-gp-TjO" secondAttribute="centerX" id="eP3-lx-THW"/>
+                    <constraint firstAttribute="trailing" secondItem="Ze0-U4-HQ2" secondAttribute="trailing" constant="-1" id="feT-d0-AlG"/>
+                    <constraint firstItem="Ze0-U4-HQ2" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="-1" id="nDR-wr-Ptm"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="-133.5" y="161.5"/>
+        </window>
+        <menu id="iUU-uK-rS4">
+            <items>
+                <menuItem title="Copy App Version" image="info.circle" catalog="system" keyEquivalent="c" id="CK5-4S-yL1" userLabel="Copy Version">
+                    <connections>
+                        <action selector="copyVersion:" target="-2" id="DeC-HO-KJP"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy System Report" image="chart.line.text.clipboard" catalog="system" keyEquivalent="C" id="DUc-J8-y4G" userLabel="Copy System Report">
+                    <connections>
+                        <action selector="copySystemReport:" target="-2" id="kwI-iO-QiO"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="208" y="151"/>
+        </menu>
+    </objects>
+    <resources>
+        <image name="NSApplicationIcon" width="32" height="32"/>
+        <image name="about-panel-at-slug" width="162" height="24"/>
+        <image name="chart.line.text.clipboard" catalog="system" width="14" height="18"/>
+        <image name="info.circle" catalog="system" width="15" height="15"/>
+        <namedColor name="about-panel-footer-background">
+            <color red="0.92900002002716064" green="0.92900002002716064" blue="0.92900002002716064" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="about-panel-footer-border">
+            <color red="0.76899999380111694" green="0.76899999380111694" blue="0.76899999380111694" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

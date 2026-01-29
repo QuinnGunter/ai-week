@@ -1,0 +1,15 @@
+{
+  "background_color": "white",
+  "description": "Airtime web application",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "assets/Icon-MacOS-256x256@1x.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "name": "Airtime",
+  "short_name": "Airtime",
+  "start_url": "."
+}

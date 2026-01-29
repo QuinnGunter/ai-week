@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Airtime Settings</title>
+    <link rel="stylesheet" href="../css/settings.css" />
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body class="light">
+    <div class="settings-panel">
+        <!-- Header -->
+        <section class="panel-header">
+            <img src="../images/AppIcon.png" alt="Settings" class="header-image" />
+        </section>
+
+        <!-- Launch Behavior -->
+        <section>
+            <h2>Launch Behavior</h2>
+            <div class="row">
+                <div class="labels">
+                    <div class="primary">Launch tool</div>
+                    <div class="secondary">
+                        Choose the tool to launch automatically when apps connect to the Airtime virtual camera.
+                    </div>
+                </div>
+                <div id="launch-tool-container"></div>
+            </div>
+        </section>
+
+        <!-- Keyboard Shortcuts -->
+        <section>
+            <h2>Keyboard Shortcuts</h2>
+            <small>To change a shortcut, click its box and press the desired key combination to record it or Escape to cancel.</small>
+
+            <div class="row">
+                <div class="labels">
+                    <div class="primary">Create or stop a screen recording</div>
+                    <div class="secondary">
+                        Opens Screen Recorder to start a recording, or stops the recording if one is running.
+                    </div>
+                </div>
+                <input class="shortcut-input" id="shortcut1" data-key="shortcuts.createOrStopRecording" readonly value="Ctrl+Shift+2" />
+            </div>
+
+            <div class="row">
+                <div class="labels">
+                    <div class="primary">Record an entire screen</div>
+                    <div class="secondary">
+                        Opens Screen Recorder to start a recording of an entire screen.
+                    </div>
+                </div>
+                <input class="shortcut-input" id="shortcut2" data-key="shortcuts.recordEntireScreen" readonly value="Ctrl+Shift+6" />
+            </div>
+
+            <div class="row">
+                <div class="labels">
+                    <div class="primary">Record a window</div>
+                    <div class="secondary">
+                        Opens Screen Recorder to start a recording of a specific window.
+                    </div>
+                </div>
+                <input class="shortcut-input" id="shortcut3" data-key="shortcuts.recordWindow" readonly value="Ctrl+Shift+7" />
+            </div>
+
+            <button class="restore-btn">Restore Defaults</button>
+        </section>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

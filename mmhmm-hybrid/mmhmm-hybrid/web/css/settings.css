@@ -1,0 +1,224 @@
+body.light,
+body.dark {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-y: hidden;
+    background-color: var(--background-primary);
+}
+
+.settings-panel {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 0 40px 0px;
+    background-color: var(--background-primary);
+    color: var(--content-primary);
+}
+
+.panel-header {
+    margin-top: 20px;
+}
+
+.header-image {
+    max-width: 100px;
+    max-height: 100px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+}
+
+section {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 8px;
+}
+
+body.dark section {
+    background-color: var(--background-tertiary);
+}
+
+h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: var(--content-primary);
+}
+
+small {
+    font-size: 12px;
+    color: var(--content-secondary);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 16px 0;
+}
+
+.labels {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.primary {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--content-primary);
+}
+
+.secondary {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--content-secondary);
+    line-height: 16px;
+    text-wrap: pretty;
+}
+
+.shortcut-input {
+    width: 160px;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 6px;
+    border: 1px solid var(--border-primary);
+    background-color: var(--background-tertiary);
+    color: var(--content-primary);
+    text-align: center;
+    font-family: "Consolas", monospace;
+    cursor: pointer;
+    appearance: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.shortcut-input:hover {
+    background-color: var(--background-quaternary);
+}
+
+.shortcut-input:focus {
+    outline: none;
+    border-color: var(--border-accent);
+    box-shadow: 0 0 0 2px var(--action-hover);
+}
+
+.restore-btn {
+    margin-top: 10px;
+    padding: 4px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    background-color: var(--action-primary);
+    color: #000000;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+}
+
+.restore-btn:hover:enabled {
+    background-color: var(--action-hover);
+}
+
+.restore-btn:disabled {
+    background-color: var(--background-disabled);
+    color: var(--content-tertiary);
+    cursor: not-allowed;
+}
+
+.dropdown-wrapper {
+    position: relative;
+    width: 160px;
+    font-size: 13px;
+}
+
+.dropdown-toggle {
+    padding: 4px 8px;
+    background-color: var(--background-secondary);
+    color: var(--content-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+    border-color: var(--border-accent);
+    box-shadow: 0 0 0 2px var(--action-hover);
+    outline: none;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    margin-top: 4px;
+    padding: 4px 0;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 10;
+    list-style: none;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    line-height: 1.4;
+    min-height: 32px;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    background-color: var(--action-hover);
+}
+
+.dropdown-item.selected {
+    background-color: var(--action-secondary);
+    color: var(--content-alternative);
+}
+
+.dropdown-item.highlighted {
+    background-color: var(--action-hover);
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.toast.visible {
+    opacity: 1;
+}

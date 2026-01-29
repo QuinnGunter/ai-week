@@ -1,0 +1,22 @@
+# mac-az-pipeline-variables.yml
+#
+# This is a variable template file to be included in Azure DevOps pipelines.
+# Variable template files support only variables as content.
+#
+# Note: Variable groups are defined in the Azure DevOps pipeline library.
+
+variables:
+  - group: CodeSigning
+  - group: Tokens
+  - name: xcodePath
+    value: "/Applications/Xcode_26.1.app"
+  - name: productName
+    value: "Airtime"
+  - name: cameraDMGName
+    value: "AirtimeCamera"
+  - name: creatorDMGName
+    value: "AirtimeCreator"
+  - name: stacksDMGName
+    value: "AirtimeStacks"
+  - name: recorderDMGName
+    value: "AirtimeScreenRecorder"

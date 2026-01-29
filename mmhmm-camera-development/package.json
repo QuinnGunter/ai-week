@@ -1,0 +1,61 @@
+{
+  "name": "mmhmm-camera",
+  "version": "0.0.0",
+  "description": "mmhmm camera",
+  "main": "",
+  "devDependencies": {
+    "@playwright/test": "^1.50.1",
+    "@sentry/vite-plugin": "^3.3.1",
+    "@types/micromatch": "^4.0.9",
+    "@types/node": "^20.11.5",
+    "acorn": "^8.10.0",
+    "acorn-walk": "^8.2.0",
+    "css-tree": "2.3.1",
+    "esbuild": "^0.25.3",
+    "eslint": "^8.52.0",
+    "express": "^4.19.2",
+    "express-sslify": "^1.2.0",
+    "http-server": "^14.1.1",
+    "micromatch": "^4.0.8",
+    "sinon": "^17.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3",
+    "vite-plugin-static-copy": "^2.3.1",
+    "vitest": "^3.1.2"
+  },
+  "scripts": {
+    "start" : "node local_development/simple-http-server.js",
+    "start:python": "python3 -m http.server --directory teleport",
+    "start:https": "node local_development/simple-https-server.js",
+    "start:test": "http-server ./ -p 3001",
+    "debug-hybrid-chrome": "open \"/Applications/airtime.app\" --args --remote-debugging-port=9222 --user-data-dir=remote-profile && open -a \"Google Chrome\" \"chrome://inspect/#devices\"",
+    "debug-hybrid-brave": "open \"/Applications/airtime.app\" --args --remote-debugging-port=9222 --user-data-dir=remote-profile && open -a \"Brave Browser\" \"chrome://inspect/#devices\"",
+    "local-hybrid-brave": "open \"/Applications/airtime.app\" --args --remote-debugging-port=9222 --user-data-dir=remote-profile --url=http://localhost:8000 && open -a \"Brave Browser\" \"chrome://inspect/#devices\"",
+    "lint": "eslint teleport/main.js",
+    "localize": "node teleport/genstrings.js",
+    "win-start": "http-server teleport -p 8000",
+    "test:action_bar": "npx playwright test tests/action_bar --project chromium",
+    "test:network": "npx playwright test tests/network --project chromium",
+    "test:renderer": "npx playwright test tests/renderer --project chromium",
+    "test:utils": "npx playwright test tests/utils --project chromium",
+    "test:logger": "npx playwright test tests/logger --project chromium",
+    "test:all": "npx playwright test --project chromium",
+    "test:unit": "vitest",
+    "dev": "vite --port 8000",
+    "build": "vite build",
+    "build-internal": "vite build --mode internal",
+    "preview": "vite preview --port 8000",
+    "typecheck": "tsc --noEmit"
+  },
+  "author": "mmhmm",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "node-html-parser": "^6.1.13"
+  },
+  "prettier": {
+    "tabWidth": 4,
+    "printWidth": 90,
+    "singleQuote": false,
+    "trailingComma": "none"
+  }
+}

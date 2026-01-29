@@ -1,0 +1,29 @@
+//
+//  mmhmm Camera.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+CODE_SIGN_ENTITLEMENTS = $(PROJECT_DIR)/CameraExtension/extension.entitlements
+CODE_SIGN_IDENTITY[config=Debug] = Apple Development
+CODE_SIGN_IDENTITY[config=Release] = Developer ID Application
+CODE_SIGN_STYLE[config=Debug] = Automatic
+CODE_SIGN_STYLE[config=Release] = Manual
+DEBUG_INFORMATION_FORMAT[config=Debug] = dwarf
+DEBUG_INFORMATION_FORMAT[config=Release] = dwarf-with-dsym
+DEVELOPMENT_TEAM[config=Debug] = M3KUT44L48
+DEVELOPMENT_TEAM[config=Release] = M3KUT44L48
+GENERATE_INFOPLIST_FILE = YES
+INFOPLIST_FILE = $(PROJECT_DIR)/CameraExtension/Info.plist
+INFOPLIST_KEY_CFBundleDisplayName = Airtime Virtual Camera
+INFOPLIST_KEY_NSSystemExtensionUsageDescription = "This application needs to install a camera extension to provide virtual camera functionality for video conferencing and recording."
+// Used in update checks.
+CURRENT_PROJECT_VERSION = 17
+MACOSX_DEPLOYMENT_TARGET = 13.0
+MARKETING_VERSION = 1.5
+PRODUCT_BUNDLE_IDENTIFIER = app.mmhmm.hybrid.extension
+PROVISIONING_PROFILE_SPECIFIER[config=Release] = Airtime Extension Developer ID Application

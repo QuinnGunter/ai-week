@@ -1,0 +1,34 @@
+name: Delete preview build
+on:
+  workflow_dispatch:
+  delete:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # Extract the issue number from a branch name, e.g. extract
+    # "1234" from "feature/1234-amazing-stuff", or
+    # "4321" from "4321_fix_the_bugs"
+    - name: Extract issue number
+      id: issue-extractor
+      run: echo "ISSUE_NUMBER=$(echo $BRANCH_NAME | sed -rn 's/^([a-zA-Z]+\/)?([0-9]{4,5})[_-].*$/\2/p')" >> "$GITHUB_OUTPUT"
+      env:
+        BRANCH_NAME: ${{ github.event.ref }}
+
+    - name: Configure AWS Credentials
+      if: ${{ steps.issue-extractor.outputs.ISSUE_NUMBER != ''}}
+      uses: aws-actions/configure-aws-credentials@v1-node16
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ vars.AWS_REGION }}
+
+    # Delete /preview/ID, where ID is the GitHub issue number
+    - name: Delete deployment from S3
+      if: ${{ steps.issue-extractor.outputs.ISSUE_NUMBER != ''}}
+      run: aws s3 rm --recursive s3://${{vars.AWS_S3_BUCKET}}/preview/$ISSUE_NUMBER
+      env:
+        ISSUE_NUMBER: ${{ steps.issue-extractor.outputs.ISSUE_NUMBER }}

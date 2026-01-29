@@ -1,0 +1,78 @@
+diff --git a/cmake/cef_variables.cmake.in b/cmake/cef_variables.cmake.in
+index 1cd0c6e43..11d62566a 100644
+--- a/cmake/cef_variables.cmake.in
++++ b/cmake/cef_variables.cmake.in
+@@ -580,6 +580,16 @@ if(OS_WINDOWS)
+     vk_swiftshader.dll
+     vk_swiftshader_icd.json
+     vulkan-1.dll
++    tpxai_segmentation.dll
++    openvino.dll
++    openvino_intel_cpu_plugin.dll
++    openvino_intel_gpu_plugin.dll
++    openvino_onnx_frontend.dll
++    tbb12.dll
++    DirectML.dll
++    Microsoft.AI.MachineLearning.dll
++    onnxruntime.dll
++    resources
+     )
+ 
+   if(PROJECT_ARCH STREQUAL "x86_64")
+diff --git a/tools/make_distrib.py b/tools/make_distrib.py
+index aa921067f..264be3449 100644
+--- a/tools/make_distrib.py
++++ b/tools/make_distrib.py
+@@ -1068,6 +1068,15 @@ elif platform == 'windows':
+       {'path': 'vk_swiftshader.dll'},
+       {'path': 'vk_swiftshader_icd.json'},
+       {'path': 'vulkan-1.dll'},
++      {'path': 'tpxai_segmentation.dll'},
++      {'path': 'openvino.dll'},
++      {'path': 'openvino_intel_cpu_plugin.dll'},
++      {'path': 'openvino_intel_gpu_plugin.dll'},
++      {'path': 'openvino_onnx_frontend.dll'},
++      {'path': 'tbb12.dll'},
++      {'path': 'DirectML.dll'},
++      {'path': 'Microsoft.AI.MachineLearning.dll'},
++      {'path': 'onnxruntime.dll'},
+   ]
+   pdb_files = [
+       {'path': 'chrome_elf.dll.pdb'},
+@@ -1078,6 +1087,14 @@ elif platform == 'windows':
+       {'path': 'vk_swiftshader.dll.pdb'},
+       {'path': 'vulkan-1.dll.pdb'},
+   ]
++  seglib_resources = [
++      {'path': 'seglib_win_segnetu.json.cpu'},
++      {'path': 'seglib_win_segnetu.json.gpu'},
++      {'path': 'seglib_win_segnetu.json.segnet'},
++      {'path': 'seglib_win_segnetu.json.winml'},
++      {'path': 'VisionTalk'},
++      {'path': 'SegNet'},
++  ]
+   # yapf: enable
+ 
+   if mode == 'client':
+@@ -1125,6 +1142,10 @@ elif platform == 'windows':
+         valid_build_dir = build_dir
+         dst_dir = os.path.join(output_dir, 'Debug')
+         copy_files_list(build_dir, dst_dir, binaries)
++      # copy seglib resource files
++      seglib_res_dir = os.path.join(dst_dir, 'resources')
++      seglib_res_src = os.path.join(build_dir, 'resources')
++      copy_files_list(seglib_res_src, seglib_res_dir, seglib_resources)
+ 
+       if not options.nosymbols and mode != 'release-symbols':
+         # create the symbol output directory
+@@ -1143,6 +1164,10 @@ elif platform == 'windows':
+       valid_build_dir = build_dir
+       dst_dir = os.path.join(output_dir, 'Release')
+       copy_files_list(build_dir, dst_dir, binaries)
++      # copy seglib resource files
++      seglib_res_dir = os.path.join(dst_dir, 'resources')
++      seglib_res_src = os.path.join(build_dir, 'resources')
++      copy_files_list(seglib_res_src, seglib_res_dir, seglib_resources)
+ 
+     if not options.nosymbols and mode != 'debug-symbols':
+       # create the symbol output directory

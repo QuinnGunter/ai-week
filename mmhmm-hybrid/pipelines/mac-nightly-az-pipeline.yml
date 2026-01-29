@@ -1,0 +1,41 @@
+# mac-nightly-az-pipeline.yml
+#
+# This pipeline runs tests for and builds the release configuration of the mmhmm hybrid macOS app.
+# It is scheduled to run once per day, if there are any changes on the included branches.
+
+parameters:
+  - name: debugMode
+    displayName: Pipeline Debug Mode and Verbose Logs
+    type: boolean
+    default: false
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger: none
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+pr: none
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/process/scheduled-triggers?view=azure-devops&tabs=yaml
+schedules:
+- cron: '0 6 * * *' # 6 am UTC
+  displayName: macOS nightly run
+  branches:
+    include:
+    - main
+
+variables:
+  - template: templates/mac-az-pipeline-variables.yml
+
+stages:
+  - stage: Tests
+    displayName: "Unit and UI Tests"
+    jobs:
+    - template: templates/mac-az-pipeline-test.yml
+      parameters:
+        debugMode: ${{ parameters.debugMode }}
+  - stage: Build
+    displayName: "Build Check"
+    dependsOn: [] # Explicitly not depending on the previous stage
+    jobs:
+    - template: templates/mac-az-pipeline.yml
+      parameters:
+        mode: publish
+        debugMode: ${{ parameters.debugMode }}

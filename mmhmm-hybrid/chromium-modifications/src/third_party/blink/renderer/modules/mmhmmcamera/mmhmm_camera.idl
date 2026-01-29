@@ -1,0 +1,17 @@
+enum CameraState { "inactive", "streaming" };
+
+[
+    ActiveScriptWrappable,
+    Exposed=Window
+] interface MmhmmCamera : EventTarget {
+    [CallWith=ExecutionContext, RaisesException] constructor(MediaStream stream);
+    readonly attribute MediaStream stream;
+    readonly attribute CameraState state;
+
+    attribute EventHandler onstart;
+    attribute EventHandler onstop;
+    attribute EventHandler onerror;
+
+    [RaisesException] void start();
+    [RaisesException] void stop();
+};

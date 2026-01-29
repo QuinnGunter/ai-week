@@ -1,0 +1,15 @@
+module blink.mojom;
+
+import "mojo/public/mojom/base/string16.mojom";
+import "ui/gfx/mojom/buffer_types.mojom";
+
+// Interface to provided platform handle IPC communication
+
+interface MappedMemory {
+
+    Initialize() => (bool result);
+
+    SendHandle(gfx.mojom.GpuMemoryBufferHandle gmb);
+      
+    Dispose(string name) => (bool result);
+};

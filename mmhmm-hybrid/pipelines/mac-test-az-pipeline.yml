@@ -1,0 +1,24 @@
+# mac-test-az-pipeline.yml
+#
+# This pipeline runs the tests for the mmhmm hybrid macOS app.
+
+parameters:
+  - name: debugMode
+    displayName: Pipeline Debug Mode and Verbose Logs
+    type: boolean
+    default: false
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger: none
+
+# While this pipeline has no PR triggers configured, triggering it manually through a PR comment is a good alternative:
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#comment-triggers
+pr: none
+
+variables:
+  - template: templates/mac-az-pipeline-variables.yml
+
+jobs:
+  - template: templates/mac-az-pipeline-test.yml
+    parameters:
+      debugMode: ${{ parameters.debugMode }}

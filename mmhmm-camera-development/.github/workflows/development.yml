@@ -1,0 +1,12 @@
+on:
+    push:
+        branches:
+        - development
+
+jobs:
+    deploy:
+        uses: ./.github/workflows/deploy.yml
+        with:
+            MMHMM_ENV: development
+        secrets:
+            inherit

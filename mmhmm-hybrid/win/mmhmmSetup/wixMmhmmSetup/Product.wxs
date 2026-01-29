@@ -1,0 +1,174 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:fire="http://wixtoolset.org/schemas/v4/wxs/firewall">
+	<?include Configurations/$(var.MmhmmHybridApplicationConfiguration)/Configuration.wxi ?>
+
+	<?define ResourcesDir = $(sys.CURRENTDIR)\Assets\?>
+	
+	<Package Name="$(var.MmhmmProductNameShort)" Language="1033" Version="!(bind.fileVersion.mmhmmExecutableId)" Manufacturer="mmhmm" UpgradeCode="$(var.MmhmmProductUpgradeCode)" Scope="perUser">
+		<SummaryInformation Manufacturer="mmhmm" Description="Airtime !(bind.fileVersion.mmhmmExecutableId)" />
+
+		<Icon Id="Airtime.ico" SourceFile="Assets\Airtime.ico" />
+		<Property Id="ARPPRODUCTICON" Value="Airtime.ico" />
+
+		<Property Id="USERUUID" Secure="yes">
+			<RegistrySearch Id="user_uuid" Type="raw" Root="HKCU" Key="Software/MmhmmDesktop" Name="UserUUID" />
+		</Property>
+
+		<Property Id="APPVERSION" Secure="yes" Value="!(bind.fileVersion.mmhmmExecutableId)" />
+		<Property Id="PREREQ_STATUS" Value="0" />
+		<Property Id="PREREQ_FAILURE_REASON" Value="All prerequisites are met." />
+		<Property Id="UNINSTALL_REASON" Value="not set" />
+		<Property Id="ExtendedError" Value="no error" />
+		<Property Id="CAMERA_NEEDS_UPGRADE" Secure="yes"/>
+		<Property Id="ALREADY_RAN_DETECT" Secure="yes"/>
+		<Property Id="INSTALL_DRIVER" Value="0" />
+
+		<Property Id="AppTrack" Value="$(var.AppTrack)" />
+		<Property Id="AppName" Value="$(var.AppName)" />
+		<Property Id="LaunchApp" Value="$(var.LaunchApp)"/>
+
+		<Property Id="MsiLogging" Value="vx" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch $(var.AppName)" />
+		<Property Id="REINSTALLMODE" Value="amus" />
+
+		<WixVariable Id="WixUIBannerBmp" Value="$(var.ResourcesDir)banner.jpg" />
+		<WixVariable Id="WixUIDialogBmp" Value="$(var.ResourcesDir)background.jpg" />
+
+		<Property Id="WixShellExecTarget" Value="[INSTALLFOLDER]Airtime.exe" />
+
+		<Binary Id="ExtendedActions" SourceFile="$(var.ExtendedInstaller.TargetDir)$(var.ExtendedInstaller.TargetName).CA.dll" />
+
+		<CustomAction Id="LaunchApplication" ExeCommand="" Execute="immediate" Return="asyncNoWait" Impersonate="yes" FileRef="mmhmmExecutableId" />
+		<CustomAction Id="InstallAttemptedAction" DllEntry="ReportInstallAttempted" Execute="immediate" Impersonate="no" Return="ignore" BinaryRef="ExtendedActions" />
+		<CustomAction Id="InstallCancelledAction" DllEntry="ReportInstallCancelled" Execute="immediate" Impersonate="no" Return="ignore" BinaryRef="ExtendedActions" />
+		<CustomAction Id="InstallSuccessAction" DllEntry="ReportInstallSuccess" Execute="immediate" Impersonate="no" Return="ignore" BinaryRef="ExtendedActions" />
+		<CustomAction Id="InstallErrorAction" DllEntry="ReportInstallError" Execute="immediate" Impersonate="no" Return="ignore" BinaryRef="ExtendedActions" />
+		<CustomAction Id="GenerateUserUUID" DllEntry="GenerateUserUUID" Execute="immediate" Impersonate="no" Return="ignore" BinaryRef="ExtendedActions" />
+		<CustomAction Id="CheckPrerequisites" DllEntry="CheckPrerequisites" Execute="immediate" Impersonate="yes" Return="check" BinaryRef="ExtendedActions"/>
+		<CustomAction Id="UninstallCamera" DllEntry="UninstallCamera" Execute="immediate" Impersonate="yes" Return="check" BinaryRef="ExtendedActions"/>
+		<CustomAction Id="InstallCamera" DllEntry="InstallCamera" Execute="immediate" Impersonate="yes" Return="check" BinaryRef="ExtendedActions"/>
+		<CustomAction Id="DetectOldProducts" DllEntry="DetectOldProducts" Execute="immediate" Impersonate="yes" Return="check" BinaryRef="ExtendedActions"/>
+		<CustomAction Id="UninstallFormAction" DllEntry="ShowUninstallForm" Execute="immediate" Impersonate="yes" Return="ignore" BinaryRef="ExtendedActions"/>
+		
+		<UI Id="UserInterface">
+			<Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR" />
+			<Property Id="WixUI_Mode" Value="Custom" />
+
+			<TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+			<TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="9" Bold="yes" />
+			<TextStyle Id="WixUI_Font_Title" FaceName="Tahoma" Size="9" Bold="yes" />
+
+			<Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+
+			<Publish Dialog="WelcomeDlg" Control="Next" Event="DoAction" Value="CheckPrerequisites" Order="1" />
+			<Publish Dialog="WelcomeDlg" Control="Next" Event="EndDialog" Value="Return" Order="2" Condition="PREREQ_STATUS = 2" />
+			<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="PrereqFailureDlg" Order="2" Condition="PREREQ_STATUS = 0 OR PREREQ_STATUS = 1" />
+
+			<Dialog Id="PrereqFailureDlg" Width="350" Height="120" Title="[AppName] Setup" NoMinimize="yes">
+				<Control Id="Title" Type="Text" X="55" Y="15" Width="280" Height="30" Transparent="yes" NoPrefix="yes">
+					<Text Value="{\WixUI_Font_Title}Prerequisite Check Failed" />
+				</Control>
+				<Control Id="Line" Type="Line" X="10" Y="50" Width="330" Height="1" />
+				<Control Id="Description" Type="Text" X="15" Y="60" Width="320" Height="40">
+					<Text Value="{\WixUI_Font_Normal}[PREREQ_FAILURE_REASON]" />
+				</Control>
+				<Control Id="Finish" Type="PushButton" X="145" Y="100" Width="60" Height="17" Default="yes" Cancel="yes" Text="Close">
+					<Publish Event="EndDialog" Value="Exit" />
+				</Control>
+			</Dialog>
+    	
+			<DialogRef Id="ErrorDlg" />
+			<DialogRef Id="FatalError" />
+			<DialogRef Id="UserExit" />
+			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LaunchApplication" Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 and NOT Installed" />
+			<Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999" />
+		</UI>
+		
+		<UIRef Id="WixUI_Common"/>
+		<UIRef Id="WixUI_ErrorProgressText" />
+
+		<Upgrade Id="$(var.MmhmmProductUpgradeCode)">
+			<UpgradeVersion Maximum="99.0.0.0" Property="OLDPRODUCTFOUND" OnlyDetect="no" IncludeMinimum="yes" IncludeMaximum="no" Language="1033"/>
+		</Upgrade>
+		<InstallUISequence>
+			<FindRelatedProducts Suppress="yes"/>
+			<Custom Action="DetectOldProducts" Before='FindRelatedProducts' Condition='NOT Installed' />
+			<Custom Action="VSDCA_AllUsers" After="CostInitialize" Condition="Installed=&quot;&quot; AND NOT RESUME AND ALLUSERS=1" />
+		</InstallUISequence>
+		<InstallExecuteSequence>
+			<!-- mixpanel events -->
+			<FindRelatedProducts Suppress="yes"/>
+			<Custom Action="UninstallFormAction" Before="LaunchConditions" Condition="(REMOVE=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE) AND NOT UILevel=2" />
+			<Custom Action="DetectOldProducts" Before='FindRelatedProducts' Condition='NOT Installed AND NOT ALREADY_RAN_DETECT' />
+			<Custom Action="InstallAttemptedAction" Before="InstallInitialize" Condition="NOT Installed AND NOT OLDPRODUCTFOUND" />
+			<Custom Action="InstallCancelledAction" OnExit="cancel" Condition="NOT Installed AND NOT OLDPRODUCTFOUND" />
+			<Custom Action="InstallSuccessAction" OnExit="success" Condition="(NOT Installed AND NOT OLDPRODUCTFOUND) OR (REMOVE=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE)" />
+			<Custom Action="InstallErrorAction" OnExit="error" Condition="NOT Installed AND NOT OLDPRODUCTFOUND" />
+			<Custom Action="GenerateUserUUID" After="FindRelatedProducts" />
+			<Custom Action="UninstallCamera" Before="RemoveFiles" Condition="NOT UPGRADINGPRODUCTCODE"/>
+			<Custom Action="InstallCamera" After="InstallFinalize" Condition="(CAMERA_NEEDS_UPGRADE OR INSTALL_DRIVER = 1) AND (NOT REMOVE=&quot;ALL&quot;)"/>
+
+			<RemoveExistingProducts Before="CostInitialize" />
+			<!--Enables full downgrade/-->
+			<Custom Action="VSDCA_AllUsers" After="CostInitialize" Condition="Installed=&quot;&quot; AND NOT RESUME AND ALLUSERS=1" />
+
+		</InstallExecuteSequence>
+		<CustomAction Id="VSDCA_AllUsers" Property="ALLUSERS" Value="2" Execute="firstSequence" />
+		<Property Id="ARPCONTACT" Value="Mmhmm" />
+		<MediaTemplate EmbedCab="yes" />
+		<Feature Id="ProductFeature" Title="Airtime Setup" Level="1">
+			<ComponentGroupRef Id="mmhmmHybridComponentGroup" />
+			<ComponentRef Id="ApplicationShortcutDesktop" />
+			<ComponentRef Id="ApplicationShortcut" />
+			<ComponentRef Id="ApplicationLinkcomponent" />
+		</Feature>
+	</Package>
+	<Fragment>
+		<DirectoryRef Id="ApplicationProgramsFolder">
+			<Component Id="ApplicationShortcut" Guid="$(var.MmhmmStartupMenuGuid)">
+				<Shortcut Id="ApplicationStartMenuShortcut" Name="$(var.MmhmmProductName)" Target="[INSTALLFOLDER]Airtime.exe" WorkingDirectory="INSTALLFOLDER" />
+				<RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall" />
+			</Component>
+			<Component Id="ApplicationLinkcomponent" Guid="$(var.MmhmmApplicationUrlGuid)">
+				<RegistryKey Root="HKCR" Key="$(var.MmhmmProtocolName)" ForceCreateOnInstall="yes" ForceDeleteOnUninstall="yes">
+					<RegistryValue Type="string" Name="URL Protocol" Value="" />
+					<RegistryValue Type="string" Value="URL:$(var.MmhmmProtocolName)" />
+					<RegistryKey Key="DefaultIcon">
+						<RegistryValue Type="string" Value="[INSTALLFOLDER]Airtime.exe" />
+					</RegistryKey>
+					<RegistryKey Key="shell\open\command">
+						<RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]Airtime.exe&quot; &quot;%1&quot;" />
+					</RegistryKey>
+				</RegistryKey>
+			</Component>
+		</DirectoryRef>
+		<!--desktop shortcut-->
+		<StandardDirectory Id="DesktopFolder">
+			<Component Id="ApplicationShortcutDesktop" Guid="$(var.MmhmmShotrcutGuid)">
+				<!--Description="mmhmm $(var.mmhmmNet.Configuration)"/-->
+				<Shortcut Id="ApplicationDesktopShortcut" Name="$(var.MmhmmProductName)" Target="[INSTALLFOLDER]Airtime.exe" WorkingDirectory="INSTALLFOLDER" />
+				<RemoveFolder Id="DesktopFolder" On="uninstall" />
+				<RegistryValue Root="HKCU" Key="Software\MmhmmDesktop" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+				<RegistryValue Root="HKCU" Key="Software\MmhmmDesktop" Name="UserUUID" Type="string" Value="[USERUUID]" KeyPath="no" />
+				<RegistryValue Root="HKCU" Key="Software\MmhmmDesktop" Name="LaunchApp" Type="string" Value="[LaunchApp]" KeyPath="no" />
+				<RegistryValue Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="Airtime" Type="string" Value="[INSTALLFOLDER]Airtime.exe --silent" KeyPath="no"/>
+			</Component>
+		</StandardDirectory>
+		<!--application dir tree-->
+		<StandardDirectory Id="LocalAppDataFolder">
+			<Directory Id="INSTALLFOLDER" Name="$(var.MmhmmInstallDir)">
+				<!--wixMmhmmSetup/-->
+				<Directory Id="MMHMMLOCALES" Name="locales">
+				</Directory>
+				<Directory Id="SERVICE" Name="service">
+				</Directory>
+				<Directory Id="CAMERA" Name="Camera">
+				</Directory>
+			</Directory>
+		</StandardDirectory>
+		<!-- Start menu shortcut -->
+		<StandardDirectory Id="ProgramMenuFolder">
+			<Directory Id="ApplicationProgramsFolder" Name="$(var.MmhmmProductName)" />
+		</StandardDirectory>
+	</Fragment>
+</Wix>

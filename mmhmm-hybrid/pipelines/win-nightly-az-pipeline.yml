@@ -1,0 +1,19 @@
+# win-build-az-pipeline.yml
+#
+# This pipeline builds the Windows hybrid app and publishes the build artifacts.
+# It is scheduled to run once per day, if there are any changes on the included branches.
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger: none
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+pr: none
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/process/scheduled-triggers?view=azure-devops&tabs=yaml
+schedules:
+- cron: '0 6 * * *'
+  displayName: Windows nightly build
+  branches:
+    include:
+    - main
+
+jobs:
+  - template: templates/win-az-pipeline.yml

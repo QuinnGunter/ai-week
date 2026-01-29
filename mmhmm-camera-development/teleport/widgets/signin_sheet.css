@@ -1,0 +1,77 @@
+/*
+ * Sign In / Create Account Sheet
+ */
+
+div.sheet.sign_in_sheet {
+  background-color: var(--background-primary);
+}
+
+div.sheet.sign_in_sheet div.titlebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  height: 44px;
+  gap: 10px;
+}
+
+div.sheet.sign_in_sheet div.titlebar div.title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--content-primary);
+  line-height: 20px;
+}
+
+div.sheet.sign_in_sheet div.titlebar button svg {
+  fill: var(--content-tertiary);
+  width: 14px;
+  height: 14px;
+}
+
+div.sheet.sign_in_sheet div.titlebar button:hover svg {
+  fill: var(--content-primary);
+}
+
+div.sheet.sign_in_sheet div.contents {
+  padding: 4px 12px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+div.sheet.sign_in_sheet div.contents img.sign_in_icon {
+  display: block;
+  margin: 0 auto;
+}
+
+div.sheet.sign_in_sheet div.contents p.sign_in_message {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--content-primary);
+  line-height: 16px;
+}
+
+div.sheet.sign_in_sheet div.contents div.sign_in_options {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+div.sheet.sign_in_sheet div.contents div.sign_in_options button {
+  font-size: 12px;
+}
+
+div.sheet.sign_in_sheet div.contents div.sign_in_options button.sign_in_create {
+  color: var(--content-primary);
+  background-color: var(--border-secondary);
+}
+
+body.light div.sign_in_sheet div.contents div.sign_in_options button.sign_in_create {
+  color: #15141a; /* Intentionally Fixed */
+}
+
+div.sheet.sign_in_sheet div.contents div.sign_in_options button.sign_in_create:hover {
+  background-color: var(--border-primary);
+}

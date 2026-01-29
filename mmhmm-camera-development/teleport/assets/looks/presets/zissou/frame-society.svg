@@ -1,0 +1,18 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+    :root {
+        --background: #5B7275;
+    }
+    .background {
+    	fill: var(--background);
+    }
+</style>
+<g clip-path="url(#clip0_378_137025)">
+<path d="M1920 1080H0V0H1920V1080ZM190 115C167.909 115 150 132.909 150 155V815C150 837.091 167.909 855 190 855H1730C1752.09 855 1770 837.091 1770 815V155C1770 132.909 1752.09 115 1730 115H190Z" class="background"/>
+</g>
+<defs>
+<clipPath id="clip0_378_137025">
+<rect width="1920" height="1080" fill="white"/>
+</clipPath>
+</defs>
+</svg>

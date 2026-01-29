@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "A393405F-E92E-4B2B-81EB-43D33E70CDBA",
+      "name" : "Vanilla",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "commandLineArgumentEntries" : [
+      {
+        "argument" : "--args --remote-debugging-port=9222 --user-data-dir=remote-profile"
+      }
+    ],
+    "diagnosticCollectionPolicy" : "Always",
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "skippedTests" : [
+        "UITestBase",
+        "mmhmmUITests",
+        "mmhmmUITests\/testLaunchPerformance()"
+      ],
+      "target" : {
+        "containerPath" : "container:mmhmm.xcodeproj",
+        "identifier" : "FD15B17E2C47E38D00D0D5ED",
+        "name" : "mmhmmUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

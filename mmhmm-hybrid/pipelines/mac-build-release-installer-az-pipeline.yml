@@ -1,0 +1,54 @@
+# mac-build-release-installer-az-pipeline.yml
+#
+# This pipeline builds the mmhmm hybrid macOS release build configuration, creates a
+# notarized installer and distributes the build artifacts to their respective target locations.
+# Release tracks are selectable as parameters, e.g. through Azure DevOps' pipeline UI.
+#
+# Use this pipeline to create and distribute releases.
+
+parameters:
+  - name: debugMode
+    displayName: Pipeline Debug Mode and Verbose Logs
+    type: boolean
+    default: false
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger:
+  - release/mac/*
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+# Note: Additionally disabled through Azure DevOps UI: Select pipeline > Edit > 3 dots menu button > Triggers > Pull request validation
+pr: none
+
+variables:
+  - template: templates/mac-az-pipeline-variables.yml
+  - template: templates/mac-branch-variables.yml
+
+stages:
+  - stage: Build
+    displayName: "Build"
+    jobs:
+    - template: templates/mac-az-pipeline.yml
+      parameters:
+        mode: createArchive
+        createInstaller: true
+        track: ${{ variables.track }}
+        debugMode: ${{ parameters.debugMode }}
+  - stage: Distribute
+    displayName: "Distribute"
+    dependsOn: Build
+    jobs:
+    - template: templates/mac-az-pipeline-distribute.yml
+      parameters:
+        buildVersion: $[stageDependencies.Build.BuildJob.outputs['BuildVersion.buildVersion']]
+        gitTagName: $[stageDependencies.Build.BuildJob.outputs['VersionNames.gitTagName']]
+        bundleArchiveName: $[stageDependencies.Build.BuildJob.outputs['VersionNames.archiveName']]
+        createGitTag: ${{ variables.gitTagCreation }}
+        requiresApproval: ${{ variables.releaseApproval }}
+        debugMode: ${{ parameters.debugMode }}
+        track: ${{ variables.track }}
+  - stage: Update
+    displayName: "Update Release Index"
+    dependsOn: Distribute
+    jobs:
+    - template: templates/x-az-pipeline-update-releases.yml

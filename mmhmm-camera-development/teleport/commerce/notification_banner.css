@@ -1,0 +1,146 @@
+/* Show only the first non-hidden banner */
+#notifications-banner .banner:not(.hidden) ~ .banner:not(.hidden) {
+    height: 0;
+    min-height: 0;
+    border-bottom: 0;
+    color: transparent;
+}
+
+#notifications-banner .ghost_button {
+    height: var(--size-6);
+    padding: var(--size-1);
+}
+
+#notifications-banner .ghost_button svg {
+    height: var(--size-4);
+    width: var(--size-4);
+}
+
+#notifications-banner .banner {
+    border-bottom: 1px solid var(--background-tertiary);
+    color: var(--content-tertiary);
+    font-size: clamp(8px, 3.5vw, 12px);
+    font-weight: 510;
+    line-height: 16px;
+
+    transition: .404s;
+}
+
+#notifications-banner .banner .warning {
+    background-color: rgba(255, 107, 0, 0.12);
+    color: var(--action-warning);
+}
+
+/* Virtual Camera specific styling */
+
+#notifications-banner .looks-banner a {
+    text-wrap: nowrap;
+}
+
+/* Commerce-banner specific styling */
+
+#notifications-banner .commerce-banner {
+    transition: 0.404s;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+
+    width: 100%;
+    height: 32px;
+    min-height: 32px;
+    overflow: hidden;
+
+    padding: 0px 8px;
+
+    align-items: center;
+    justify-content: center;
+
+    font-variant-numeric: tabular-nums;
+
+    gap: 8px;
+}
+
+#notifications-banner .commerce-banner.hidden {
+    height: 0;
+    min-height: 0;
+    border-bottom: 0;
+    color: transparent;
+}
+
+#notifications-banner .commerce-banner.active {
+    background-color: transparent;
+    color: var(--content-tertiary);
+}
+
+#notifications-banner .commerce-banner.expiring {
+    background-color: rgba(255, 107, 0, 0.12);
+    color: var(--action-warning);
+}
+
+#notifications-banner .commerce-banner.expired {
+    background-color: rgba(255, 117.98, 96.90, 0.12);
+    color: var(--action-destructive);
+}
+
+#notifications-banner .commerce-banner span.expiring {
+    color: var(--action-destructive);
+}
+
+#notifications-banner .commerce-banner .left {
+    /* This allows the grid box to shrink to fit the window, even if that means truncating text. */
+    min-width: 0px;
+}
+
+#notifications-banner .commerce-banner .left svg {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    fill: var(--content-primary);
+}
+
+#notifications-banner .commerce-banner .left svg path {
+    opacity: 1;
+}
+
+#notifications-banner .commerce-banner .center {
+    /* This allows the grid box to shrink to fit the window, even if that means truncating text. */
+    min-width: 0px;
+}
+
+#notifications-banner .commerce-banner .right {
+    overflow: hidden;
+    min-width: fit-content;
+}
+
+button.buy-now {
+    min-width: 24px;
+    flex-shrink: 0;
+    border: 0px none;
+    background-color: transparent;
+    stroke: none;
+    fill: var(--content-secondary);
+    color: var(--content-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+}
+
+button.buy-now:hover {
+    background-color: var(--background-quaternary);
+}
+
+button.buy-now span {
+    margin: 0px 0px 0px 4px;
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+/* Responsive styling for Camera */
+@media only screen and (max-width: 360px) {
+    #notifications-banner .commerce-banner:not(.daily) button.buy-now span {
+        display: none;
+    }
+}

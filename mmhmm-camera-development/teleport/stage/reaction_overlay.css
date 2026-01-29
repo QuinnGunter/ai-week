@@ -1,0 +1,37 @@
+div#stage_overlay .reaction_overlay {
+    pointer-events: initial !important;
+}
+
+div#stage_overlay .reaction_overlay div.buttons {
+    display: none;
+}
+
+body:not(.visual-editor) div#stage_overlay .reaction_overlay:hover div.buttons {
+    display: flex;
+}
+
+div#stage_overlay .reaction_overlay button {
+    display: flex;
+    padding: var(--size-2-5);
+    background-color: rgba(0, 0, 0, 0.24);
+
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--size-1-5);
+}
+
+div#stage_overlay .reaction_overlay button svg {
+    width: var(--size-6);
+    height: var(--size-6);
+    transition: transform 0.3s var(--ease-bounce);
+    fill: white;
+}
+
+div#stage_overlay .reaction_overlay button:hover svg {
+    transform: scale(1.2);
+}
+
+div#stage_overlay .reaction_overlay button.layout.full-screen svg.expand,
+div#stage_overlay .reaction_overlay button.layout.over-the-shoulder svg.collapse {
+    display: none;
+}

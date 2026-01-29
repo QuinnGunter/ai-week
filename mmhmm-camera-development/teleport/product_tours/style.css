@@ -1,0 +1,115 @@
+/*
+ * Tours Coachmarks
+*/
+
+div.coachmarks-tour-container {
+    z-index: 100;
+    position: absolute;
+}
+
+div.coachmarks-arrow {
+    position: absolute;
+    background: var(--action-primary);
+    width: 12px;
+    height: 12px;
+    transform: rotate(45deg);
+}
+
+div.coachmark {
+    width: auto;
+    min-width: 220px;
+    max-width: 380px;
+    color: #000;
+    background: var(--action-primary);
+    padding: 8px 12px;
+    border-radius: 8px;
+    z-index: auto;
+}
+
+div.coachmark > span {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+div.coachmark > div.coachmark-content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 12px;
+}
+
+div.coachmark > div.coachmark-content > p {
+  font-size: 12px;
+  line-height: 18px;
+  margin: 2px 0 12px;
+}
+
+
+div.coachmark-content button.coachmark-close-button {
+  align-self: flex-start;
+  padding: 0px;
+  border-color: transparent;
+  background: transparent;
+  margin: 1px -2px 0 0;
+}
+
+div.coachmark-content button.coachmark-close-button:hover {
+  fill: #000;
+}
+
+div.coachmark-content button.coachmark-close-button svg {
+  width: 16px;
+  height: 16px;
+}
+
+div.coachmark-nav {
+  width: 100%;
+}
+
+div.coachmark-nav > div.coachmark-btns {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+div.coachmark-nav > div.coachmark-btns > p.coachmark-content-count {
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  flex: 1;
+  margin-left: 4px;
+  color: #000;
+}
+
+div.coachmark-nav > button.coachmark-close-button,
+div.coachmark-nav > div.coachmark-btns > button.coachmark-prev-button,
+div.coachmark-nav > div.coachmark-btns > button.coachmark-next-button {
+  height: 24px;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 0;
+  border-radius: 4px;
+  color: #000;
+  background: transparent;
+  border: 1px solid #000;
+}
+
+div.coachmark-nav > div.coachmark-btns:not(.justify-between) > button.coachmark-next-button {
+  margin-left: auto;
+  min-width: 60px;
+}
+
+div.coachmark-nav > button.coachmark-close-button:hover {
+  color: #000;
+}
+
+div.coachmark-arrow {
+  position: absolute;
+  border: 12px solid;
+  border-color: transparent;
+  z-index: auto;
+  pointer-events: none;
+}
+
+div.coachmark-content a {
+    color: #000
+}

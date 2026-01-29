@@ -1,0 +1,26 @@
+//
+//  mmhmm Base Config.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+CLANG_CXX_LANGUAGE_STANDARD = c++23
+CLANG_WARN_COMMA = NO
+CLANG_WARN_DOCUMENTATION_COMMENTS = NO
+DEBUG_INFORMATION_FORMAT = dwarf
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+FRAMEWORK_SEARCH_PATHS = $(PROJECT_DIR)/CEF
+GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64] = NO
+HEADER_SEARCH_PATHS = $(PROJECT_DIR)/CEF $(PROJECT_DIR)/../mmhmm-hybrid $(PROJECT_DIR)/../win/3rdParty/spdlog/include $(PROJECT_DIR)/Dependencies
+MACOSX_DEPLOYMENT_TARGET = 13.0
+ONLY_ACTIVE_ARCH[config=Debug] = YES
+SDKROOT = macosx
+SWIFT_OBJC_INTEROP_MODE = objcxx
+SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
+SWIFT_STRICT_CONCURRENCY = complete
+SWIFT_VERSION = 6.0
+HUMAN_READABLE_COPYRIGHT = Copyright © 2020-2025 mmhmm inc. All rights reserved.

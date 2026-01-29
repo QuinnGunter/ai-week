@@ -1,0 +1,65 @@
+# win-build-release-installer-az-pipeline.yml
+#
+# This pipeline builds the Windows hybrid app, creates installers, and distributes
+# the build artifacts to their respective target locations using YAML stages.
+# Release tracks are determined by branch (via win-branch-variables.yml).
+#
+# This is the new staged approach matching Mac's pattern.
+# It replaces the classic release pipeline approach.
+#
+# Stages:
+#   1. Build - Builds the app, creates MSI installers, generates release notes
+#   2. Distribute - Uploads artifacts to public Azure storage
+#   3. Update - Updates the release index page
+
+parameters:
+  - name: debugMode
+    displayName: Pipeline Debug Mode and Verbose Logs
+    type: boolean
+    default: false
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger:
+  - release/windows/*
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+pr: none
+
+variables:
+  - template: templates/win-branch-variables.yml
+  - template: templates/x-az-storage-variables.yml
+
+stages:
+  - stage: Build
+    displayName: "Build"
+    jobs:
+    - template: templates/win-az-pipeline.yml
+      parameters:
+        appTrack: ${{ variables.appTrack }}
+        isDistributionBuild: true
+        distributeArtifacts: false  # Distribution handled by Distribute stage
+        track: ${{ variables.track }}  # Track for git tags/release notes (differs from appTrack for alpha/engineering)
+
+  - stage: Distribute
+    displayName: "Distribute"
+    dependsOn: Build
+    # Only run distribution for actual release branches (not PR builds, etc.)
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+    variables:
+      gitTagName: $[stageDependencies.Build.Build.outputs['VersionInfo.gitTagName']]
+    jobs:
+    - template: templates/win-az-pipeline-distribute.yml
+      parameters:
+        gitTagName: $(gitTagName)
+        branch: ${{ variables.branch }}
+        createGitTag: ${{ variables.gitTagCreation }}
+        requiresApproval: ${{ variables.releaseApproval }}
+        debugMode: ${{ parameters.debugMode }}
+        track: ${{ variables.track }}
+
+  - stage: Update
+    displayName: "Update Release Index"
+    dependsOn: Distribute
+    condition: succeeded()
+    jobs:
+    - template: templates/x-az-pipeline-update-releases.yml

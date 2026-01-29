@@ -1,0 +1,39 @@
+div.drop_zone:hover {
+    border: 1px dashed var(--border-accent);
+}
+
+div.drop_zone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    background: var(--border-secondary);
+    border: 1px dashed var(--border-primary);
+    border-radius: 8px;
+
+    width: 100%;
+    height: 90px;
+
+    padding: 16px 0px;
+    gap: 10px;
+
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+div.drop_zone.dragging {
+    background: var(--action-secondary-fade);
+}
+
+div.drop_zone div.message {
+    text-align: center;
+}
+
+div.drop_zone span.link,div.link {
+    text-decoration: underline;
+    color: var(--action-secondary);
+}
+

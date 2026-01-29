@@ -1,0 +1,24 @@
+# win-build-distribution-az-pipeline.yml
+#
+# This pipeline builds the Windows hybrid app, as well as:
+# * publishes the build artifacts to the pipeline
+# * uploads the build artifacts for distribution
+# * uploads debug symbols to storage
+# * tags the source commit
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger:
+- release/windows/*
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+# Note: Additionally disabled through Azure DevOps UI: Select pipeline > Edit > 3 dots menu button > Triggers > Pull request validation
+pr: none
+
+variables:
+  - template: templates/win-branch-variables.yml
+
+jobs:
+  - template: templates/win-az-pipeline.yml
+    parameters:
+      appTrack: ${{ variables.appTrack }}
+      isDistributionBuild: true

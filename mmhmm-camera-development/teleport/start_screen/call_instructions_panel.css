@@ -1,0 +1,403 @@
+/* Shared styling for the entire panel */
+
+div.vcam_education {
+    height: 100%;
+    width: inherit;
+    justify-content: flex-start !important;
+}
+
+div.vcam_education > div.collapsible,
+div.vcam_education > div.message_panel {
+    justify-content: flex-start;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+div.vcam_education a {
+    color: var(--action-secondary);
+}
+
+div.vcam_education div.title {
+    color: var(--content-secondary);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+
+    white-space: normal;
+}
+
+div.vcam_education div {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+div.vcam_education select {
+    height: 32px;
+    padding: 8px 12px;
+
+    font-weight: 510;
+    font-size: 12px;
+    line-height: 16px;
+
+    background-color: var(--background-tertiary);
+}
+
+div.vcam_education > div.connection_instructions,
+div.vcam_education > div.message_panel {
+    width: 100%;
+    gap: 16px;
+    padding: 16px 16px 0px 16px;
+}
+
+/* Camera status indicator */
+
+div.vcam_education div.camera_status {
+    width: 100%;
+    padding: 16px 16px;
+    justify-content: flex-start;
+    gap: 8px;
+    border-bottom: 1px solid var(--background-tertiary);
+
+    --border-connected: rgba(64, 194, 136, 0.3);
+}
+
+div.vcam_education div.camera_status:not(.disconnected) .disconnected {
+    display: none !important;
+}
+
+div.vcam_education div.camera_status:not(.connected) .connected {
+    display: none !important;
+}
+
+div.vcam_education div.camera_status:not(.disabled) .disabled {
+    display: none !important;
+}
+
+div.vcam_education div.camera_status .connected {
+    color: var(--action-success);
+    fill: var(--action-success);
+}
+
+div.vcam_education div.camera_status .disconnected,
+div.vcam_education div.camera_status .disabled {
+    color: var(--action-destructive);
+    fill: var(--action-destructive);
+}
+
+div.vcam_education div.camera_status div.indicator {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 1fr auto auto auto 1fr;
+    align-items: center;
+}
+
+div.vcam_education div.camera_status.connected div.indicator div {
+    border-color: var(--border-connected) !important;
+}
+
+div.vcam_education div.camera_status div.indicator div.connector {
+    width: 8px;
+    height: 1px;
+    border-top: 1px solid transparent;
+}
+
+div.vcam_education div.camera_status div.indicator div.center {
+    width: max-content;
+    border-radius: 13px;
+    border: 1px solid var(--background-quaternary);
+}
+
+div.vcam_education div.camera_status div.indicator div.center > div {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.vcam_education div.camera_status div.indicator div.left,
+div.vcam_education div.camera_status div.indicator div.right {
+    height: max-content;
+    width: max-content;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: var(--background-tertiary);
+    border: 1px solid var(--background-quaternary);
+}
+
+div.vcam_education div.camera_status div.indicator div.left > div,
+div.vcam_education div.camera_status div.indicator div.right > div {
+    width: 80px;
+    height: 45px;
+}
+
+div.vcam_education div.camera_status div.indicator div.right > div {
+    background-image: url(/assets/fixed-aspect-ratio-spacer.png);
+    background-size: 40px;
+    background-repeat: repeat;
+}
+
+div.vcam_education div.camera_status div.indicator div.left > div,
+div.vcam_education div.camera_status div.indicator div.right > div {
+    position: relative;
+}
+
+div.vcam_education div.camera_status div.indicator div.left img,
+div.vcam_education div.camera_status div.indicator div.right img {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 2px;
+}
+
+div.vcam_education div.camera_status div.indicator div.right img {
+    width: 40px;
+    border-radius: 2px;
+}
+
+div.vcam_education div.camera_status:not(.connected) div.right img {
+    display: none;
+}
+
+div.vcam_education div.camera_status div.message {
+    gap: 4px;
+
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 16px;
+}
+
+div.vcam_education div.camera_status div.message span:first-child {
+    color: var(--content-tertiary);
+}
+
+/* Camera not available, info, needs reboot */
+
+div.vcam_education div.message_panel div.instructions {
+    align-items: flex-start;
+}
+
+div.vcam_education div.message_panel div.description {
+    color: var(--content-secondary);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+div.vcam_education div.message_panel div.learn_more {
+    padding-top: 8px;
+    border-top: 1px solid var(--background-tertiary);
+}
+
+/* How to connect the virtual camera */
+
+div.vcam_education img {
+    width: inherit;
+    max-width: 256px;
+    align-self: center;
+    border-radius: 8px;
+}
+
+div.vcam_education div.instructions {
+    width: 100%;
+    gap: 16px;
+}
+
+div.vcam_education div.instructions div.steps {
+    gap: 12px;
+    width: 100%;
+}
+
+div.vcam_education div.instructions div.step {
+    gap: 12px;
+    width: 100%;
+}
+
+div.vcam_education div.instructions div.step:not(:last-of-type) {
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--background-tertiary);
+}
+
+div.vcam_education div.instructions div.step div.index {
+    flex-shrink: 0;
+    height: 24px;
+    width: 24px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 34px;
+    background-color: var(--background-tertiary);
+    color: var(--content-tertiary);
+    text-align: center;
+}
+
+div.vcam_education div.instructions div.step.selected div.index {
+    background-color: var(--background-quaternary);
+}
+
+div.vcam_education div.instructions div.step div.text {
+    gap: 4px;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+div.vcam_education div.instructions div.step div.title {
+    font-weight: 700;
+    color: var(--content-secondary);
+    white-space: wrap;
+}
+
+div.vcam_education div.instructions div.step div.description {
+    font-weight: 400;
+    color: var(--content-tertiary);
+    white-space: wrap;
+}
+
+/* FAQ */
+
+div.vcam_education div.faq {
+    font-weight: 510;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+div.vcam_education div.faq > div.column > div {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+div.vcam_education div.faq div.expandable {
+    gap: 16px;
+}
+
+div.vcam_education div.faq div.expandable > div.heading {
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--background-tertiary);
+}
+
+div.vcam_education div.faq div.expandable > div.heading div.title {
+    font-size: 12px;
+    line-height: unset;
+}
+
+div.vcam_education div.faq div.expandable > div.content {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--background-tertiary);
+    align-items: flex-start;
+}
+
+div.vcam_education div.faq div.expandable > div.heading svg {
+    transition: rotate 0.2s;
+}
+
+div.vcam_education div.faq div.expandable:not(.expanded) > div.heading svg {
+    rotate: -90deg;
+}
+
+div.vcam_education div.faq div.expandable:not(.expanded) > div.content {
+    display: none;
+}
+
+div.vcam_education div.general {
+    color: var(--content-secondary);
+    font-weight: 400;
+}
+
+div.vcam_education div.general div.column {
+    gap: 16px;
+}
+
+div.vcam_education div.general p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+div.vcam_education div.general ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 16px;
+}
+
+div.vcam_education div.faq div.title {
+    flex-shrink: 0;
+}
+
+div.vcam_education div.faq div.sections {
+    gap: 16px;
+    padding-top: 16px;
+}
+
+div.vcam_education div.faq div.section {
+    gap: 8px;
+}
+
+div.vcam_education div.faq div.section > div.heading {
+    color: var(--content-tertiary);
+}
+
+div.vcam_education div.faq div.section div.question {
+    gap: 8px;
+    padding: 8px;
+
+    border-radius: 6px;
+    background-color: var(--background-tertiary);
+}
+
+div.vcam_education div.faq div.section div.question div.content {
+    gap: 12px;
+}
+
+div.vcam_education div.faq div.section div.question div.content div.heading {
+
+}
+
+div.vcam_education div.faq div.section div.question div.content div.answer {
+    display: none;
+
+    gap: 12px;
+    color: var(--content-secondary);
+    font-weight: 400;
+}
+
+div.vcam_education div.faq div.section div.question.expanded div.content div.answer {
+    display: flex;
+    align-items: flex-start;
+}
+
+div.vcam_education div.faq div.section div.question div.content div.answer ol {
+    padding-left: 16px;
+    margin: unset;
+}
+
+div.vcam_education div.faq div.section div.question div.content div.answer a {
+    color: var(--content-secondary);
+}
+
+div.vcam_education div.faq div.section div.question div.icon {
+    width: fit-content;
+    height: 100%;
+    justify-content: flex-start;
+}
+
+div.vcam_education div.faq div.section div.question svg {
+    display: none;
+}
+
+div.vcam_education div.faq div.section div.question:not(.expanded) svg.open {
+    display: flex;
+}
+
+div.vcam_education div.faq div.section div.question.expanded svg.close {
+    display: flex;
+}
+
+div.vcam_education div.faq div.learn_more {
+    padding: 16px;
+    font-weight: 400;
+}

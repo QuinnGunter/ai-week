@@ -1,0 +1,173 @@
+div.sheet.release_notes_sheet {
+  height: 600px !important;
+  max-height: calc(100vh - 24px) !important;
+}
+
+.mini div.sheet.release_notes_sheet {
+    height: calc(100vh - 24px) !important;
+    width: calc(100vw - 24px) !important;
+}
+
+div.release_notes_sheet div.titlebar {
+  border-bottom: 1px solid var(--border-primary);
+  padding-left: 40px;
+}
+
+.mini div.release_notes_sheet div.titlebar {
+    padding-left: 16px;
+}
+
+div.release_notes_sheet div.contents {
+  /* margin: 4px 2px; */
+  overflow-y: scroll;
+  height: calc(100% - 56px); /* Full height with titlebar offset */
+}
+
+div.release_notes_sheet div.textfield_dialog {
+  padding: 0px 40px 40px 40px !important;
+}
+
+.mini div.release_notes_sheet div.textfield_dialog {
+    padding: 0px 16px 16px 16px !important;
+    min-width: unset !important;
+}
+
+div.release_notes_sheet div.release_container:not(:first-of-type) {
+  border-top: 1px solid var(--border-primary);
+  margin-top: 32px;
+  padding-top: 8px;
+}
+
+div.release_notes_sheet div.release_container a.info_link {
+  line-height: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  display: inline-block;
+  margin: 8px 0px 4px;
+}
+
+body.light .release_notes_sheet div.release_container a.info_link {
+  color: var(--action-primary);
+}
+
+body.dark .release_notes_sheet div.release_container a.info_link {
+  color: var(--action-secondary);
+}
+
+div.release_notes_sheet span.title_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* margin: 8px 0; */
+  padding: 16px 0px;
+}
+
+div.release_notes_sheet div.release_container:first-of-type span.title_wrapper {
+    padding: 32px 0px;
+}
+
+div.release_notes_sheet span.title_wrapper h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--content-primary);
+  margin: 0;
+}
+
+div.release_notes_sheet span.title_wrapper span {
+  font-size: 11px;
+  font-weight: 400;
+  color: #000; /* Intentionally Fixed var(--content-primary) */
+  padding: 2px 8px;
+  background-color: var(--action-success);
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+div.release_notes_sheet div.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+/* Only show one column in Airtime Camera */
+.mini div.release_notes_sheet div.two-column {
+    grid-template-columns: 1fr;
+    gap: unset;
+}
+
+div.release_notes_sheet div.info_wrapper {
+    padding-bottom: 16px;
+}
+
+div.release_notes_sheet img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+div.release_notes_sheet h3,
+div.release_notes_sheet h4 {
+  margin: 16px 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 24px;
+  color: var(--content-primary);
+}
+
+div.release_notes_sheet p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--content-secondary);
+  margin: 0px;
+}
+
+div.release_notes_sheet ul {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--content-secondary);
+  margin: 0px;
+  padding-left: 20px;
+}
+
+div.release_notes_sheet ul li {
+  margin-bottom: 2px;
+}
+
+div.release_notes_sheet div.learn_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--content-secondary);
+}
+
+div.release_notes_sheet div.learn_container:has(> span) {
+  background-color: var(--background-tertiary);
+}
+
+div.release_notes_sheet div.learn_container button {
+  margin-left: auto;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  height: 24px !important;
+  border-radius: 6px !important;
+}
+
+.release_notes_sheet div.release_container div.info_thumbnails {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 16px 0;
+  gap: 16px;
+}
+
+.release_notes_sheet div.release_container div.info_thumbnails.single {
+    grid-template-columns: repeat(1, 1fr);
+}

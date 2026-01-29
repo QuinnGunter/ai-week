@@ -1,0 +1,215 @@
+# win-az-pipeline-distribute.yml
+#
+# This pipeline distributes Windows build artifacts to Azure Storage endpoints.
+# It expects a host of existing variables and must be used as a template in another pipeline.
+#
+# The key ingredient of this pipeline is an `environment`, which allows introducing
+# checks and approvals on the Azure DevOps UI level.
+
+parameters:
+  - name: pool
+    type: string
+    default: "windows-2022"
+  - name: gitTagName
+    type: string
+  - name: branch
+    type: string
+  - name: createGitTag
+    type: boolean
+    default: false
+  - name: requiresApproval
+    type: boolean
+    default: true
+  - name: debugMode
+    type: boolean
+    default: false
+  - name: track
+    type: string
+    values:
+    - engineering
+    - qa
+    - alpha
+    - beta
+    - prod
+
+jobs:
+  - deployment: Distribute_Windows
+    displayName: Distribute for Windows platform
+    variables:
+      - group: Tokens
+      - template: x-az-storage-variables.yml
+      - template: win-branch-variables.yml
+      - name: sentryOrganizationID
+        value: "mmhmm"
+      - name: sentryProjectID
+        value: "mmhmm-hybrid-win"
+      - name: gitTagName
+        value: ${{ parameters.gitTagName }}
+      - name: branch
+        value: ${{ parameters.branch }}
+      - name: track
+        value: ${{ parameters.track }}
+    ${{ if eq(parameters.requiresApproval, true) }}:
+      environment: 'windows-distribution-requires-approval'
+    ${{ else }}:
+      environment: 'windows-distribution-without-approval'
+    pool:
+      vmImage: ${{ parameters.pool }}
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+
+          - task: DownloadPipelineArtifact@2
+            displayName: "Download build artifacts"
+            inputs:
+              buildType: 'current'
+              targetPath: '$(Pipeline.Workspace)'
+              artifact: drop
+
+          - script: dir /s "$(Pipeline.Workspace)"
+            displayName: "Debug: List files in $(Pipeline.Workspace)"
+
+          - script: |
+              echo "gitTagName: $(gitTagName)"
+              echo "branch: $(branch)"
+              echo "track: $(track)"
+            displayName: "Debug: print template variables"
+
+          - task: AzureCLI@2
+            displayName: "AZ (private): Archive all build artifacts"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload-batch \
+                --source "$(Pipeline.Workspace)/drop" \
+                --destination $(archiveStorageContainer) \
+                --destination-path $(branch)/$(gitTagName) \
+                --account-name $(mmhmminstallableStorageAccount) \
+                --account-key $(az_storage_mmhmminstallables_key) \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish Airtime.msi"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/Airtime.msi" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/Airtime.msi" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish AirtimeCamera.msi"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/AirtimeCamera.msi" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/AirtimeCamera.msi" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish AirtimeCreator.msi"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/AirtimeCreator.msi" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/AirtimeCreator.msi" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish AirtimeStacks.msi"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/AirtimeStacks.msi" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/AirtimeStacks.msi" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish AirtimeScreenRecorder.msi"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob upload \
+                --file "$(Pipeline.Workspace)/drop/AirtimeScreenRecorder.msi" \
+                --container $(releaseStorageContainerName) \
+                --name "$(branch)/$(gitTagName)/AirtimeScreenRecorder.msi" \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --overwrite \
+                --verbose
+
+          - task: AzureCLI@2
+            displayName: "AZ (public): Publish release notes HTML"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                if [ -f "$(Pipeline.Workspace)/drop/ReleaseNotes/release-notes.html" ]; then
+                  az storage blob upload \
+                  --file "$(Pipeline.Workspace)/drop/ReleaseNotes/release-notes.html" \
+                  --container $(releaseStorageContainerName) \
+                  --name "$(branch)/$(gitTagName)/release-notes.html" \
+                  --account-name $(mmhmmStorageAccount) \
+                  --account-key $(az_storage_mmhmm_key) \
+                  --content-type "text/html" \
+                  --overwrite \
+                  --verbose
+
+                  echo "Release notes available at:"
+                  echo "https://$(mmhmmStorageAccount).blob.core.windows.net/$(releaseStorageContainerName)/$(branch)/$(gitTagName)/release-notes.html"
+                else
+                  echo "##vso[task.logissue type=warning]Release notes file not found, skipping upload"
+                fi
+
+          - task: Bash@3
+            displayName: "Sentry: Upload symbols"
+            condition: and(succeeded(), eq(variables['symbolsUpload'], true))
+            inputs:
+              targetType: inline
+              script: |
+                curl -sL https://sentry.io/get-cli/ | sh
+                export SENTRY_LOG_LEVEL=debug
+                sentry-cli --auth-token $(sentry_auth_token) upload-dif --force-foreground --org $(sentryOrganizationID) --project $(sentryProjectID) $(Pipeline.Workspace)/drop/*.pdb
+              failOnStderr: false
+
+          - ${{ if eq(parameters.createGitTag, true) }}:
+
+            - checkout: self
+              persistCredentials: true
+
+            # Requires a variable named `gitTagName`.
+            - template: x-git-tag.yml

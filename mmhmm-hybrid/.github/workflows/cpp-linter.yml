@@ -1,0 +1,33 @@
+# https://cpp-linter.github.io/cpp-linter-action/
+name: cpp-linter
+on:
+  pull_request:
+    paths: ['**.c', '**.cpp', '**.h', '**.hpp', '**.cxx', '**.hxx', '**.cc', '**.hh', '**.m', '**.mm', '**CMakeLists.txt', 'meson.build', '**.cmake', '.github/workflows/cpp-linter.yml', '.clang-format']
+
+jobs:
+  cpp-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cpp-linter/cpp-linter-action@v2
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          style: 'file'  # Use .clang-format config file.
+          extensions: 'c,h,C,H,cpp,hpp,cc,hh,c++,h++,cxx,hxx'
+          tidy-checks: '' # Use .clang-tidy config file.
+          lines-changed-only: true # Only lines in the diff that contain additions are analyzed.
+  cpp-linter-objc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cpp-linter/cpp-linter-action@v2
+        id: linter
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          style: 'LLVM'
+          extensions: 'mm,m'
+          tidy-checks: '' # Use .clang-tidy config file.
+          lines-changed-only: true # Only lines in the diff that contain additions are analyzed.

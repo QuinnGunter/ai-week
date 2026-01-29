@@ -1,0 +1,91 @@
+# mac-branch-variables.yml
+#
+# Variable definitions depending on Git branch names.
+#
+# This is a variable template file to be included in Azure DevOps pipelines.
+# Variable template files support only variables as content.
+
+variables:
+  awsServiceConnection: "AWS connection"
+  awsRegionName: "us-west-2"
+  awsS3Bucket: "updates.mmhmm.app"
+  sparkleLink: "https://www.airtimetools.com"
+
+  # Production
+  ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/release/mac/prod') }}:
+    awsS3UpdateUpload: true
+    awsS3InstallerUpload: true
+    awsS3UpdateTargetFolder: "mac/hybrid/production"
+    awsS3InstallerTargetFolder: "mac/hybrid"
+    sparkleDownloadURLPrefix: "https://updates.airtimetools.com/mac/hybrid/production"
+    productFileNameUsesMarketingVersionOnly: true
+    debugSymbolUpload: true
+    gitTagCreation: true
+    releaseApproval: true
+    track: "production"
+    branch: "release/mac/prod"
+  # Beta
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/mac/beta') }}:
+    awsS3UpdateUpload: true
+    awsS3InstallerUpload: false
+    awsS3UpdateTargetFolder: "mac/hybrid/beta"
+    awsS3InstallerTargetFolder: ""
+    sparkleDownloadURLPrefix: "https://updates.airtimetools.com/mac/hybrid/beta"
+    productFileNameUsesMarketingVersionOnly: false
+    debugSymbolUpload: true
+    gitTagCreation: true
+    releaseApproval: true
+    track: "beta"
+    branch: "release/mac/beta"
+  # Alpha
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/mac/alpha') }}:
+    awsS3UpdateUpload: true
+    awsS3InstallerUpload: false
+    awsS3UpdateTargetFolder: "mac/hybrid/alpha"
+    awsS3InstallerTargetFolder: ""
+    sparkleDownloadURLPrefix: "https://updates.airtimetools.com/mac/hybrid/alpha"
+    productFileNameUsesMarketingVersionOnly: false
+    debugSymbolUpload: true
+    gitTagCreation: true
+    releaseApproval: true
+    track: "alpha"
+    branch: "release/mac/alpha"
+  # Test / QA
+  ${{ elseif or(eq(variables['Build.SourceBranch'], 'refs/heads/release/mac/qa'), eq(variables['Build.SourceBranch'], 'refs/heads/release/mac/test')) }}:
+    awsS3UpdateUpload: false
+    awsS3InstallerUpload: false
+    awsS3UpdateTargetFolder: ""
+    awsS3InstallerTargetFolder: ""
+    sparkleDownloadURLPrefix: "https://mmhmm.blob.core.windows.net/release/release/mac/test"
+    productFileNameUsesMarketingVersionOnly: false
+    debugSymbolUpload: true
+    gitTagCreation: true
+    releaseApproval: false
+    track: "test"
+    branch: "release/mac/test"
+  # Engineering
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/mac/engineering') }}:
+    awsS3UpdateUpload: false
+    awsS3InstallerUpload: false
+    awsS3UpdateTargetFolder: ""
+    awsS3InstallerTargetFolder: ""
+    sparkleDownloadURLPrefix: "https://mmhmm.blob.core.windows.net/release/release/mac/engineering"
+    productFileNameUsesMarketingVersionOnly: false
+    debugSymbolUpload: false
+    gitTagCreation: true
+    releaseApproval: false
+    track: "engineering"
+    branch: "release/mac/engineering"
+  # Everything else fails by setting track to an undefined value to call out release branch mismatches.
+  ${{ else }}:
+    awsS3UpdateUpload: false
+    awsS3InstallerUpload: false
+    awsS3UpdateTargetFolder: ""
+    awsS3InstallerTargetFolder: ""
+    sparkleDownloadURLPrefix: ""
+    productFileNameUsesMarketingVersionOnly: false
+    debugSymbolUpload: false
+    gitTagCreation: false
+    releaseApproval: false
+    track: "unsupported"
+    branch: "release/mac/unsupported"

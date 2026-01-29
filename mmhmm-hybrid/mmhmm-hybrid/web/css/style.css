@@ -1,0 +1,184 @@
+body.light {
+    --background-primary: #FFFFFF;
+    --background-secondary: #F5F5F5;
+    --background-tertiary: #EBEBEB;
+    --background-quaternary: #E0E0E0;
+    --background-disabled: #A1A0A4;
+    --background-overlay: rgba(255, 255, 255, 0.5);
+  
+    --action-primary: #79DDE8;
+    --action-secondary: #1A7580;
+    --action-hover: #99E5EE;
+    --action-success: #40C288;
+    --action-destructive: #FF715C;
+    --action-destructive-secondary: #EB7D71;
+    --content-primary: #0A0A0E;
+    --content-secondary: #3B3B3E;
+    --content-tertiary: #4F4F51;
+    --content-accent: #F9DF74;
+    --content-alternative: #FFFFFF;
+    --border-primary: rgba(0, 0, 0, 0.1);
+    --border-secondary-fade: rgba(0, 0, 0, 0.025);
+    --border-secondary: rgba(0, 0, 0, 0.05);
+    --border-accent: #79DDE8;
+    --border-accent-secondary: #79DDE8;
+}
+
+body.dark {
+    --background-primary: #0A0A0E;
+    --background-secondary: #16161A;
+    --background-tertiary: #212127;
+    --background-quaternary: #2F2F32;
+    --background-disabled: #59565E;
+    --background-overlay: rgba(0, 0, 0, 0.5);
+  
+    --action-primary: #79DDE8;
+    --action-secondary: #79DDE8;
+    --action-hover: #99E5EE;
+    --action-success: #40C288;
+    --action-destructive: #FF7661;
+    --action-destructive-secondary: #EB7D71;
+    --content-primary: #FFFFFF;
+    --content-secondary: #D4D2D6;
+    --content-tertiary: #B1B0B2;
+    --content-accent: #F9DF74;
+    --content-alternative: #FFFFFF;
+    --border-primary: rgba(255, 255, 255, 0.1);
+    --border-secondary-fade: rgba(255, 255, 255, 0.025);
+    --border-secondary: rgba(255, 255, 255, 0.05);
+    --border-accent: #79DDE8;
+    --border-accent-secondary: #79DDE8;
+}
+
+  button {
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  button.capsule {
+    border: 0px none;
+    height: 32px;
+    border-radius: 6px;
+    font-size: 13px;
+    color: black;
+    fill: black;
+    padding: 4px 16px;
+    font-weight: 500;
+    background-color: var(--action-primary);
+    transition: all 0.15s linear;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+button.capsule:active:enabled,
+button.capsule:hover:enabled {
+  background-color: var(--action-hover);
+}
+button.capsule.destructive {
+  background-color: var(--action-destructive);
+}
+button.capsule.destructive:active,
+button.capsule.destructive:hover {
+  background-color: var(--action-destructive-secondary);
+}
+
+button.capsule.secondary {
+  background-color: var(--background-tertiary);
+  color: var(--content-primary);
+  stroke: var(--content-primary);
+  fill: var(--content-primary);
+}
+
+button.capsule.secondary:hover:enabled {
+  background: var(--background-quaternary);
+}
+
+button.capsule.secondary:active:enabled {
+  opacity: 30%;
+}
+
+button.capsule.full {
+  width: 100%;
+}
+
+button.capsule:disabled,
+button.capsule.secondary:disabled {
+  cursor: not-allowed;
+  background-color: var(--background-disabled);
+  color: var(--background-quaternary);
+  stroke: var(--background-quaternary);
+  fill: var(--background-quaternary);
+}
+
+body.light button.capsule:disabled,
+body.light button.capsule.secondary:disabled {
+  background-color: var(--background-disabled);
+  color: var(--content-tertiary);
+  stroke: var(--content-tertiary);
+  fill: var(--content-tertiary);
+}
+
+div.labels {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+div.primary {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: left;
+  color: var(--content-primary);
+}
+
+div.secondary {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-align: left;
+  text-wrap: pretty;
+  color: var(--content-primary);
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--action-primary);
+  border-radius: 4px;
+  margin-left: 0px;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-color: var(--action-primary);
+  fill: white;
+}
+
+input[type="checkbox"]::before {
+  content: url('data:image/svg+xml; utf8, <svg width="10" height="9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.009 8.903c.335 0 .592-.132.771-.395L9.326 1.55c.062-.098.108-.192.137-.283a.86.86 0 0 0 .044-.264.76.76 0 0 0-.23-.566.797.797 0 0 0-.58-.225.787.787 0 0 0-.406.098.989.989 0 0 0-.312.322l-3.99 6.304L1.958 4.42a.804.804 0 0 0-.65-.317.804.804 0 0 0-.585.229.765.765 0 0 0-.23.571c0 .101.018.199.054.293a.992.992 0 0 0 .185.293l2.52 3.052c.202.24.454.361.757.361Z" fill="white"/></svg>');
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 2px;
+  bottom: 2px;
+  visibility: hidden;
+}
+
+input[type="checkbox"]:checked::before {
+  visibility: visible;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-primary) transparent;
+}

@@ -1,0 +1,50 @@
+div.replace-media-sheet {
+    width: 208px !important;
+}
+
+div.media_replace div.drop_zone {
+    fill: var(--content-secondary);
+    height: 100px;
+}
+
+div.media_replace div.drop_zone:hover,
+div.media_replace div.drop_zone.dragging{
+    border: 1px dashed var(--action-secondary);
+    background-color: var(--background-tertiary);
+}
+
+div.media_replace div.drop_zone div.message {
+    white-space: normal;
+    max-width: 110px;
+}
+
+div.media_replace div.buttons {
+    display: flex;
+    flex-direction: column;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+div.media_replace div.buttons button {
+    justify-content: flex-start !important;
+    background-color: unset;
+    padding-left: 4px;
+    font-size: 12px;
+    font-weight: normal;
+    stroke: none !important;
+}
+
+div.media_replace div.buttons button svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+div.media_replace div.buttons button:nth-child(n + 2) {
+    margin-top: 8px;
+}
+
+div.option_list.menu.nav_menu.media_replace div.row.button > button span.icon svg {
+    max-height: 20px !important;
+    stroke: none !important;
+}

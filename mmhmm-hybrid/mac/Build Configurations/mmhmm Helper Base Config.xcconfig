@@ -1,0 +1,46 @@
+//
+//  mmhmm Helper Base Config.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+ALWAYS_SEARCH_USER_PATHS = NO
+CLANG_CXX_LANGUAGE_STANDARD = gnu++17
+CLANG_LINK_OBJC_RUNTIME = NO
+CLANG_WARN_OBJC_MISSING_PROPERTY_SYNTHESIS = YES
+CODE_SIGN_ENTITLEMENTS = mmhmm Helper/helper.entitlements
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_IDENTITY[config=Release][sdk=macosx*] = Developer ID Application
+CODE_SIGN_STYLE[config=Debug] = Automatic
+CODE_SIGN_STYLE[config=Release] = Manual
+COMBINE_HIDPI_IMAGES = YES
+COPY_PHASE_STRIP = NO
+DEAD_CODE_STRIPPING[config=Release] = YES
+DEVELOPMENT_TEAM[config=Debug] = M3KUT44L48
+DEVELOPMENT_TEAM[config=Release][sdk=macosx*] = M3KUT44L48
+GCC_CW_ASM_SYNTAX = NO
+GCC_C_LANGUAGE_STANDARD = c99
+GCC_DYNAMIC_NO_PIC = NO
+GCC_ENABLE_CPP_EXCEPTIONS = YES
+GCC_ENABLE_CPP_RTTI = YES
+GCC_ENABLE_PASCAL_STRINGS = NO
+GCC_INLINES_ARE_PRIVATE_EXTERN = YES
+GCC_OBJC_CALL_CXX_CDTORS = YES
+GCC_OPTIMIZATION_LEVEL[config=Debug] = 0
+GCC_OPTIMIZATION_LEVEL[config=Release] = 3
+GCC_PREPROCESSOR_DEFINITIONS = 'CMAKE_INTDIR="$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)"' __STDC_CONSTANT_MACROS __STDC_FORMAT_MACROS CEF_USE_SANDBOX $(inherited)
+GCC_SYMBOLS_PRIVATE_EXTERN = YES
+GCC_THREADSAFE_STATICS = NO
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+GCC_WARN_ABOUT_MISSING_NEWLINE = YES
+INFOPLIST_FILE = $(SRCROOT)/mmhmm Helper/helper-Info.plist
+OTHER_CPLUSPLUSFLAGS[config=Debug] = -fno-strict-aliasing -fstack-protector -funwind-tables '-fvisibility=hidden' -Wall -Werror -Wextra -Wendif-labels -Wnewline-eof -Wno-missing-field-initializers -Wno-unused-parameter -fobjc-arc -fno-exceptions -fno-rtti -fno-threadsafe-statics -fobjc-call-cxx-cdtors -fvisibility-inlines-hidden '-std=c++17' -Wno-narrowing -Wsign-compare -Wno-undefined-var-template
+OTHER_CPLUSPLUSFLAGS[config=Release] = -DNDEBUG -fno-strict-aliasing -fstack-protector -funwind-tables '-fvisibility=hidden' -Wall -Werror -Wextra -Wendif-labels -Wnewline-eof -Wno-missing-field-initializers -Wno-unused-parameter -fobjc-arc -fno-exceptions -fno-rtti -fno-threadsafe-statics -fobjc-call-cxx-cdtors -fvisibility-inlines-hidden '-std=c++17' -Wno-narrowing -Wsign-compare -Wno-undefined-var-template
+OTHER_LDFLAGS[config=Debug] = -Wl,-search_paths_first -Wl,-ObjC -Wl,-search_paths_first -Wl,-headerpad_max_install_names -lpthread -framework Cocoa -framework AppKit -lcef_dll_wrapper $(inherited) -lsandbox
+OTHER_LDFLAGS[config=Release] = -Wl,-search_paths_first -Wl,-ObjC -Wl,-dead_strip -Wl,-search_paths_first -Wl,-headerpad_max_install_names -lpthread -framework Cocoa -framework AppKit -lcef_dll_wrapper $(inherited) -lsandbox
+USE_HEADERMAP = NO

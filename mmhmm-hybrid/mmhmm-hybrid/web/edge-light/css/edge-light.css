@@ -1,0 +1,167 @@
+/*
+ * Edge Light Overlay Styles
+ *
+ * Full-screen borderless overlay window that creates a glow effect
+ * around the screen edges to act as a virtual ring light.
+ *
+ * Configuration via CSS custom properties:
+ * --edge-brightness: 0.0 to 1.0 (opacity/intensity)
+ * --edge-width: percentage of screen (e.g., 10%)
+ * --edge-color: the light color (set by temperature)
+ */
+
+:root {
+    /* Default configuration values */
+    --edge-brightness: 0.7;
+    --edge-width: 10%;
+    --edge-color: rgb(255, 250, 244); /* Warm white default */
+
+    /* Calculated values */
+    --edge-color-with-brightness: rgba(255, 250, 244, var(--edge-brightness));
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+}
+
+.edge-light-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* Edge glow elements */
+.edge {
+    position: fixed;
+    pointer-events: none;
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* Top edge - horizontal gradient fading downward */
+.edge.top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--edge-width);
+    background: linear-gradient(
+        to bottom,
+        var(--edge-color-with-brightness) 0%,
+        transparent 100%
+    );
+}
+
+/* Bottom edge - horizontal gradient fading upward */
+.edge.bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--edge-width);
+    background: linear-gradient(
+        to top,
+        var(--edge-color-with-brightness) 0%,
+        transparent 100%
+    );
+}
+
+/* Left edge - vertical gradient fading rightward */
+.edge.left {
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: var(--edge-width);
+    background: linear-gradient(
+        to right,
+        var(--edge-color-with-brightness) 0%,
+        transparent 100%
+    );
+}
+
+/* Right edge - vertical gradient fading leftward */
+.edge.right {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--edge-width);
+    background: linear-gradient(
+        to left,
+        var(--edge-color-with-brightness) 0%,
+        transparent 100%
+    );
+}
+
+/* Corner glow elements for smooth transitions */
+.corner {
+    position: fixed;
+    width: var(--edge-width);
+    height: var(--edge-width);
+    pointer-events: none;
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+}
+
+/* Top-left corner - radial gradient */
+.corner.top-left {
+    top: 0;
+    left: 0;
+    background: radial-gradient(
+        circle at 0% 0%,
+        var(--edge-color-with-brightness) 0%,
+        transparent 70%
+    );
+}
+
+/* Top-right corner - radial gradient */
+.corner.top-right {
+    top: 0;
+    right: 0;
+    background: radial-gradient(
+        circle at 100% 0%,
+        var(--edge-color-with-brightness) 0%,
+        transparent 70%
+    );
+}
+
+/* Bottom-left corner - radial gradient */
+.corner.bottom-left {
+    bottom: 0;
+    left: 0;
+    background: radial-gradient(
+        circle at 0% 100%,
+        var(--edge-color-with-brightness) 0%,
+        transparent 70%
+    );
+}
+
+/* Bottom-right corner - radial gradient */
+.corner.bottom-right {
+    bottom: 0;
+    right: 0;
+    background: radial-gradient(
+        circle at 100% 100%,
+        var(--edge-color-with-brightness) 0%,
+        transparent 70%
+    );
+}
+
+/* Animation for smooth enable/disable transitions */
+.edge-light-overlay.disabled .edge,
+.edge-light-overlay.disabled .corner {
+    opacity: 0;
+}
+
+.edge-light-overlay.enabled .edge,
+.edge-light-overlay.enabled .corner {
+    opacity: 1;
+}

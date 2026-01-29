@@ -1,0 +1,36 @@
+# x-git-tag.yml
+#
+# This pipeline tags a Git commit with an annotated tag in a platform-independent bash script step.
+# It can be used as a template in other pipelines, see https://learn.microsoft.com/en-us/azure/devops/pipelines/process/templates
+#
+# Unfortunately, template parameters can't be filled dynamically at runtime.
+# Hence, this pipeline expects the following runtime variable to exist:
+# - name: gitTagName
+#   type: string
+
+steps:
+  # Note the nuanced use of Build.SourceBranch and Build.SourceBranchName in the following script.
+  # https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#build-variables-devops-services
+  - bash: |
+      set -euxo
+      build_source_branch="$(Build.SourceBranch)"
+      refs_heads_prefix="refs/heads/"
+      source_branch_full_name=${build_source_branch#"$refs_heads_prefix"}
+      tag_name="$source_branch_full_name/$(gitTagName)"
+      tag_message="$(System.TeamProject), pipeline $(Build.DefinitionName) on $(Build.SourceBranchName), requested for $(Build.RequestedFor): $(Build.SourceVersion), $(Build.BuildNumber)"
+      # For some CI triggers, Azure pipelines don't provide RequestedFor... values, which breaks the following git config commands.
+      user_email="$(Build.RequestedForEmail)"
+      user_email_fallback="installables@mmhmm.app"
+      user_name="$(Build.RequestedFor)"
+      user_name_fallback="$(Build.DefinitionName)-$(Build.SourceBranchName)"
+      git fetch
+      git switch "$source_branch_full_name"
+      # Push an annotated tag marking the commit from which the release installer was built
+      git config --global user.email "${user_email:-$user_email_fallback}"
+      git config --global user.name "${user_name:-$user_name_fallback}"
+      git tag -a "$tag_name" -m "$tag_message"
+      git push origin "$tag_name"
+    condition: succeeded()
+    continueOnError: true
+    workingDirectory: $(Build.SourcesDirectory)
+    displayName: Publish Git tag

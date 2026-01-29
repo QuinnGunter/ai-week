@@ -1,0 +1,43 @@
+# ci-gitflow.yml
+#
+# This pipeline enforces merge requests to the main branch only to be allowed from a hotfix branch.
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger: none
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - main
+  drafts: true
+
+pool:
+  vmImage: "ubuntu-latest"
+
+steps:
+  - checkout: none
+
+  - bash: |
+      set -euxo
+      echo "System.PullRequest.SourceBranch	: $(System.PullRequest.SourceBranch)"
+      echo "Build.SourceBranchName: $(Build.SourceBranchName)"
+      echo "System.PullRequest.TargetBranch	: $(System.PullRequest.TargetBranch)"
+      echo "System.PullRequest.targetBranchName: $(System.PullRequest.targetBranchName)"
+      if [ -z $(System.PullRequest.SourceBranch) ] || [ -z $(System.PullRequest.targetBranchName) ]; then
+        echo "GitFlow: Branch names unavailable. Unable to evaluate GitFlow policy."
+        echo "##vso[task.logissue type=error;]GitFlow: Branch names unavailable. Unable to evaluate GitFlow policy."
+        echo "##vso[task.complete result=Failed;]"
+        exit 1
+      elif [ $(System.PullRequest.SourceBranch) != "hotfix" ] && [ $(System.PullRequest.targetBranchName) == "main" ]; then
+        echo "GitFlow: Merge requests to main branch are only allowed from a hotfix branch $(System.PullRequest.SourceBranch)."
+        echo "##vso[task.logissue type=error;]GitFlow: Merge requests to main branch are only allowed from develop or hotfix branch, not $(System.PullRequest.SourceBranch)."
+        echo "##vso[task.complete result=Failed;]"
+        exit 1
+      else
+        echo "GitFlow: Merge request from $(System.PullRequest.SourceBranch) to $(System.PullRequest.targetBranchName) is allowed."
+        echo "##vso[task.complete result=Succeeded;]GitFlow: Merge request from $(System.PullRequest.SourceBranch) to $(System.PullRequest.targetBranchName) is allowed."
+        exit 0
+      fi
+    displayName: Enforce GitFlow

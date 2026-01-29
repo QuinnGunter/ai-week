@@ -1,0 +1,17 @@
+div.message_dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+
+    gap: 12px;
+    padding: 0px 12px 12px 16px;
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    color: var(--content-tertiary);
+}
+
+div.message_dialog div.footer {
+    align-self: flex-end;
+}

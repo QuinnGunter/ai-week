@@ -1,0 +1,244 @@
+.mini .looks__panel {
+    transition: transform 0.2s var(--ease-bounce), opacity 0.2s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* State = looks.idle
+ * ======================= */
+.mini .looks[data-state="looks.idle"] [data-id="looks-idle-panel"] {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+.mini .looks[data-state="looks.idle"] [data-id="looks-list-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 0;
+}
+
+.mini .looks[data-state="looks.idle"] [data-id="looks-settings-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 0;
+}
+
+.mini .looks[data-state="looks.idle"] [data-id="reactions-settings-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 0;
+}
+
+
+/* State = looks.list
+ * ======================= */
+.mini .looks[data-state="looks.list"] [data-id="looks-idle-panel"] {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.mini .looks[data-state="looks.list"] [data-id="looks-list-panel"] {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+.mini .looks[data-state="looks.list"] [data-id="looks-settings-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 0;
+}
+
+.mini .looks[data-state="looks.list"] [data-id="reactions-settings-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 0;
+}
+
+/* State = looks.settings panel
+ * ============================= */
+.mini .looks[data-state^="looks.settings"] [data-id="looks-settings-panel"] {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+.mini .looks[data-state^="looks.settings"] > [data-id="looks-idle-panel"] {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.mini .looks[data-state^="looks.settings"] > [data-id="looks-list-panel"] {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.mini .looks[data-state^="looks.settings"] > [data-id="reactions-settings-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+/* State = reactions.settings panel
+ * ============================= */
+
+.mini .looks[data-state^="reactions.settings"] [data-id="reactions-settings-panel"] {
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 1;
+}
+
+.mini .looks[data-state^="reactions.settings"] > [data-id="looks-idle-panel"] {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.mini .looks[data-state^="reactions.settings"] > [data-id="looks-list-panel"] {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.mini .looks[data-state^="reactions.settings"] > [data-id="looks-settings-panel"] {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+
+.mini  [data-id="tab-panels"] {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+}
+
+.mini  [data-id="tab-panels"] [data-panel]  {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    transition: transform 0.3s var(--ease-bounce);
+}
+
+
+.mini [data-id="tab-panels"] .scroll-container {
+    padding: var(--size-3);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.mini.look-editor [data-id="tab-panels"] .scroll-container {
+    overflow-y: auto;
+}
+
+/* Force the width of the scroll container so that we don't leave extra space for the scrollbar */
+.mini.look-editor [data-id="tab-panels"] .scroll-container > div {
+    width: calc(var(--sidebar-width) - 2 * var(--size-2));
+}
+
+.mini [data-id="tab-panels"] [data-id="giphy-panel"] .scroll-container {
+    padding-top: 0;
+}
+
+.mini .catalog__container [data-id="tab-panels"] [data-id="catalog-panel"] {
+    padding-top: var(--size-4);
+}
+
+.mini .catalog__container [data-id="tab-panels"] [data-id="catalog-panel"] .scroll-container {
+    padding-top: var(--size-1);
+}
+
+/* ======== TABS ===============/
+
+
+/* TABS Transitions */
+
+/* IDLE screen*/
+.mini .looks__panel [data-id="tab-panels"][data-state="looks"] [data-id="looks-panel"] {
+    transform: translateX(0);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="looks"] [data-id="reactions-panel"] {
+    transform: translateX(100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="reactions"] [data-id="looks-panel"] {
+    transform: translateX(-100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="reactions"] [data-id="reactions-panel"] {
+    transform: translateX(0);
+}
+
+/* Looks list screen*/
+.mini .looks__panel [data-id="tab-panels"][data-state="looks"] [data-id="looks-panel"] {
+    transform: translateX(0);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="looks"] [data-id="catalog-panel"] {
+    transform: translateX(100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="catalog"] [data-id="looks-panel"] {
+    transform: translateX(-100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="catalog"] [data-id="catalog-panel"] {
+    transform: translateX(0);
+}
+
+/* Settings screen */
+
+.mini .looks__panel [data-id="tab-panels"][data-state="style"] [data-id="presets-panel"] {
+    transform: translateX(-100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="style"] [data-id="style-panel"] {
+    transform: translateX(0);
+    padding: 0;
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="style"] [data-id="nametag-panel"] {
+    transform: translateX(100%);
+}
+
+/* =========== */
+
+.mini .looks__panel [data-id="tab-panels"][data-state="nametag"] [data-id="presets-panel"] {
+    transform: translateX(-200%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="nametag"] [data-id="style-panel"] {
+    transform: translateX(-100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="nametag"] [data-id="nametag-panel"] {
+    transform: translateX(0);
+    padding: 0;
+}
+
+/* =========== */
+
+.mini .looks__panel [data-id="tab-panels"][data-state="presets"] [data-id="presets-panel"] {
+    transform: translateX(0);
+    padding: 0;
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="presets"] [data-id="style-panel"] {
+    transform: translateX(100%);
+}
+
+.mini .looks__panel [data-id="tab-panels"][data-state="presets"] [data-id="nametag-panel"] {
+    transform: translateX(200%);
+}
+
+/*=*/
+
+
+/* Visuals search */
+
+.looks [data-id="looks-idle-panel"] [data-panel].loading > :not(.loader-container) {
+    display: none;
+}

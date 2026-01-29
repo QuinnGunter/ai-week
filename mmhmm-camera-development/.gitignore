@@ -1,0 +1,46 @@
+.DS_Store
+build
+xcuserdata
+webm2mov/webm2mov.html
+webm2mov/webm2mov.js
+webm2mov/webm2mov.wasm
+node_modules
+
+teleport/main.js
+
+# next.js
+.next/
+out/
+build
+deploy/
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env
+.env.*
+!.env.example
+
+# turbo
+.turbo
+
+# visual studio
+.vs
+*.code-workspace
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
+# vscode
+.vscode/settings.json

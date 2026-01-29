@@ -1,0 +1,19 @@
+# x-az-storage-variables.yml
+#
+# Variable definitions for Azure blob storage access.
+#
+# This is a variable template file to be included in Azure DevOps pipelines.
+# Variable template files support only variables as content.
+
+variables:
+
+  azureSubscription: 'mmhmm Installable'
+
+  # Private storage
+  mmhmminstallableStorageAccount: mmhmminstallable
+  archiveStorageContainer: archive
+
+  # Public storage
+  mmhmmStorageAccount: mmhmm
+  sparkleStorageContainerName: sparkle
+  releaseStorageContainerName: release

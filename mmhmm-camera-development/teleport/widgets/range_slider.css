@@ -1,0 +1,125 @@
+/*
+ * Stylized ranges
+ */
+
+div.slider_wrapper {
+  display: inline-block;
+  --knob-diameter: 14px;
+  --slider-length: 130px;
+  --track-size: 2px;
+
+  height: var(--knob-diameter);
+  width: var(--slider-length);
+  margin: 0px;
+  width: 100%;
+  display: flex;
+}
+
+div.slider_wrapper.vertical {
+  width: var(--knob-diameter);
+  height: var(--slider-length);
+}
+
+div.slider_wrapper input[type="range"] {
+  --fillAmount: 0%;
+  margin: 0px;
+  -webkit-appearance: none;
+  background-color: rgba(0, 0, 0, 0);
+  width: var(--slider-length);
+  height: var(--knob-diameter);
+}
+
+div.slider_wrapper.vertical input[type="range"] {
+  transform-origin: left top;
+  transform: translateY(var(--slider-length)) rotate(270deg);
+}
+
+div.slider_wrapper input[type="range"]:disabled {
+    opacity: 30%;
+}
+
+/* Hard-coded color values for background gradient prevent light/dark theming issues */
+div.slider_wrapper.vertical input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    white 0%,
+    white var(--fillAmount),
+    #2F2F32 var(--fillAmount),
+    #2F2F32 100%
+  );
+}
+
+/* Hard-coded color values for background gradient prevent light/dark theming issues */
+div.slider_wrapper.vertical input[type="range"]::-moz-range-track {
+  background: linear-gradient(
+    to right,
+    white 0%,
+    white var(--fillAmount),
+    #2F2F32 var(--fillAmount),
+    #2F2F32 100%
+  );
+}
+
+
+div.slider_wrapper input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: var(--track-size);
+  background: linear-gradient(
+    to right,
+    var(--content-primary) 0%,
+    var(--content-primary) var(--fillAmount),
+    var(--border-primary) var(--fillAmount),
+    var(--border-primary) 100%
+  );
+  border-radius: calc(var(--track-size) / 2);
+}
+
+div.slider_wrapper input[type="range"]::-moz-range-track {
+  height: var(--track-size);
+  background: linear-gradient(
+    to right,
+    var(--content-primary) 0%,
+    var(--content-primary) var(--fillAmount),
+    #cccccc var(--fillAmount),
+    #cccccc 100%
+  );
+  border-radius: calc(var(--track-size) / 2);
+}
+
+div.slider_wrapper input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: 1px solid var(--content-secondary);
+  background-color: var(--background-secondary);
+
+  margin-top: calc((var(--knob-diameter) - var(--track-size)) / -2);
+  width: var(--knob-diameter);
+  height: var(--knob-diameter);
+  border-radius: 50%;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0.5px 1px rgba(0, 0, 0, 0.27);
+}
+
+div.slider_wrapper input[type="range"]::-moz-range-thumb {
+  border: 0px none;
+  background-color: white;
+  margin-top: calc((var(--knob-diameter) - var(--track-size)) / -2);
+  width: var(--knob-diameter);
+  height: var(--knob-diameter);
+  border-radius: calc(var(--knob-diameter) / 2);
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), 0px 0.5px 1px rgba(0, 0, 0, 0.27);
+}
+
+div.slider_wrapper input[type="range"]:active::-webkit-slider-thumb {
+  background-color: #eeeeee;
+}
+
+div.slider_wrapper input[type="range"]:active::-moz-range-thumb {
+  background-color: #eeeeee;
+}
+
+div.slider_wrapper.vertical input[type="range"]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), -0.5px 0px 1px rgba(0, 0, 0, 0.27);
+}
+
+div.slider_wrapper.vertical input[type="range"]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.1), -0.5px 0px 1px rgba(0, 0, 0, 0.27);
+}

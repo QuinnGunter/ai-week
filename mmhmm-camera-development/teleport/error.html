@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<head>
+    <link rel="icon" href="/assets/icons/favicon_light.png" id="light-scheme-icon">
+    <link rel="icon" href="/assets/icons/favicon_dark.png" id="dark-scheme-icon">
+    <link rel="stylesheet" href="/main.css">
+    <title>Page not found</title>
+    <script>
+      function SetupFavIcons() {
+        var lightSchemeIcon = document.querySelector('link#light-scheme-icon');
+        var darkSchemeIcon = document.querySelector('link#dark-scheme-icon');
+        var themeMatcher = window.matchMedia('(prefers-color-scheme: dark)');
+        var onThemeUpdate = function() {
+          if (themeMatcher.matches) {
+            lightSchemeIcon?.remove();
+            document.head.append(darkSchemeIcon);
+          } else {
+            document.head.append(lightSchemeIcon);
+            darkSchemeIcon?.remove();
+          }
+        }
+        themeMatcher.addListener(onThemeUpdate);
+        onThemeUpdate();
+      }
+
+      window.addEventListener("load", evt => {
+        SetupFavIcons();
+      });
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div class="fatal_error">
+            <span class="dialog">
+                <div class="icon" style="width:unset; height:unset; aspect-ratio:1; padding:12px;">
+                    <img src="/assets/watermark-64w.png"/>
+                </div>
+                <div class="title">Sorry! Nothing here.</div>
+            </span>
+        </div>
+    </div>
+</body>

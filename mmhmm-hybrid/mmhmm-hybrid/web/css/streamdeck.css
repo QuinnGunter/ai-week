@@ -1,0 +1,122 @@
+body {
+    background-color: var(--background-primary);
+    margin: 0px;
+    padding: 0px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+h1 {
+    font-size: 14px;
+    color: var(--content-primary);;
+    text-align: left;
+}
+
+span {
+    font-size: 12px;
+    color: var(--content-primary);;
+    text-align: left;
+}
+
+label {
+    font-size: 12px;
+    color: var(--content-primary);;
+    margin: 4px;
+}
+
+input {
+    margin-left: 0px;
+}
+
+img {
+    width: 80px;
+    height: 80px;
+    margin: 20px 10px 10px 10px;
+}
+
+.dialog-button {
+    display: inline-block;
+    width: 136px;
+    height: 32px;
+    background: var(--border-secondary);
+    border-radius: 2px;
+    border-width: 0px;
+    transition: all .15s linear;
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: var(--content-primary);
+
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.dialog-button-selected {
+    display: inline-block;
+    width: 136px;
+    height: 32px;
+    background: var(--action-primary);
+    border-radius: 2px;
+    border-width: 0px;
+
+    font-family: 'Segoe UI';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+    color: var(--content-alternative);
+
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+dialog-button:hover:enabled {
+    background-color: var(--background-quaternary);
+}
+
+.dialog-button:disabled {
+    color: var(--background-disabled);
+}
+
+.dialog-button-selected:hover:enabled {
+    background-color: var(--action-hover);
+}
+
+.dialog-button-selected:disabled {
+    color: hotpink;
+}
+
+div.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    gap: 8px;
+}
+
+div.check-container {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+.image-pane {
+    width: 100px;
+    height: 100%;
+    text-align: center;
+}
+
+.content-pane {
+    width: 100%;
+    text-align: left;
+    margin: 8px;
+}
+
+.check-container {
+    margin-top: 20px;
+}

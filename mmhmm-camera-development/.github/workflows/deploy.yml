@@ -1,0 +1,54 @@
+# Implements the core of the build & deploy process used in all of our GitHub actions
+# This workflow is never invoked directly, instead it is called from other workflow files
+# See https://docs.github.com/en/actions/using-workflows/reusing-workflows
+name: Build and deploy
+on:
+  workflow_call:
+    inputs:
+      MMHMM_ENV:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    # Safety check - make sure an environment is defined so that we don't write to
+    # the root path on S3 and overwrite production
+    if: ${{ inputs.MMHMM_ENV != '' }}
+
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.MMHMM_ENV }}
+      url: https://app.airtimetools.com/camera/${{ inputs.MMHMM_ENV }}/index.html
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set build identifier
+        run: echo "BUILD_ID=$(git rev-parse --short=7 HEAD)" >> "$GITHUB_ENV"
+
+      - name: Build the distribution
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: npm run build-internal
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Deploy to S3
+        run: aws s3 cp --recursive ./deploy/ s3://${{ vars.AWS_S3_BUCKET }}/${{ inputs.MMHMM_ENV }}
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id ${{ vars.AWS_CLOUDFRONT_DISTRIBUTION_ID }} --paths "/${{ inputs.MMHMM_ENV }}/*"

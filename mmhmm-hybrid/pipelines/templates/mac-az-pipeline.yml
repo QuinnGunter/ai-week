@@ -1,0 +1,412 @@
+# mac-az-pipeline.yml
+#
+# This pipeline builds the mmhmm hybrid macOS release build configuration with parameterized optional steps.
+# It is meant to be used as a template by other pipelines which specify this pipeline's behavior by setting the respective parameters:
+#
+# ### mode
+#
+# * `createArchive` - creates a notarized app bundle archive and publishes it with its debug symbol bundles to the pipeline
+# * `publish` - publishes the unnotarized app bundle build artifact to the pipeline
+#
+# ### other flags
+#
+# * `createInstaller` - when mode is `createArchive`, additionally creates a notarized installer package, also publishing it to the pipeline
+# * `debugMode` - determines whether debug tasks are added and additional log messages are printed
+# * `pool` - allows selecting one of the available runner images: https://learn.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
+# * `track` - the release track to build for
+
+parameters:
+  - name: mode
+    type: string
+    values: 
+    - createArchive
+    - publish
+  - name: createInstaller
+    type: boolean
+    default: false
+  - name: pool
+    type: string
+    default: "macOS-15" # Runner image: https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
+  - name: debugMode # Switches 'System.Debug': https://learn.microsoft.com/en-us/azure/devops/pipelines/build/variables?view=azure-devops&tabs=yaml#systemdebug
+    type: boolean
+    default: false
+  - name: track
+    type: string
+    default: test
+    values:
+    - engineering
+    - test
+    - beta
+    - alpha
+    - production
+
+jobs:
+  - job: BuildJob
+    ${{ if eq(parameters.mode, 'createArchive') }}:
+      displayName: "Build release configuration for ${{ parameters.track }} track and archive"
+    ${{ elseif eq(parameters.mode, 'publish') }}:
+      displayName: "Build release configuration and publish"
+    ${{ else }}:
+      displayName: "Build release configuration"
+    variables:
+      - template: x-az-storage-variables.yml
+      - name: system.debug
+        value: ${{ parameters.debugMode }}
+      - name: notarytoolKeychainProfile
+        value: "notarytool-password"
+    pool:
+      vmImage: ${{ parameters.pool }}
+    steps:
+      - checkout: self
+        persistCredentials: true
+        lfs: true
+        submodules: true
+        fetchDepth: 200 # Required to get enough git history for release notes generation
+
+      - task: InstallAppleCertificate@2
+        displayName: "Install Developer ID Application certificate"
+        inputs:
+          certSecureFile: "DeveloperApplication.p12"
+          certPwd: "$(p12-password)"
+          keychain: "temp" # For Microsoft-hosted builds, use Temporary Keychain. A temporary keychain will always be deleted after the build or release is complete.
+          signingIdentity: "Developer ID Application: mmhmm inc. (M3KUT44L48)"
+
+      - task: InstallAppleProvisioningProfile@1
+        displayName: "Install app provisioning profile"
+        inputs:
+          provisioningProfileLocation: "sourceRepository"
+          provProfileSourceRepository: "$(Build.SourcesDirectory)/mac/mmhmm/embedded.provisionprofile"
+
+      - task: InstallAppleProvisioningProfile@1
+        displayName: "Install extension provisioning profile"
+        inputs:
+          provisioningProfileLocation: "sourceRepository"
+          provProfileSourceRepository: "$(Build.SourcesDirectory)/mac/CameraExtension/extension.provisionprofile"
+
+      # The build script being run next calls xcodebuild which resolves remotely stored Swift Packages, of which the CameraExtension package is one.
+      # Because the CameraExtension package is stored in a private GitHub repository, GitHub's SCM server asks for authentication becore connecting.
+      # While Xcode documentation advises the use of SSH keys, our team currently relies on HTTPS login. However, since this pipeline runs in a
+      # non-interactive shell, the login data must exist on the system during build. The applied solution was found most reliable by other Swift people,
+      # see https://forums.swift.org/t/support-for-resolving-private-packages-through-https-with-xcodebuild/48581/13
+      #
+      # The required access token can be configured as a 'fine-grained' personal access token for read-only access to the relevant repositories.
+      # This is much safer than a 'classic' token which requires full repo access to all repos in the organization.
+      #
+      # This step adds a GitHub access token to a agent local file that is consulted when a connection to github.com requests a non-interactive login.
+      # - script: echo -e "machine github.com\n  login Beni-at\n  password $(github_cameraextension_repo_read_access_token)\n\n" > ~/.netrc
+      #   displayName: "Add GitHub read access for xcodebuild checkout of CameraExtension Swift Package"
+
+      - task: Bash@3
+        displayName: "Log build machine specs"
+        condition: always()
+        inputs:
+          targetType: inline
+          workingDirectory: $(Pipeline.Workspace)
+          script: |
+            sysctl machdep.cpu.brand_string
+            machine
+            uname -m
+            sw_vers
+
+      - task: Bash@3
+        displayName: "Log available Xcode versions"
+        condition: always()
+        inputs:
+          targetType: inline
+          workingDirectory: $(Pipeline.Workspace)
+          script: ls /Applications | grep Xcode
+
+      # Outputs `BuildVersion.buildVersion`.
+      #
+      # For production, the version's last three digits are replaced with `0`s to differentiate them from other builds.
+      - task: Bash@3
+        displayName: "Calculate build version timestamp"
+        inputs:
+          targetType: inline
+          ${{ if eq(parameters.track, 'production') }}:
+            script: |
+              set -euo # !!!: No -x when using ###vso - https://github.com/microsoft/azure-pipelines-tasks/issues/10331#issuecomment-547533244
+              unix_timestamp=$(date '+%s')
+              unix_timestamp_floored=${unix_timestamp:0:${#unix_timestamp}-3}000
+              echo "##vso[task.setvariable variable=buildVersion;isOutput=true]$unix_timestamp_floored"
+              echo "buildVersion: $unix_timestamp_floored"
+          ${{ else }}:
+            script: |
+              unix_timestamp=$(date '+%s')
+              echo "##vso[task.setvariable variable=buildVersion;isOutput=true]$unix_timestamp"
+              echo "buildVersion: $unix_timestamp"
+        name: "BuildVersion"
+
+      - ${{ if or(eq(parameters.mode, 'publish'), eq(parameters.mode, 'createArchive')) }}:
+
+        - task: Bash@3
+          displayName: "Select Xcode Version"
+          inputs:
+            targetType: inline
+            script: |
+              sudo xcode-select -s $(xcodePath)
+              xcrun xcode-select --print-path
+              xcodebuild -version
+
+        - task: Bash@3
+          displayName: "Build release configuration"
+          inputs:
+            filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/build.sh"
+            arguments: "--ci"
+            failOnStderr: false # xcodebuild (rightfully) writes diagnostics to stderr causing this step to fail if set to 'true'.
+
+      # - script: rm -f ~/.netrc
+      #   displayName: "Remove GitHub read access for xcodebuild checkout of CameraExtension Swift Package"
+      #   condition: always() # Always do this cleanup step, even when the pipeline was cancelled.
+
+      - ${{ if eq(parameters.debugMode, true) }}:
+          - task: Bash@3
+            displayName: "Debug: list files in $(Pipeline.Workspace)"
+            condition: always()
+            inputs:
+              targetType: inline
+              workingDirectory: $(Pipeline.Workspace)
+              script: ls -R
+
+      - ${{ if eq(parameters.mode, 'publish') }}:
+          # The CopyFiles@2 task copies files, not folders, making copying an app bundle a little more involved.
+          # Zipping an app bundle directly into the staging directory reduces the file size and makes a copy in one step.
+          - task: ArchiveFiles@2
+            displayName: "Zip and stage app bundle"
+            inputs:
+              rootFolderOrFile: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release/$(productName).app"
+              archiveType: "zip"
+              archiveFile: "$(Build.ArtifactStagingDirectory)/UnnotarizedBuildProducts/$(productName).app.$(Build.BuildId)-unnotarized.zip"
+
+      - ${{ if eq(parameters.mode, 'createArchive') }}:
+
+          - task: InstallAppleCertificate@2
+            displayName: "Install Developer ID Installer certificate"
+            inputs:
+              certSecureFile: "DeveloperInstaller.p12"
+              certPwd: "$(installer-p12-password)"
+              signingIdentity: "Developer ID Installer: mmhmm inc. (M3KUT44L48)"
+              keychain: "temp"
+
+          # Add notarization credentials to the temporary keychain file.
+          # The temporary keychain file path is not documented, but can be observed in 'InstallAppleCertificate@2' tasks.
+          - script: |
+              xcrun notarytool store-credentials $(notarytoolKeychainProfile) \
+                --apple-id "benjamin.federer@all-turtles.com" \
+                --team-id M3KUT44L48 \
+                --password $(notarytool-app-password) \
+                --keychain $(Agent.TempDirectory)/ios_signing_temp.keychain
+            displayName: "Add notarytool app password to keychain"
+
+          - ${{ if eq(parameters.createInstaller, false) }}:
+
+            - task: Bash@3
+              timeoutInMinutes: 15
+              retryCountOnTaskFailure: 5
+              displayName: "Notarize app bundle for ${{ parameters.track }} release"
+              inputs:
+                filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/snp.sh"
+                arguments: "$(productName) --track ${{ parameters.track }} --version $(BuildVersion.buildVersion) --appleauth $(notarytoolKeychainProfile) --notarize --ci"
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                failOnStderr: false
+
+          - ${{ if eq(parameters.createInstaller, true) }}:
+
+            - task: Bash@3
+              timeoutInMinutes: 15
+              retryCountOnTaskFailure: 5
+              displayName: "Create notarized archive and DMG for ${{ parameters.track }} release"
+              inputs:
+                filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/snp.sh"
+                arguments: "$(productName) --track ${{ parameters.track }} --version $(BuildVersion.buildVersion) --appleauth $(notarytoolKeychainProfile) --create-dmg --prep-update --ci"
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                failOnStderr: false
+
+            - task: Bash@3
+              timeoutInMinutes: 15
+              retryCountOnTaskFailure: 5
+              displayName: "Create notarized $(cameraDMGName) DMG for ${{ parameters.track }} release"
+              inputs:
+                filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/modal-snp.sh"
+                arguments: "$(cameraDMGName) camera $(productName) --track ${{ parameters.track }} --version $(BuildVersion.buildVersion) --appleauth $(notarytoolKeychainProfile) --create-dmg --ci"
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                failOnStderr: false
+
+            - task: Bash@3
+              timeoutInMinutes: 15
+              retryCountOnTaskFailure: 5
+              displayName: "Create notarized $(creatorDMGName) DMG for ${{ parameters.track }} release"
+              inputs:
+                filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/modal-snp.sh"
+                arguments: "$(creatorDMGName) creator $(productName) --track ${{ parameters.track }} --version $(BuildVersion.buildVersion) --appleauth $(notarytoolKeychainProfile) --create-dmg --ci"
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                failOnStderr: false
+
+            - task: Bash@3
+              timeoutInMinutes: 15
+              retryCountOnTaskFailure: 5
+              displayName: "Create notarized $(stacksDMGName) DMG for ${{ parameters.track }} release"
+              inputs:
+                filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/modal-snp.sh"
+                arguments: "$(stacksDMGName) stacks $(productName) --track ${{ parameters.track }} --version $(BuildVersion.buildVersion) --appleauth $(notarytoolKeychainProfile) --create-dmg --ci"
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                failOnStderr: false
+
+            - task: Bash@3
+              timeoutInMinutes: 15
+              retryCountOnTaskFailure: 5
+              displayName: "Create notarized $(recorderDMGName) DMG for ${{ parameters.track }} release"
+              inputs:
+                filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/modal-snp.sh"
+                arguments: "$(recorderDMGName) screenRecorder $(productName) --track ${{ parameters.track }} --version $(BuildVersion.buildVersion) --appleauth $(notarytoolKeychainProfile) --create-dmg --ci"
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                failOnStderr: false
+
+          # Renames the app bundle archive and release notes file, if required, which has to be done before the Sparkle appcast is updated.
+          # Outputs `VersionNames.marketingVersion`, `VersionNames.gitTagName`, `VersionNames.archiveName`.
+          - task: Bash@3
+            displayName: "Create and update version-dependent names"
+            inputs:
+              workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              targetType: inline
+              script: |
+                set -euo # !!!: No -x when using ###vso - https://github.com/microsoft/azure-pipelines-tasks/issues/10331#issuecomment-547533244
+                app_version="$(defaults read $(Build.SourcesDirectory)/mac/Build-Tools/build/Release/$(productName).app/Contents/Info.plist CFBundleShortVersionString)"
+                tag_name="$app_version-$(BuildVersion.buildVersion)"
+                echo "##vso[task.setvariable variable=marketingVersion;isOutput=true]$app_version"
+                echo "##vso[task.setvariable variable=gitTagName;isOutput=true]$tag_name"
+                archive_name="$(productName)_$(track)_$(BuildVersion.buildVersion)"
+                if [ $(productFileNameUsesMarketingVersionOnly) = true ]; then
+                  new_archive_name="$(productName)_$app_version"
+                  mv "$archive_name".zip "$new_archive_name".zip
+                  mv "$archive_name".html "$new_archive_name".html
+                  archive_name="$new_archive_name"
+                fi
+                echo "##vso[task.setvariable variable=archiveName;isOutput=true]$archive_name"
+                echo "app_version: $app_version"
+                echo "tag_name: $tag_name"
+                echo "archive_name: $archive_name"
+            name: "VersionNames"
+
+          - task: Bash@3
+            displayName: "Generate release notes HTML"
+            inputs:
+              workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              targetType: inline
+              script: |
+                # Create the ReleaseNotes directory if it doesn't exist
+                mkdir -p "$(Build.ArtifactStagingDirectory)/ReleaseNotes"
+
+                # Generate release notes HTML with download links
+                script_path="$(Build.SourcesDirectory)/mac/Build-Tools/latest_git_tag.sh"
+                # Take only the last line of output to avoid TERM messages breaking the tag name
+                latestGitTagName="$($script_path $(track) mac 2>/dev/null | tail -1)"
+                if [ $? -ne 0 ] || [ -z "$latestGitTagName" ]; then
+                  echo "❌ Error: Failed to find latest git tag for track $(track)"
+                  exit 1
+                fi
+                echo "📋 Using latest git tag: $latestGitTagName"
+
+                storageBaseUrl="https://$(mmhmmStorageAccount).blob.core.windows.net/$(releaseStorageContainerName)"
+                $(Build.SourcesDirectory)/mac/Build-Tools/process_commits.sh "$latestGitTagName" "$(Build.ArtifactStagingDirectory)/ReleaseNotes/release-notes.html" "$(VersionNames.gitTagName)" "${{ parameters.track }}" "$storageBaseUrl"
+
+                echo "Release notes generated at: $(Build.ArtifactStagingDirectory)/ReleaseNotes/release-notes.html"
+                ls -la "$(Build.ArtifactStagingDirectory)/ReleaseNotes/release-notes.html"
+            env:
+              GITHUB_TOKEN: $(github_read_write_issues_token)
+
+          - ${{ if or(eq(parameters.track, 'test'), eq(parameters.track, 'engineering')) }}:
+
+            - task: Bash@3
+              displayName: "Replace Sparkle release notes"
+              inputs:
+                workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+                targetType: inline
+                script: |
+                  # Failsafe: Only allow test or engineering tracks
+                  if [[ "${{ parameters.track }}" != "test" && "${{ parameters.track }}" != "engineering" ]]; then
+                    echo "❌ Error: This step must only run for test or engineering tracks"
+                    echo "Current track: ${{ parameters.track }}"
+                    exit 1
+                  fi
+                  
+                  echo "📋 Replacing Sparkle release notes with generated release notes for track ${{ parameters.track }}"
+                  cp -f "$(Build.ArtifactStagingDirectory)/ReleaseNotes/release-notes.html" "$(VersionNames.archiveName).html"
+
+          - task: CopyFiles@2
+            displayName: "Stage notarized build products"
+            inputs:
+              SourceFolder: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              Contents: |
+                *.zip
+                *.pkg
+                *.dmg
+                !*.pkg.zip
+              TargetFolder: "$(Build.ArtifactStagingDirectory)/BuildProducts"
+
+          - task: AzureCLI@2
+            displayName: "Download published ${{ parameters.track }} Sparkle appcast XML file"
+            inputs:
+              azureSubscription: ${{ variables.azureSubscription }}
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                az storage blob download \
+                --file $(Build.SourcesDirectory)/mac/Build-Tools/build/Release/sparkle-appcast.xml \
+                --name ${{ parameters.track }}/sparkle-appcast.xml \
+                --container-name $(sparkleStorageContainerName) \
+                --account-name $(mmhmmStorageAccount) \
+                --account-key $(az_storage_mmhmm_key) \
+                --verbose
+
+          - task: Bash@3
+            displayName: "Prepare Sparkle update source directory"
+            inputs:
+              targetType: inline
+              workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              script: |
+                mkdir Sparkle-Source
+                cp $(VersionNames.archiveName).zip Sparkle-Source
+                cp $(VersionNames.archiveName).html Sparkle-Source
+              failOnStderr: false
+
+          - task: Bash@3
+            displayName: "Update ${{ parameters.track }} Sparkle appcast XML file"
+            inputs:
+              filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/generate_sparkle_appcast.sh"
+              arguments: "--track ${{ parameters.track }} --sparkle-xml sparkle-appcast.xml --url-prefix $(sparkleDownloadURLPrefix) --link $(sparkleLink) --strict --ci Sparkle-Source"
+              workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              failOnStderr: false
+            env: 
+              SPARKLE_PRIVATE_KEY: $(sparkle_private_key)
+
+          - task: CopyFiles@2
+            displayName: "Stage ${{ parameters.track }} Sparkle appcast XML file"
+            inputs:
+              SourceFolder: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              Contents: "*.xml"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)/Sparkle"
+
+          - task: ArchiveFiles@2
+            displayName: "Zip and stage symbols"
+            inputs:
+              rootFolderOrFile: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Symbols"
+              archiveType: "zip"
+              archiveFile: "$(Build.ArtifactStagingDirectory)/Symbols/$(VersionNames.archiveName).dSYM.zip"
+  
+      - ${{ if eq(parameters.debugMode, true) }}:
+          - task: Bash@3
+            displayName: "Debug: list files in $(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+            condition: always()
+            inputs:
+              targetType: inline
+              workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools/build/Release"
+              script: ls -R
+  
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish artifacts"
+        condition: always()
+        inputs:
+          targetPath: "$(Build.ArtifactStagingDirectory)"
+          artifact: "drop"
+          publishLocation: "pipeline"

@@ -1,0 +1,274 @@
+/* Floating Camera Nav Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --text-color: #ffffff;
+    --accent-color: #FF6D4C;
+    --border-radius: 12px;
+    --transition-duration: 0.2s;
+    --collapsed-size: 50px;
+    --expanded-horizontal-width: 250px;
+    --expanded-horizontal-height: 80px;
+    --expanded-vertical-width: 80px;
+    --expanded-vertical-height: 200px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Main Container */
+.floating-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--collapsed-size);
+    height: var(--collapsed-size);
+    background: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    transition: all var(--transition-duration) ease-out;
+    cursor: pointer;
+    -webkit-app-region: drag;
+}
+
+.floating-nav.expanded {
+    cursor: default;
+}
+
+.floating-nav.expanded.horizontal {
+    width: var(--expanded-horizontal-width);
+    height: var(--expanded-horizontal-height);
+}
+
+.floating-nav.expanded.vertical {
+    width: var(--expanded-vertical-width);
+    height: var(--expanded-vertical-height);
+}
+
+/* Collapsed View */
+.collapsed-view {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--collapsed-size);
+    height: var(--collapsed-size);
+    transition: opacity var(--transition-duration) ease-out;
+}
+
+.floating-nav.expanded .collapsed-view {
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.airtime-logo {
+    width: 50px;
+    height: 50px;
+}
+
+/* Expanded View */
+.expanded-view {
+    display: none;
+    width: 100%;
+    height: 100%;
+    padding: 8px;
+    opacity: 0;
+    transition: opacity var(--transition-duration) ease-out;
+}
+
+.floating-nav.expanded .expanded-view {
+    display: flex;
+    opacity: 1;
+}
+
+.floating-nav.expanded.horizontal .expanded-view {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.floating-nav.expanded.vertical .expanded-view {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Preview Container */
+.preview-container {
+    position: relative;
+    background: var(--bg-secondary);
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.floating-nav.expanded.horizontal .preview-container {
+    width: 100px;
+    height: 64px;
+}
+
+.floating-nav.expanded.vertical .preview-container {
+    width: 64px;
+    height: 100px;
+}
+
+.camera-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.preview-placeholder.hidden {
+    display: none;
+}
+
+/* Controls */
+.controls {
+    display: flex;
+    gap: 4px;
+    -webkit-app-region: no-drag;
+}
+
+.floating-nav.expanded.horizontal .controls {
+    flex-direction: column;
+    justify-content: center;
+}
+
+.floating-nav.expanded.vertical .controls {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.control-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-duration) ease-out;
+    -webkit-app-region: no-drag;
+}
+
+.control-btn:hover {
+    background: #3a3a3a;
+}
+
+.control-btn:active {
+    background: #4a4a4a;
+}
+
+.control-btn.active {
+    background: var(--accent-color);
+}
+
+.control-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Icon visibility */
+.hidden {
+    display: none !important;
+}
+
+.control-btn.muted .camera-on-icon {
+    display: none;
+}
+
+.control-btn.muted .camera-off-icon {
+    display: block;
+}
+
+.control-btn:not(.muted) .camera-on-icon {
+    display: block;
+}
+
+.control-btn:not(.muted) .camera-off-icon {
+    display: none;
+}
+
+/* Layout toggle icons */
+.floating-nav.horizontal .horizontal-icon {
+    display: block;
+}
+
+.floating-nav.horizontal .vertical-icon {
+    display: none;
+}
+
+.floating-nav.vertical .horizontal-icon {
+    display: none;
+}
+
+.floating-nav.vertical .vertical-icon {
+    display: block;
+}
+
+/* Drag Handle - invisible but allows dragging the window */
+.drag-handle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-app-region: drag;
+    pointer-events: none;
+}
+
+.floating-nav.expanded .drag-handle {
+    height: 20px;
+}
+
+/* Recording indicator */
+.control-btn.recording circle:first-child {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Focus states for accessibility */
+.control-btn:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.control-btn:focus:not(:focus-visible) {
+    outline: none;
+}

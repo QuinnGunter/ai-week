@@ -1,0 +1,25 @@
+div.share_app_sheet {
+    width: 296px;
+    gap: 12px;
+    border-top: 1px solid var(--background-tertiary);
+}
+
+.share_app_sheet div.message {
+    padding: 24px 12px;
+    border-bottom: 1px solid var(--background-tertiary);
+}
+
+.share_app_sheet div.body {
+    gap: 20px;
+}
+
+.share_app_sheet div.divider {
+    height: 1px;
+    width: 100%;
+    background-color: var(--background-tertiary);
+}
+
+.share_app_sheet div.actions {
+    padding: 12px;
+    gap: 12px;
+}

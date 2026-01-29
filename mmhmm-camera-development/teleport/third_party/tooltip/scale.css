@@ -1,0 +1,29 @@
+.tippy-box[data-animation=scale][data-placement^=top] {
+    transform-origin: bottom
+}
+
+.tippy-box[data-animation=scale][data-placement^=bottom] {
+    transform-origin: top
+}
+
+.tippy-box[data-animation=scale][data-placement^=left] {
+    transform-origin: right
+}
+
+.tippy-box[data-animation=scale][data-placement^=right] {
+    transform-origin: left
+}
+
+.tippy-box[data-animation=scale][data-state=hidden] {
+    transform: scale(.7);
+    opacity: 0.1;
+    /* transition duration is defined in tooltip.js*/
+}
+
+.tippy-box {
+    font-size: var(--body2-font-size);
+    line-height: var(--body2-line-height);
+    font-weight: var(--body2-font-weight);
+}
+
+

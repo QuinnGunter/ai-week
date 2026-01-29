@@ -1,0 +1,70 @@
+# x-az-pipeline-update-releases.yml
+#
+# This pipeline generates a comprehensive release index page that lists all versions
+# for all release tracks and platforms, with links to individual release notes.
+# The index is uploaded to https://mmhmm.blob.core.windows.net/release/releases.html
+
+parameters:
+  - name: pool
+    type: string
+    default: "ubuntu-latest"
+
+jobs:
+  - job: UpdateReleasesIndex
+    displayName: "Update Releases Index"
+    variables:
+      - template: x-az-storage-variables.yml
+      - template: mac-az-pipeline-variables.yml
+    pool:
+      vmImage: ${{ parameters.pool }}
+    steps:
+      - checkout: self
+
+      - script: |
+          echo "📦 Installing jq for JSON processing..."
+          sudo apt-get update -q
+          sudo apt-get install -y jq
+          echo "✅ jq installation completed"
+          echo "🔍 jq version: $(jq --version)"
+        displayName: "Install jq"
+
+      - task: Bash@3
+        displayName: "Generate releases index HTML"
+        inputs:
+          filePath: "$(Build.SourcesDirectory)/mac/Build-Tools/generate-release-notes-index.sh"
+          arguments: "$(mmhmmStorageAccount) $(releaseStorageContainerName) releases.html"
+          workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools"
+          failOnStderr: false
+        env: 
+          AZURE_STORAGE_KEY: $(az_storage_mmhmm_key)
+
+      - task: AzureCLI@2
+        displayName: "Upload releases index to Azure Storage"
+        inputs:
+          azureSubscription: ${{ variables.azureSubscription }}
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools"
+          inlineScript: |
+            az storage blob upload \
+            --file "releases.html" \
+            --container $(releaseStorageContainerName) \
+            --name "releases.html" \
+            --account-name $(mmhmmStorageAccount) \
+            --account-key $(az_storage_mmhmm_key) \
+            --content-type "text/html" \
+            --overwrite \
+            --verbose
+            
+            echo "✅ Releases index uploaded successfully!"
+            echo "📋 Available at: https://$(mmhmmStorageAccount).blob.core.windows.net/$(releaseStorageContainerName)/releases.html"
+
+      - script: |
+          echo "📊 Release Index Summary:"
+          echo "========================"
+          grep -o "Total Releases:</strong> [0-9]*" releases.html | head -1 || echo "No releases found"
+          echo ""
+          echo "🔗 Public URL:"
+          echo "https://$(mmhmmStorageAccount).blob.core.windows.net/$(releaseStorageContainerName)/releases.html"
+        displayName: "Display summary"
+        workingDirectory: "$(Build.SourcesDirectory)/mac/Build-Tools"

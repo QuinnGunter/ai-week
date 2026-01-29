@@ -1,0 +1,59 @@
+# win-branch-variables.yml
+#
+# Variable definitions depending on Git branch names.
+#
+# This is a variable template file to be included in Azure DevOps pipelines.
+# Variable template files support only variables as content.
+#
+# Note: `appTrack` is used for the build system (CMake/MSBuild configuration).
+#       `track` is used for git tags and release notes (matches branch path segment).
+
+variables:
+  # Production
+  ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/release/windows/prod') }}:
+    symbolsUpload: true
+    appTrack: 'prod'
+    track: 'prod'
+    branch: 'release/windows/prod'
+    gitTagCreation: true
+    releaseApproval: true
+  # Beta
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/windows/beta') }}:
+    symbolsUpload: true
+    appTrack: 'beta'
+    track: 'beta'
+    branch: 'release/windows/beta'
+    gitTagCreation: true
+    releaseApproval: true
+  # Alpha (appTrack is 'uat' for build system, track is 'alpha' for git tags)
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/windows/alpha') }}:
+    symbolsUpload: true
+    appTrack: 'uat'
+    track: 'alpha'
+    branch: 'release/windows/alpha'
+    gitTagCreation: true
+    releaseApproval: true
+  # QA
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/windows/qa') }}:
+    symbolsUpload: true
+    appTrack: 'qa'
+    track: 'qa'
+    branch: 'release/windows/qa'
+    gitTagCreation: true
+    releaseApproval: false
+  # Engineering - purely internal, no symbol uploads. appTrack is 'qa' for emulation purposes.
+  ${{ elseif eq(variables['Build.SourceBranch'], 'refs/heads/release/windows/engineering') }}:
+    symbolsUpload: false
+    appTrack: 'qa'
+    track: 'engineering'
+    branch: 'release/windows/engineering'
+    gitTagCreation: true
+    releaseApproval: false
+  # Everything else fails by setting track to an undefined value to call out release branch mismatches.
+  ${{ else }}:
+    symbolsUpload: false
+    appTrack: 'unsupported'
+    track: 'unsupported'
+    branch: 'release/windows/unsupported'
+    gitTagCreation: false
+    releaseApproval: false

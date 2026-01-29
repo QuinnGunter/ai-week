@@ -1,0 +1,326 @@
+/** Generic styles for buttons
+ * ==================== */
+
+
+/**
+ * Icon Button - has a border & background
+ * ==================== */
+.mini .icon-button {
+    aspect-ratio: 1;
+    width: var(--size-8);
+    height: var(--size-8);
+    transition: background-color 0.2s ease;
+    display: grid;
+    place-content: center;
+    background: var(--background-tertiary);
+    border: 1px solid var(--background-quaternary);
+    border-radius: var(--size-1-5);
+}
+
+/* 510px */
+@media only screen and (max-height: 31.875rem) {
+    .mini .icon-button.landscape {
+        width: var(--size-6);
+        height: var(--size-6);
+    }
+}
+
+.mini .icon-button svg {
+    fill: var(--content-primary);
+}
+
+.mini .looks-item .icon-button svg {
+    fill: #fff;
+}
+
+.mini .looks-item.add-item .icon-button svg {
+    fill: var(--content-tertiary);
+}
+
+.mini  .icon-button:not(.no-hover):hover {
+    background-color: rgba(25, 25, 25, .75);
+}
+
+.mini .icon-button.landscape {
+    width: unset;
+    aspect-ratio: 16/9;
+    transition: all 0.2s ease;
+}
+
+.mini .icon-button.image-button {
+    display: block;
+    overflow: hidden;
+}
+
+.mini .image-button.has-background {
+    background-color: #808080;
+}
+
+.mini .look-editor-panel .layer-option-row .image-button {
+    width: 100%;
+    height: unset;
+    aspect-ratio: 16 / 9;
+    display: grid;
+    overflow: hidden;
+}
+
+.mini .icon-button.image-button.padded {
+    padding: var(--size-1);
+}
+
+.mini .icon-button.image-button img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: contain;
+}
+
+.mini .layer-button-wrapper {
+    outline: 2px solid transparent;
+    border: 2px solid transparent;
+    width: calc(100% - 4px); /* Leave space for the outline */
+}
+
+.mini .layer-button-wrapper:has(> [aria-selected="true"]) {
+    outline: 2px solid var(--content-primary);
+    border-radius: 8px;
+}
+
+/**
+ * Alt icon button - no borer or background
+ */
+ .mini .alt-icon-button {
+    aspect-ratio: 1;
+    width: var(--size-7);
+    height: var(--size-7);
+    transition: background-color 0.2s ease;
+    display: grid;
+    place-content: center;
+    background: transparent;
+    border: none;
+    border-radius: var(--size-1-5);
+    fill: var(--content-primary);
+}
+
+.mini .alt-icon-button:hover {
+    background-color: var(--highlight-primary);
+}
+
+/**
+ * Primary Button
+ * ==================== */
+.mini .primary-button {
+    transition: background-color 0.2s ease;
+    display: grid;
+    place-content: center;
+    background: var(--action-primary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--size-1-5);
+    color: #000;
+}
+
+.mini.light .primary-button {
+    background: var(--action-light);
+}
+
+.mini .primary-button svg {
+    width: 100%;
+    fill: var(--content-primary);
+}
+
+.mini .primary-button:not(:disabled):hover {
+    background-color: var(--action-hover);
+}
+
+/**
+ * Secondary Button
+ * ==================== */
+.secondary-button {
+    transition: all 0.2s ease;
+    display: grid;
+    place-content: center;
+    background: var(--background-tertiary);
+    border: 1px solid var(--background-quaternary);
+    border-radius: var(--size-1-5);
+    color: var(--content-primary);
+    height: var(--size-7);
+}
+
+.secondary-button.justify-start {
+    justify-content: start;
+}
+
+.secondary-button svg {
+    width: 100%;
+    fill: var(--content-primary);
+}
+
+.secondary-button:hover {
+    background-color: var(--background-quaternary);
+}
+
+.secondary-button.action-primary {
+    background: var(--action-primary);
+}
+
+
+/**
+ * Outline Button
+ * ==================== */
+.mini  .outline-button {
+    transition: all 0.2s ease;
+    display: grid;
+    place-content: center;
+    background: transparent;
+    border: 1px solid var(--background-quaternary);
+    border-radius: var(--size-1-5);
+    color: var(--content-primary);
+}
+.mini  .outline-button svg {
+    fill: var(--content-primary);
+}
+
+.mini  .outline-button:hover {
+    background-color: var(--background-quaternary);
+}
+
+
+/**
+ * Text Button
+ * ==================== */
+.mini  .text-button {
+    transition: background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--size-1);
+    padding: var(--size-2);
+    background: transparent;
+    color: var(--content-primary);
+    border: transparent;
+    border-radius: var(--size-1-5);
+}
+
+.mini  .text-button svg {
+    width: var(--size-4);
+    height: var(--size-4);
+    fill: var(--content-primary);
+}
+
+.mini  .text-button:hover {
+    background-color: var(--background-quaternary);
+}
+
+/**
+ * Float Button
+ * ==================== */
+.mini .float-button {
+    opacity: 0;
+    transition: transform 0.3s var(--ease-bounce);
+    transform: scale(0.7);
+    position: absolute;
+    top: var(--size-2);
+    background-color: rgba(0, 0, 0, 0.75);
+    border: none;
+    width: var(--size-6);
+    height: var(--size-6);
+    padding-left: var(--size-2);
+    padding-right: var(--size-2);
+    border-radius: 6px;
+}
+
+
+/**
+ * Segmented Button
+ * ==================== */
+.mini .segmented-button {
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--size-1-5);
+    color: var(--content-primary);
+    gap: var(--size-1);
+    height: 28px;
+}
+
+.mini .segmented-button.bordered {
+    border: 1px solid var(--background-quaternary);
+}
+.mini .segmented-button.bordered:hover {
+    background-color: var(--background-quaternary);
+}
+
+.mini .segmented-button svg {
+    fill: var(--content-primary);
+}
+
+.mini .segmented-button:hover,
+.mini .segmented-button[aria-selected="true"] {
+    border: 1px solid var(--background-quaternary);
+    background-color: var(--background-secondary);
+}
+
+.mini .segmented-button[aria-selected="true"] span {
+    color: var(--content-primary);
+}
+
+
+/**
+ * Recent look button
+ */
+.recent-look-button {
+    padding: 2px;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: unset;
+    border-radius: var(--size-2);
+}
+
+.recent-look-button:not(:has(img)) {
+    border: 1px dashed var(--border-primary);
+    background: var(--background-tertiary);
+}
+
+.recent-look-button[aria-selected="true"] {
+    outline: 2px solid var(--content-primary);
+}
+
+.recent-look-button:not(:disabled):not([aria-selected="true"]):has(img):hover {
+    outline: 2px solid rgb(from var(--content-primary) r g b / 0.6);
+}
+
+.recent-look-button:not(:disabled):has(img):hover img {
+    opacity: 0.5;
+}
+
+.recent-look-button:not(:disabled):hover {
+    background-color: var(--background-quaternary);
+}
+
+.recent-look-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--size-1-5);
+}
+
+.recent-look-button img.object-contain {
+    object-fit: contain;
+}
+
+.recent-look-button:has(svg) {
+    padding: 8px;
+    border: 1px solid var(--border-primary);
+}
+
+.recent-look-button svg {
+    height: 100%;
+    width: 100%;
+}

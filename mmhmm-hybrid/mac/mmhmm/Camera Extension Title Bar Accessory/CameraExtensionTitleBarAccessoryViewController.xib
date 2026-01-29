@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="CameraExtensionTitleBarAccessoryViewController" customModule="mmhmm" customModuleProvider="target">
+            <connections>
+                <outlet property="disclosureImageView" destination="fID-Ns-dPo" id="QqO-Pm-B5G"/>
+                <outlet property="indicatorImageView" destination="rTc-FT-34H" id="rPj-nL-iVO"/>
+                <outlet property="messageLabel" destination="pNB-t0-eav" id="0XE-Os-cdN"/>
+                <outlet property="messageLabelWidthConstraint" destination="w9f-dq-IdD" id="3A9-ZZ-UDE"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="50" height="29"/>
+            <subviews>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pNB-t0-eav" userLabel="Message Label">
+                    <rect key="frame" x="14" y="8" width="4" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="width" id="w9f-dq-IdD"/>
+                    </constraints>
+                    <textFieldCell key="cell" controlSize="small" lineBreakMode="truncatingMiddle" alignment="right" title="messageLabel" id="SHB-lp-L4q">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="751" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="rTc-FT-34H" userLabel="Status Indicator">
+                    <rect key="frame" x="-8" y="7" width="24" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="32" id="HqJ-Zm-lLq"/>
+                        <constraint firstAttribute="width" constant="24" id="p49-I0-MkY"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="checkmark.circle" catalog="system" id="DxJ-Lt-IDa"/>
+                    <color key="contentTintColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="751" verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="fID-Ns-dPo" userLabel="Disclosure">
+                    <rect key="frame" x="16" y="10" width="24.5" height="9"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="1F8-qa-q9o"/>
+                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="32" id="T6y-1u-q0b"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" image="chevron.down" catalog="system" id="Oqn-Ch-3oX"/>
+                    <color key="contentTintColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                </imageView>
+                <button focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="ZB0-fO-z9X" userLabel="Transparent Button">
+                    <rect key="frame" x="-8" y="0.0" width="48" height="25"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" focusRingType="none" transparent="YES" imageScaling="proportionallyDown" inset="2" id="lR0-UI-ntZ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="transparentButtonClicked:" target="-2" id="nzx-Pc-jyg"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="rTc-FT-34H" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="Mnc-WC-amG"/>
+                <constraint firstItem="ZB0-fO-z9X" firstAttribute="trailing" secondItem="fID-Ns-dPo" secondAttribute="trailing" id="O9K-yx-abz"/>
+                <constraint firstItem="pNB-t0-eav" firstAttribute="leading" secondItem="rTc-FT-34H" secondAttribute="trailing" id="OBP-4n-gef"/>
+                <constraint firstItem="fID-Ns-dPo" firstAttribute="leading" secondItem="pNB-t0-eav" secondAttribute="trailing" id="SDd-a5-I3o"/>
+                <constraint firstAttribute="trailing" secondItem="fID-Ns-dPo" secondAttribute="trailing" constant="10" id="TAC-5Y-dyV"/>
+                <constraint firstItem="ZB0-fO-z9X" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="4" id="TXH-Y0-S8p"/>
+                <constraint firstItem="fID-Ns-dPo" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="XFO-Vv-SQ0"/>
+                <constraint firstItem="rTc-FT-34H" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="-8" id="YtZ-5f-6Xs"/>
+                <constraint firstAttribute="bottom" secondItem="ZB0-fO-z9X" secondAttribute="bottom" id="Zd0-3M-mWY"/>
+                <constraint firstItem="ZB0-fO-z9X" firstAttribute="leading" secondItem="rTc-FT-34H" secondAttribute="leading" id="iWP-WG-45W"/>
+                <constraint firstItem="rTc-FT-34H" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="qAh-jV-Mu6"/>
+                <constraint firstAttribute="trailing" secondItem="fID-Ns-dPo" secondAttribute="trailing" constant="10" id="qCr-oM-J98"/>
+                <constraint firstItem="pNB-t0-eav" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="rFV-PW-iLZ"/>
+                <constraint firstItem="fID-Ns-dPo" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="vJi-xR-47X"/>
+            </constraints>
+            <point key="canvasLocation" x="212" y="40.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="checkmark.circle" catalog="system" width="15" height="15"/>
+        <image name="chevron.down" catalog="system" width="15" height="9"/>
+    </resources>
+</document>

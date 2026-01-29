@@ -1,0 +1,19 @@
+//
+//  BuildConfiguration.xcconfig
+//  libcef_dll_wrapper
+//
+//  Created by Beni Federer on 12.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+BUNDLE_LOADER = $(TEST_HOST)
+CLANG_CXX_LANGUAGE_STANDARD = c++17
+DEBUG_INFORMATION_FORMAT = dwarf
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+FRAMEWORK_SEARCH_PATHS = $(PROJECT_DIR)/CEF
+GCC_WARN_64_TO_32_BIT_CONVERSION[arch=*64] = NO
+HEADER_SEARCH_PATHS = $(PROJECT_DIR)/CEF
+MACOSX_DEPLOYMENT_TARGET = 13.0
+SDKROOT = macosx

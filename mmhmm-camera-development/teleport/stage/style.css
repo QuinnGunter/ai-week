@@ -1,0 +1,167 @@
+div#stage_overlay {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  line-height: initial;
+  pointer-events: none;
+}
+
+div#presenter_overlay,
+div#hidden_presenter_overlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+div#hidden_presenter_overlay {
+  display: flex;
+  align-content: flex-end;
+  padding: 16px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+div.hidden-presenter {
+  display: flex;
+  align-items: center;
+  border-radius: 50px;
+  background-color: rgba(21, 20, 26, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 8px;
+  gap: 8px;
+  color: white;
+  fill: white;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+div.hidden-presenter .avatar {
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+}
+
+div.hidden-presenter svg {
+  height: 18px;
+  margin-right: 4px;
+}
+
+div#presenter_overlay div.name_badge {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  color: white;
+}
+
+div#presenter_overlay div.name_badge div.label {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 200px;
+  overflow: hidden;
+}
+
+div.name_badge button,
+div.hidden-presenter button {
+  border: 0px none;
+  background-color: transparent;
+  padding: 0px;
+  margin: 0px;
+  cursor: pointer;
+  width: auto;
+  pointer-events: initial !important;
+}
+
+div.name_badge button {
+  height: 16px;
+}
+
+div.hidden-presenter button {
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+
+div.name_badge svg.icon {
+  fill: white;
+  margin-left: 4px;
+  width: 16px;
+  height: 16px;
+}
+
+div.name_badge svg.icon.off,
+div.hidden-presenter svg.icon.off {
+  fill: var(--action-destructive);
+}
+
+div#stage_overlay div.toast {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
+
+  background: #27242e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.16);
+  border-radius: 4px;
+  padding: 8px 12px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: #ffffff;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  /* Full width while allowing for padding on stage element */
+  max-width: calc(100% - 48px);
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  transition: opacity 0.45s ease-in-out;
+}
+
+div#stage_overlay div.toast span {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+div#stage_overlay div.toast button {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+
+    /* Stage overlays don't typically respond to pointer events */
+    pointer-events: all;
+
+     /* Hardcoded to the dark values since the toast is always dark */
+    color: #D4D2D6;
+    background-color: #2F2F32;
+}
+
+div#stage_overlay div.toast button:hover {
+    background-color: #59565E;
+}

@@ -1,0 +1,22 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+    :root {
+        --background: #5B7275;
+    }
+    .background {
+    	fill: var(--background);
+    }
+</style>
+<path d="M1920 1080H0V0H1920V1080ZM961.5 60C696.403 60 481.5 274.903 481.5 540C481.5 805.097 696.403 1020 961.5 1020C1226.6 1020 1441.5 805.097 1441.5 540C1441.5 274.903 1226.6 60 961.5 60Z" class="background"/>
+<g opacity="0.1">
+<path d="M959.5 45.9219C1233.16 45.922 1455.03 267.562 1455.03 541C1455.03 814.438 1233.16 1036.08 959.5 1036.08C685.839 1036.08 463.967 814.438 463.967 541C463.967 267.562 685.839 45.9219 959.5 45.9219Z" stroke="white" stroke-width="31"/>
+<ellipse cx="953.502" cy="43.3926" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="953.502" cy="1036.61" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="583.076" cy="865.068" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="570.877" cy="232.428" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="1344.73" cy="855.248" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="1347.57" cy="232.428" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="463.401" cy="539.357" rx="8.40058" ry="8.39261" class="background"/>
+<ellipse cx="1456.6" cy="539.357" rx="8.40058" ry="8.39261" class="background"/>
+</g>
+</svg>

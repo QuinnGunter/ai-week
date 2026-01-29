@@ -1,0 +1,14 @@
+//
+//  mmhmm Helper.xcconfig
+//  mmhmm
+//
+//  Created by Beni Federer on 09.07.24.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "mmhmm Helper Base Config.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = app.mmhmm.hybrid.helper
+PRODUCT_NAME = Airtime Helper

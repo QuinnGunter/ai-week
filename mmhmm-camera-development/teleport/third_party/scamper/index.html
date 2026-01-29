@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+</head>
+
+<script type='text/javascript' src="scamper.js"></script>
+
+<script type='text/javascript'>
+
+  var isDrawing = false;
+  var scamper = new Scamper({step: 10, sample: 2});
+
+  window.onmousedown = function(e) {
+    isDrawing = true;
+    scamper.beginStroke(e.clientX, e.clientY, 0);
+  }
+
+  window.onmousemove = function(e) {
+    if (!isDrawing) return;
+    scamper.extendStroke(e.clientX, e.clientY, 0).forEach(drawPoint);
+  }
+  
+  window.onmouseup = function(e) {
+    isDrawing = false;
+    scamper.endStroke(e.clientX, e.clientY, 0).forEach(drawPoint);
+  }
+
+  function drawPoint(pt) {
+    var d = document.createElement('div');
+    d.innerHTML = '&#149;';
+    d.setAttribute('style', 'position: absolute; top: ' + pt.y + 'px; left: ' + pt.x + 'px;');
+    document.body.appendChild(d);
+  }
+
+</script>
+
+<body>
+
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+# https://github.com/realm/SwiftLint?tab=readme-ov-file#unexpected-project-structures
+parent_config: ../.swiftlint.yml

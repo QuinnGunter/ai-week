@@ -1,0 +1,316 @@
+/*
+ * Action Sheets
+ */
+div.sheet {
+  position: absolute;
+  border-radius: 16px;
+  background-color: var(--background-secondary);
+  box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 10%);
+  opacity: 0;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border-primary);
+  overflow: hidden;
+}
+
+div.sheet div.titlebar {
+  display: flex;
+  align-items: center;
+  border-top-right-radius: inherit;
+  border-top-left-radius: inherit;
+  color: var(--content-primary);
+  fill: var(--content-primary);
+  padding: 12px 16px;
+  height: 56px;
+}
+div.sheet div.titlebar button {
+  border: 0px none;
+  background-color: transparent;
+}
+div.sheet div.titlebar button:active svg {
+  opacity: 33%;
+}
+
+div.sheet div.titlebar button svg {
+  transition: transform 0.33s ease-in;
+}
+
+div.sheet div.title,
+div.sheet div.header {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 140%;
+}
+div.sheet div.contents {
+  color: var(--content-secondary);
+  fill: var(--content-secondary);
+  stroke: var(--content-secondary);
+  font-size: 15px;
+
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+div.sheet div.contents.no_title {
+  border-top-right-radius: inherit;
+  border-top-left-radius: inherit;
+}
+
+div.sheet div.contents.no_scroll {
+  overflow: hidden;
+}
+
+div.sheet div.contents button.round {
+  border: 0px none;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
+  border: 0px none;
+  background-color: var(--border-secondary);
+  fill: var(--content-primary);
+  stroke: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div.sheet div.contents button.round:hover {
+  background-color: var(--border-primary);
+}
+
+div.sheet div.contents button.round:active {
+  opacity: 30%;
+}
+
+
+div.sheet div.contents div.option_list {
+  max-height: var(--sheet-max-height);
+  min-width: 120px;
+  overflow-y: auto;
+  margin: 4px 2px 0px;
+}
+
+div.sheet div.contents div.option_list div.header {
+  color: var(--content-tertiary);
+  font-weight: 600;
+  padding-top: 24px;
+  padding-left: 11px;
+  padding-bottom: 8px;
+  font-size: 11px;
+}
+
+div.sheet div.contents div.option_list div.subheader {
+  color: var(--content-tertiary);
+  font-weight: 600;
+  padding-top: 8px;
+  padding-left: 11px;
+  padding-bottom: 8px;
+  font-size: 11px;
+}
+
+div.sheet div.contents div.option_list div.row {
+  color: var(--content-secondary);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+div.sheet div.contents div.option_list div.row.divider {
+  width: 100%;
+  height: 1px;
+  padding: 0px;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  background-color: var(--border-secondary);
+  cursor: auto;
+}
+
+div.sheet div.contents div.option_list div.row.divider:hover {
+  background-color: var(--border-secondary);
+}
+
+div.sheet div.contents div.option_list div.row.button {
+  padding: 0px;
+  position: relative;
+}
+
+div.sheet div.contents div.option_list div.row.button > button {
+  padding: 8px 14px;
+  text-align: left;
+  border: 0px none;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  color: var(--content-secondary);
+  font-weight: 590;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+div.sheet div.contents div.option_list div.row.button > button:disabled {
+  opacity: 50%;
+  cursor: not-allowed;
+}
+
+div.sheet div.contents div.option_list div.row.button > button.icon {
+  display: flex;
+  align-items: center;
+  order: 1;
+}
+
+div.sheet div.contents div.option_list.menu:not(.nav_menu, .more_options_menu, .help_menu) button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+div.sheet div.contents div.option_list.menu:not(.nav_menu, .more_options_menu, .help_menu) button span.icon {
+  order: 2;
+  width: 16px;
+  height: auto;
+}
+
+div.sheet div.contents div.option_list.menu.more_options_menu button span.icon {
+  width: 16px;
+  height: auto;
+  padding: 2px;
+}
+
+div.sheet div.contents div.option_list.menu div.label {
+    text-align: center;
+    font-weight: 600;
+    font-size: 11px;
+}
+
+div.sheet div.contents div.option_list div.row.button > button.icon svg {
+  padding-right: 12px;
+}
+
+div.sheet div.contents div.option_list div.row.button.with_divider {
+  margin-bottom: 8px;
+}
+
+div.sheet div.contents div.option_list div.row.button.with_divider::after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  height: 1px;
+  background-color: var(--border-secondary);
+  bottom: -4px;
+}
+
+div.sheet div.contents div.option_list div.kv_container {
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 24px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+div.sheet div.contents div.option_list div.kv_container div.key {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-y: hidden;
+}
+
+div.sheet div.contents div.option_list div.kv_container div.value {
+  color: var(--content-tertiary);
+}
+
+div.sheet div.contents div.option_list .slider_wrapper {
+  padding: 0;
+  margin: 0;
+  padding-left: 16px;
+}
+
+div.sheet div.contents div.option_list div.row label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  flex-grow: 1;
+}
+
+div.sheet div.contents div.option_list div.row:hover {
+  color: var(--content-primary);
+  background-color: var(--border-secondary);
+  border-radius: var(--size-1-5);
+}
+
+div.sheet div.contents div.option_list div.row span.selection_state input {
+  display: none;
+}
+
+div.sheet div.contents div.option_list div.row span.selection_state svg {
+  opacity: 0%;
+}
+
+div.sheet
+  div.contents
+  div.option_list
+  div.row
+  span.selection_state
+  input:checked
+  + svg {
+  opacity: 100%;
+}
+
+div.sheet div.contents div.option_list label {
+  margin-left: 8px;
+}
+
+div.sheet div.contents div.option_list .thumbnail {
+  margin-left: 8px;
+}
+
+div.sheet div.contents div.option_list img {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+}
+
+div.shaderroom_controls {
+  margin: 16px;
+}
+
+/*  */
+
+div.sheet div.contents div.option_list div.row > button.title_plus_icon {
+  display: flex;
+  flex-direction: row;
+  padding-right: 4px !important;
+}
+
+div.sheet div.contents div.option_list div.row > button.title_plus_icon span:not(.icon) {
+  flex-grow: 1;
+}
+
+div.sheet div.contents div.option_list div.row > button.title_plus_icon svg {
+  flex-grow: 0;
+}
+
+div.sheet div.contents div.option_list div.row > button span.icon {
+  display: inline-flex;
+  width: 24px;
+}
+
+div.sheet div.contents div.option_list div.row > button span.icon > svg {
+  width: 16px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+}
+
+div.sheet div.contents div.option_list div.row > button span.icon.checkmark > svg {
+  width: 10px;
+}

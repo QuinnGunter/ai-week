@@ -1,0 +1,21 @@
+diff --git a/BUILD.gn b/BUILD.gn
+index 4cae38082..299c0ecd2 100644
+--- a/BUILD.gn
++++ b/BUILD.gn
+@@ -1615,6 +1615,16 @@ if (is_mac) {
+         "@loader_path/../../../../../..",
+       ]
+     }
++    else {
++     ldflags += [
++     "-rpath",
++     "@loader_path/../Frameworks",
++    "-rpath",
++     "@loader_path/Frameworks",
++     "-rpath",
++     "@loader_path/../../../",
++   ]
++  }
+ 
+     info_plist_target = ":cef_framework_plist"
+   }

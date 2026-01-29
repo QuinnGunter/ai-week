@@ -1,0 +1,32 @@
+{
+  "seglib": {
+    "mce_config": {
+      "nn_segmentation": {
+        "nn_segmentation_impl": {
+          "green_screen": {
+            "automation_mode": true
+          }
+        },
+        "target_color_space": "YCrCb",
+        "size": {
+          "width": 640,
+          "height": 360
+        }
+      },
+      "frames_color_space": "BGR",
+      "engine_mode": "nn_only",
+      "frame_converter_config": {
+        "nn_input_mode": "full_frame",
+        "mask_value": 255,
+        "score_threshold": 0.5
+      },
+      "frame_skipping_config": {
+        "max_percentage_user_cpu_load": 0,
+        "low_cpu_usage_duration_ms": 300,
+        "high_cpu_usage_duration_ms": 300
+      },
+      "predictions_stabilization": false,
+      "avg_frame_stability_diff_threshold": 0
+    }
+  }
+}

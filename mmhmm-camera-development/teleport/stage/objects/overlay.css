@@ -1,0 +1,235 @@
+div.slide_overlay {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+
+  --frame-color: var(--action-hover);
+  --frame-width: 2px;
+}
+
+div.slide_overlay div.drop-zone {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-overlay);
+    display: none;
+}
+
+div.slide_overlay.dragging div.drop-zone {
+    display: block;
+}
+
+div.slide_overlay div.button_bar {
+  display: flex;
+  flex-direction: row;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+div.slide_overlay div.button_bar > button {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 0px none;
+  cursor: pointer;
+  pointer-events: auto;
+
+  color: white;
+  fill: white;
+  stroke: white;
+  font-style: normal;
+  font-weight: 590;
+  font-size: 14px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+div.slide_overlay div.button_bar > button:disabled {
+    cursor: not-allowed;
+    color: rgb(128,128,128);
+    fill: rgb(128,128,128);
+    stroke: rgb(128,128,128);
+}
+
+div.slide_overlay div.button_bar > *:nth-child(1) {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+div.slide_overlay div.button_bar > *:nth-last-child(1) {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+div.slide_overlay div.button_bar > *:nth-child(n + 2) {
+  border-left: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+div.slide_overlay div.button_bar > button:active {
+  background: rgba(0, 0, 0, 0.4);
+  color: rgb(200, 200, 200);
+  fill: rgb(200, 200, 200);
+}
+
+div.slide_overlay div.button_bar > button svg {
+  height: 16px;
+  width: auto;
+}
+
+div.slide_overlay div.button_bar div.button_wrapper {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    height: 32px;
+    padding-left: 4px;
+    padding-right: 4px;
+    border-left: 0px none transparent;
+}
+
+div.slide_overlay div.button_bar div.button_wrapper:nth-last-child(1) {
+    padding-right: 8px;
+}
+
+div.slide_overlay div.button_bar div.button_wrapper > button {
+    height: 24px;
+}
+
+div.slide_overlay div.button_bar div.button_wrapper > button.secondary {
+    background-color: #212127;
+    color: #FFFFFF;
+    stroke: #FFFFFF;
+    fill: #FFFFFF;
+}
+
+div.slide_overlay div.button_bar div.button_wrapper > button.secondary:disabled {
+    opacity: 0.4;
+}
+
+div.slide_overlay div.button_bar div.zoom_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+div.slide_overlay div.button_bar div.zoom_box label {
+    color: white;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    padding-right: 6px;
+}
+
+div.slide_overlay div.frame {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  border: var(--frame-width) solid var(--frame-color);
+  margin: calc(-1 * var(--frame-width));
+  filter: drop-shadow(0px 0px 6px #000000)
+    drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.18));
+}
+
+div.slide_overlay div.handles {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    pointer-events: none;
+}
+
+div.slide_overlay div.handles div.handle {
+  background: #ffffff;
+  position: absolute;
+
+  --knob-diameter: 10px;
+  --margin: calc(var(--knob-diameter) / -2);
+
+  border: 2px solid var(--frame-color);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.18);
+  border-radius: 2px;
+  width: var(--knob-diameter);
+  height: var(--knob-diameter);
+  margin-left: var(--margin);
+  margin-top: var(--margin);
+  pointer-events: auto;
+}
+
+div.slide_overlay div.handles div.handle.crop.horizontal {
+    margin-top: calc(var(--margin) * 2);
+    height: calc(var(--knob-diameter) * 2);
+}
+
+div.slide_overlay div.handles div.handle.crop.vertical {
+    margin-left: calc(var(--margin) * 2);
+    width: calc(var(--knob-diameter) * 2);
+}
+
+div.slide_overlay div.message_box {
+    pointer-events: initial;
+    position: absolute;
+    inset: 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: initial !important;
+}
+
+div.slide_overlay div.message_box div.background {
+    position: absolute;
+    inset: 0px;
+
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+div.slide_overlay div.message_box div.background *:nth-child(n+2) {
+    margin-top: 8px;
+}
+
+div.slide_overlay div.message_box div.background div.title {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: #FFFFFF;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.48);
+}
+
+div.slide_overlay div.message_box div.background div.message {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #B1B0B2;
+    text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.48);
+}
+
+div.slide_overlay div.message_box div.background button {
+    background: rgba(160, 154, 248, 0.3);
+    border-radius: 4px;
+
+    font-style: normal;
+    font-weight: 510;
+    font-size: 12px;
+    line-height: 16px;
+    color: #FFFFFF;
+}

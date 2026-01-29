@@ -1,0 +1,656 @@
+/* Idle panel */
+
+[data-id="looks-idle-panel"] {
+    interpolate-size: allow-keywords;
+    --transition-speed: 0.2s;
+}
+
+/* When searching for visuals, hide the widget bar */
+[data-id="looks-idle-panel"] [data-id="widget-bar"] {
+    height: max-content;
+}
+[data-id="looks-idle-panel"]:has(input[type="search"].focused) [data-id="widget-bar"] {
+    height: 0px;
+}
+
+/* Some UI is hidden when the user is NOT searching for visuals */
+[data-id="looks-idle-panel"] [data-visibility="search"] {
+    height: max-content;
+    transition:
+        height var(--transition-speed),
+        padding var(--transition-speed),
+        opacity var(--transition-speed);
+}
+[data-id="looks-idle-panel"]:not(:has(input[type="search"].focused)) [data-visibility="search"] {
+    height: 0px;
+    padding: 0px;
+    opacity: 0;
+}
+[data-id="looks-idle-panel"]:not(:has(input[type="search"].focused)) [data-visibility="search-hidden"] {
+    display: none;
+}
+
+/* Application toolbar */
+
+.looks__toolbar {
+    padding: var(--size-2) var(--size-3);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--size-2);
+    background-color: transparent;
+    border-bottom: 1px solid var(--background-quaternary);
+}
+
+.looks__toolbar .ghost_button {
+    height: var(--size-7) !important;
+}
+
+/* Text styles */
+
+.looks-widget span.keycap {
+    background-color: var(--background-quaternary);
+    padding: var(--size-0-5) var(--size-1-5);
+    border-radius: var(--size-1-5);
+}
+
+/* Text inputs */
+
+.looks-widget input[type="text"]:disabled {
+    background-color: var(--background-tertiary);
+    cursor: not-allowed;
+}
+
+.looks-widget input[type="text"]:disabled:hover {
+    border: 1px solid var(--border-primary);
+}
+
+/* Misc */
+
+.looks-widget hr {
+    width: 100%;
+    border-color: var(--border-primary);
+}
+
+/* Widgets */
+
+.looks-widget {
+    width: calc(100% - (2 * var(--size-2)));
+    height: max-content;
+    max-height: calc(100% - (2 * var(--size-2)));
+    overflow: hidden;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--size-2);
+    padding: var(--size-2);
+    margin: var(--size-2);
+    background: var(--background-tertiary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--size-1-5);
+    transition:
+        height var(--transition-speed),
+        opacity var(--transition-speed);
+}
+
+.looks-widget.hidden {
+    display: flex !important;
+    height: 0px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* When a widget is open, dim the rest of the idle panel's content and prevent interaction */
+[data-id="looks-idle-panel"] > [data-id="content"] > div:not(.looks-widget) {
+    transition:
+        height var(--transition-speed) ease-in-out,
+        opacity var(--transition-speed);
+}
+[data-id="looks-idle-panel"] > [data-id="content"] > div:has(~ .looks-widget:not(.hidden)) {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Looks widget */
+
+.looks-widget [data-id="recent-looks"] {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+
+/* Away widget */
+
+.looks-widget [data-id="away-screen-options"] {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+}
+
+.looks-widget[data-id="away-widget"] input:disabled {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.looks-widget[data-id="away-widget"]:has(input:not(:disabled)) [data-id="empty-state"] {
+    display: none;
+}
+
+/* Widget on/off indicator */
+
+[data-id="looks-idle-panel"] div.indicator div.round {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    aspect-ratio: 1;
+    padding: var(--size-1);
+    border-radius: 50%;
+    background-color: var(--background-quaternary);
+    transition: background-color 0.3s ease-in-out;
+}
+
+[data-id="looks-idle-panel"] .active-widget div.indicator div.round svg {
+    fill: var(--action-primary);
+}
+
+[data-id="looks-idle-panel"] .active-widget.destructive div.indicator div.round svg {
+    fill: var(--action-destructive);
+}
+
+[data-id="looks-idle-panel"] div.indicator svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--content-primary);
+}
+
+/* Widget bar button */
+
+.widget-button {
+    height: var(--size-9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: var(--background-secondary);
+    transition: background-color 0.3s ease-in-out;
+    font-size: var(--font-size-xxs);
+    border-radius: var(--size-1-5);
+}
+
+.widget-button.active-widget {
+    background-color: var(--background-tertiary);
+}
+
+.widget-button svg {
+    fill: var(--content-primary);
+}
+
+.widget-button button {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: var(--size-2);
+
+    color: var(--content-primary);
+    background-color: transparent;
+
+    border-width: 1px;
+    border-color: var(--border-primary);
+}
+
+.widget-button button.left {
+    width: 100%;
+    border-radius: var(--size-1-5) 0 0 var(--size-1-5);
+    border-right-width: 0;
+}
+
+.widget-button button.right {
+    width: fit-content;
+    border-radius: 0 var(--size-1-5) var(--size-1-5) 0;
+}
+
+.widget-button div.indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+}
+
+.widget-button .icon-button {
+    width: var(--size-5);
+    height: var(--size-5);
+}
+
+.widget-button button:hover {
+    background-color: var(--background-quaternary) !important;
+    cursor: pointer;
+}
+
+/* Widget button toggle switch */
+.widget-button button.right svg circle {
+    transition: transform 0.1s linear;
+}
+.widget-button.active-widget button.right svg circle {
+    transform: translateX(8px);
+}
+.widget-button.active-widget button.right svg circle:first-of-type {
+    fill: var(--action-primary);
+    fill-opacity: 1;
+}
+.widget-button.active-widget button.right svg circle:last-of-type {
+    stroke: var(--action-primary);
+}
+
+/* Narrow layout */
+
+@media (max-width: 265px) {
+    .widget-button span {
+        display: none;
+    }
+}
+
+@media (max-width: 300px) {
+    .widget-button svg {
+        height: var(--size-6);
+        width: var(--size-6);
+    }
+    /* Hide the label on the virtual camera status indicator */
+    [data-id="toolbar"] button[data-action="show-virtual-camera-menu"] span {
+        display: none;
+    }
+}
+
+@media (max-width: 280px) {
+    .looks-widget button.capsule svg {
+        display: none;
+    }
+}
+
+/* Toggle button */
+
+.looks-widget .toggle-button {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: var(--size-1);
+    background-color: var(--background-primary);
+    border-radius: var(--size-1-5);
+    font-size: var(--font-size-xs);
+}
+
+.looks-widget .toggle-button button {
+    width: 100%;
+    padding: var(--size-1) var(--size-2);
+    border-radius: var(--size-1-5);
+    transition: none;
+}
+
+.looks-widget .toggle-button button[aria-selected="true"] {
+    color: var(--content-primary);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    pointer-events: none;
+}
+
+.looks-widget .toggle-button button:not([aria-selected="true"]):hover {
+    color: var(--content-primary);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+}
+
+.looks-widget .toggle-button button:not([aria-selected="true"]) {
+    color: var(--content-secondary);
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+
+/* Virtual Camera status button */
+
+.ghost_button[data-action="show-virtual-camera-menu"] {
+    fill: var(--content-secondary);
+    color: var(--content-secondary);
+}
+
+.ghost_button[data-action="show-virtual-camera-menu"][data-state="connected"] {
+    fill: var(--action-success);
+    color: var(--action-success);
+}
+
+.ghost_button[data-action="show-virtual-camera-menu"][data-state="error"] {
+    fill: var(--action-destructive);
+    color: var(--action-destructive);
+}
+
+/* Reactions panel */
+
+/* Remove padding from the thumbnail grid */
+[data-id="reactions-panel"] [data-id="tab-panels"] .scroll-container {
+    padding: var(--size-1) 0 0 0;
+}
+
+[data-id="reactions-list"] li.looks-item {
+    border-radius: unset;
+}
+
+[data-id="looks-idle-panel"] [data-id="reactions-panel"] .looks-thumbnail {
+    padding: 4px;
+    aspect-ratio: unset;
+}
+
+[data-id="looks-idle-panel"] [data-id="reactions-panel"] button.looks-thumbnail {
+    border-radius: var(--size-2-5);
+}
+
+[data-id="looks-idle-panel"] [data-id="reactions-panel"] button[data-action="select-item"]:hover {
+    outline: 2px solid rgb(from var(--content-primary) r g b / 0.6);
+    outline-offset: -2px;
+}
+
+[data-id="looks-idle-panel"] [data-id="reactions-panel"] .looks-thumbnail img {
+    object-fit: contain;
+    background: var(--background-tertiary);
+    background-clip: content-box;
+    padding: 0;
+}
+
+/* Standard button customizations */
+
+.looks-widget button.icon-button {
+    width: 20px;
+    height: 20px;
+}
+
+.looks-widget button.icon-button {
+    background-color: var(--background-quaternary);
+}
+
+[data-id="reactions-panel"] button.icon-button:hover,
+.looks-widget button.icon-button:hover {
+    background-color: var(--background-quaternary) !important;
+}
+
+.looks-widget button.capsule.secondary {
+    height: var(--size-7);
+    background-color: var(--background-quaternary);
+    border: 1px solid var(--border-primary);
+    font-size: var(--font-size-xs);
+}
+
+.looks-widget div.slider_wrapper,
+.looks-widget div.slider_wrapper input[type="range"] {
+    width: 100%;
+}
+
+.looks__panel [data-id="reactions-panel"] .ghost_button {
+    fill: var(--content-tertiary);
+    height: var(--size-8);
+}
+
+/* Widget help card */
+
+.help-card {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--size-2);
+    padding: var(--size-2);
+
+    border: 1px solid var(--border-primary);
+    border-radius: var(--size-1-5);
+}
+
+.help-card .ghost_button {
+    height: var(--size-5) !important;
+    width: var(--size-5) !important;
+    padding: var(--size-0_5) !important;
+}
+
+.help-card .ghost_button svg {
+    width: var(--size-4);
+    height: var(--size-4);
+}
+
+/* Speech Suggestions */
+
+.speech-suggestions-container {
+    padding: var(--size-2);
+    margin: 0 var(--size-2) var(--size-2) var(--size-2);
+    background-color: var(--background-tertiary);
+    border: 1px solid var(--action-primary);
+    border-radius: var(--size-1-5);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.speech-suggestions-container.hidden {
+    display: none;
+}
+
+.speech-suggestions-container.speech-suggestions-visible {
+    animation: speech-suggestions-appear 0.3s ease-out;
+}
+
+@keyframes speech-suggestions-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.speech-suggestions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--size-2);
+}
+
+.speech-suggestions-label {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2);
+    font-size: var(--font-size-xs);
+    color: var(--content-primary);
+    font-weight: 500;
+}
+
+.speech-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: var(--action-primary);
+    border-radius: 50%;
+    animation: speech-indicator-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes speech-indicator-pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
+}
+
+.speech-suggestions-dismiss {
+    width: var(--size-5) !important;
+    height: var(--size-5) !important;
+    padding: var(--size-0_5) !important;
+}
+
+.speech-suggestions-dismiss svg {
+    width: var(--size-4);
+    height: var(--size-4);
+}
+
+.speech-suggestions-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2);
+}
+
+.speech-suggestion-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: var(--size-10);
+    height: var(--size-10);
+    padding: var(--size-1) var(--size-2);
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    border-radius: var(--size-1-5);
+    cursor: pointer;
+    transition: all 0.15s ease-in-out;
+}
+
+.speech-suggestion-item:hover {
+    background-color: var(--background-quaternary);
+    border-color: var(--action-primary);
+    transform: scale(1.05);
+}
+
+.speech-suggestion-item:active {
+    transform: scale(0.95);
+}
+
+.speech-suggestion-content {
+    font-size: var(--font-size-lg);
+    line-height: 1;
+}
+
+/* GIF Suggestions Section */
+
+.gif-suggestions-section {
+    margin-top: var(--size-3);
+    padding-top: var(--size-3);
+    border-top: 1px solid var(--border-secondary);
+}
+
+.gif-suggestions-section.hidden {
+    display: none;
+}
+
+.gif-suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--size-2);
+}
+
+.gif-suggestion-item {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: var(--size-1-5);
+    cursor: pointer;
+    background-color: var(--background-secondary);
+    border: 1px solid var(--border-primary);
+    padding: 0;
+    transition: all 0.15s ease-in-out;
+}
+
+.gif-suggestion-item:hover {
+    border-color: var(--action-primary);
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.gif-suggestion-item:active {
+    transform: scale(0.95);
+}
+
+.gif-suggestion-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--size-1);
+}
+
+/* GIF Loading State */
+
+.gif-loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--size-2);
+    padding: var(--size-3) 0;
+}
+
+.gif-loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border-secondary);
+    border-top-color: var(--action-primary);
+    border-radius: 50%;
+    animation: gif-loading-spin 0.8s linear infinite;
+}
+
+@keyframes gif-loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.gif-loading-text {
+    font-size: var(--font-size-xs);
+    color: var(--content-secondary);
+}
+
+/* Speech reactions toggle button in toolbar */
+
+.speech-reactions-toggle {
+    position: relative;
+    color: var(--content-primary);
+}
+
+.speech-reactions-toggle:disabled {
+    color: var(--content-tertiary);
+    cursor: not-allowed;
+}
+
+.speech-reactions-toggle .speech-mic-on {
+    display: none;
+}
+
+.speech-reactions-toggle .speech-mic-off {
+    display: block;
+    opacity: 0.6;
+}
+
+.speech-reactions-toggle.icon_toggle_button_active .speech-mic-on {
+    display: block;
+}
+
+.speech-reactions-toggle.icon_toggle_button_active .speech-mic-off {
+    display: none;
+}
+
+.speech-reactions-toggle.icon_toggle_button_active {
+    color: var(--action-primary);
+}
+
+.speech-reactions-toggle.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid transparent;
+    border-top-color: var(--action-primary);
+    border-radius: 50%;
+    animation: speech-loading-spin 0.8s linear infinite;
+}
+
+.speech-reactions-toggle.loading > div {
+    opacity: 0.3;
+}
+
+@keyframes speech-loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

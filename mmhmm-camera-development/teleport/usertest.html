@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <!-- Used for user testing the camera app in the browser -->
+        <title>Airtime Camera</title>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #8C8C8C;
+            }
+            iframe {
+                width: clamp(240px, 320px, 480px);
+                min-width: 240px;
+                height: clamp(480px, 80vh, 1024px);
+                border: none;
+                border-radius: 12px;
+                resize: horizontal;
+            }
+            iframe.editor {
+                width: clamp(1000px, 80vw, 1920px) !important;
+                height: clamp(580px, 80vh, 1200px) !important;
+            }
+        </style>
+        <script>
+            window.toSmallWindow = function() {
+                document.querySelector("iframe").classList.remove("editor");
+            }
+            window.toLargeWindow = function() {
+                document.querySelector("iframe").classList.add("editor");
+            }
+        </script>
+    </head>
+    <body>
+        <div id="app">
+            <iframe src="index.html"></iframe>
+        </div>
+    </body>
+</html>

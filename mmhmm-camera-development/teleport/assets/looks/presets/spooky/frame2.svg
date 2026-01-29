@@ -1,0 +1,13 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<style>
+    :root {
+        --tint: #FFFFFF;
+    }
+	.tinted {
+		fill: var(--tint);
+	}
+</style>
+
+<path class="tinted" d="M1870 50V1030H50V50H1870ZM58 1022H1862V58H58V1022Z"/>
+</svg>

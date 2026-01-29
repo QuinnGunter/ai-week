@@ -1,0 +1,47 @@
+{
+  "seglib": {
+    "mce_config": {
+      "nn_segmentation": {
+        "nn_segmentation_impl": {
+          "onnxrt": {
+            "model_source": {
+              "instantiated_model": {
+                "onnx_model": {
+                  "model_path": "${SEGLIB_MODELS_ROOT_PATH}/segnet_u256--21-10-2021_fix_v113.aes"
+                }
+              }
+            },
+            "inter_threads": 0,
+            "intra_threads": 1
+          }
+        },
+        "target_color_space": "BGR",
+        "size": {
+          "width": 256,
+          "height": 144
+        }
+      },
+      "frames_color_space": "BGR",
+      "engine_mode": "nn_only",
+      "frame_converter_config": {
+        "nn_input_mode": "full_frame_padded",
+        "mask_value": 255,
+        "score_threshold": 0.3,
+        "two_step_upsampling": true
+      },
+      "nn_only_engine_config": {
+        "bottom_alpha_threshold": 0.0,
+        "upper_alpha_threshold": 1.0,
+        "smoothing_size": 0,
+        "blur_size": 3
+      },
+      "frame_skipping_config": {
+        "max_percentage_user_cpu_load": 0,
+        "low_cpu_usage_duration_ms": 300,
+        "high_cpu_usage_duration_ms": 300
+      },
+      "predictions_stabilization": true,
+      "avg_frame_stability_diff_threshold": 0.001
+    }
+  }
+}

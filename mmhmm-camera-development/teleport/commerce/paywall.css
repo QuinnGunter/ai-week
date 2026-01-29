@@ -1,0 +1,112 @@
+.paywall_sheet {
+    --paywall-padding: 24px;
+
+    padding: var(--paywall-padding);
+    background: radial-gradient(
+        29.78% 50% at 50% 50%,
+        rgba(0, 234, 255, 0.08) 35%,
+        rgba(0, 234, 255, 0.03) 100%
+    );
+
+    transition: all 0.3s;
+}
+
+@media only screen and (max-height: 520px) {
+    .paywall_sheet {
+        --paywall-padding: 20px;
+    }
+    .paywall_sheet .buy_now {
+        gap: 16px !important;
+    }
+    .paywall_sheet .free_hour svg {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    .paywall_sheet {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+.paywall_sheet .buy_now {
+    max-width: 480px;
+    gap: 32px;
+    padding: var(--paywall-padding);
+    border-radius: 12px;
+    border: 1px solid var(--highlight-primary);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.light .paywall_sheet .buy_now {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.paywall_sheet .spacer {
+    max-height: 96px;
+    flex-grow: 1;
+}
+
+.paywall_sheet .spacer.min {
+    min-height: 32px;
+}
+
+.paywall_sheet .gap-12px {
+    gap: 12px;
+}
+
+.paywall_sheet button.capsule.secondary {
+    background: var(--highlight-primary);
+    border: 1px solid var(--highlight-primary);
+}
+
+.light .paywall_sheet button.capsule.secondary {
+    background: var(--highlight-primary);
+}
+
+.paywall_sheet .free_hour button.capsule.secondary:hover:enabled {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.light .paywall_sheet .free_hour button.capsule.secondary:hover:enabled {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.paywall_sheet button.capsule.signout {
+    background: transparent;
+}
+
+.paywall_sheet button.action-text {
+    border: none;
+    background: transparent;
+    color: var(--action-primary);
+}
+
+.paywall_sheet .text-title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--content-primary);
+}
+
+.paywall_sheet .text-body {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--content-secondary);
+    text-align: center;
+}
+
+.paywall_sheet .text-body.paywall-unlock-message {
+    /* Same as button.capsule */
+    min-height: 32px;
+}
+
+.paywall_sheet .footer {
+    padding-top: 40px;
+}
+
+.paywall_sheet .switch-tools {
+    margin-top: 32px;
+}

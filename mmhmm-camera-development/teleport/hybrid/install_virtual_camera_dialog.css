@@ -1,0 +1,37 @@
+div.install_vcam_sheet {
+    width: 400px;
+    height: min(100%, 520px);
+}
+
+div.install_vcam_sheet div.contents {
+    /* 56px is the sheet titlebar height */
+    /* There's got to be a better way to do this */
+    height: calc(100% - 56px) !important;
+}
+
+div.install_vcam_sheet div.column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px;
+}
+
+div.install_vcam_sheet div.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+div.install_vcam_sheet img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+div.install_vcam_sheet ol {
+    margin: unset;
+}
+
+div.install_vcam_sheet a {
+    color: var(--action-secondary);
+}

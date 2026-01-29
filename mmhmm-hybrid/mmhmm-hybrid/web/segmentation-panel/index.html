@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Processing Panel</title>
+    <link rel="stylesheet" href="../css/segmentation-panel.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Camera Processing Panel</h1>
+        
+        <!-- Tab Navigation -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-tab="segmentation">Segmentation</button>
+            <button class="tab-btn" data-tab="visual-effects">Visual Effects</button>
+        </div>
+        
+        <!-- Segmentation Tab Content -->
+        <div class="tab-content active" id="segmentation-tab">
+            <div class="panel-group">
+                <div class="panel-title">Presets</div>
+                <div class="button-group">
+                    <button id="preset-apple-hard" class="preset-btn">AppleVisionHard</button>
+                    <button id="preset-apple-soft" class="preset-btn">AppleVisionSoft</button>
+                    <button id="preset-vision-hard" class="preset-btn">VisionTalkHard</button>
+                    <button id="preset-vision-soft" class="preset-btn">VisionTalkSoft</button>
+                </div>
+            </div>
+            
+            <!-- Models Group -->
+            <div class="panel-group">
+                <div id="panelTitle" class="panel-title">Models</div>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="model" value="AppleVision Person" checked>
+                        AppleVision Person
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="model" value="AppleVision Foreground">
+                        AppleVision Foreground
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="model" value="VisionTalk">
+                        VisionTalk
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Segmentation Parameters Group -->
+            <div class="panel-group">
+                <div class="panel-title">Segmentation Parameters</div>
+                <div class="form-control">
+                    <label for="scoring">Scoring</label>
+                    <div class="slider-container">
+                        <input type="range" id="scoring" min="0" max="1" step="0.01" value="0.5">
+                        <span class="slider-value" id="scoring-value">0.50</span>
+                    </div>
+                </div>
+                <div class="checkbox-control">
+                    <input type="checkbox" id="scene-stabilisation" checked>
+                    <label for="scene-stabilisation">Scene Stabilisation</label>
+                </div>
+            </div>
+            
+            <!-- Post Processing Group -->
+            <div class="panel-group">
+                <div class="panel-title">Post Processing</div>
+                
+                <!-- Morphological Gradient Subgroup -->
+                <div class="checkbox-control">
+                    <input type="checkbox" id="morphological-enable" checked>
+                    <label for="morphological-enable">Morphological Gradient</label>
+                </div>
+                
+                <div class="sub-group" id="morphological-group">
+                    <div class="sub-group-title">Morphological Gradient Options</div>
+                    <div class="form-control">
+                        <label for="dilation-radius">Dilation Radius</label>
+                        <div class="slider-container">
+                            <input type="range" id="dilation-radius" min="0.1" max="20" step="0.1" value="5">
+                            <span class="slider-value" id="dilation-radius-value">5.0</span>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="erode-radius">Erode Radius</label>
+                        <div class="slider-container">
+                            <input type="range" id="erode-radius" min="0.1" max="20" step="0.1" value="5">
+                            <span class="slider-value" id="erode-radius-value">5.0</span>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="gain-power">Gain Power</label>
+                        <div class="slider-container">
+                            <input type="range" id="gain-power" min="0.1" max="20" step="0.1" value="5">
+                            <span class="slider-value" id="gain-power-value">5.0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Edge Smoothing Subgroup -->
+                <div class="sub-group-title">Edge Smoothing</div>
+                <div class="checkbox-control">
+                    <input type="checkbox" id="jb-filter">
+                    <label for="jb-filter">JB Filter</label>
+                </div>
+                <div class="checkbox-control">
+                    <input type="checkbox" id="smooth-step">
+                    <label for="smooth-step">Smooth Step</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Visual Effects Tab Content -->
+        <div class="tab-content" id="visual-effects-tab">
+            <div class="panel-group">
+                <div class="panel-title">Presets</div>
+                <div class="button-group">
+                    <button id="preset-switch-on" class="preset-btn">Switch On</button>
+                    <button id="preset-comparison-mode" class="preset-btn">Comparison Mode</button>
+                    <button id="preset-switch-off" class="preset-btn">Switch Off</button>
+                    <button id="preset-restore-defaults" class="preset-btn">Restore Defaults</button>
+                </div>
+            </div>
+            
+            <div class="panel-group">
+                <div class="panel-title">Histogram Equalization</div>
+                <div class="checkbox-control">
+                    <input type="checkbox" id="enable-heq" checked>
+                    <label for="enable-heq">Enable Histogram Equalization</label>
+                </div>
+                
+                <div class="sub-group" id="heq-options">
+                    <div class="sub-group-title">HEQ Configuration</div>
+                    <div class="form-control">
+                        <label for="heq-strength">Strength</label>
+                        <div class="slider-container">
+                            <input type="range" id="heq-strength" min="0" max="1" step="0.01" value="0.6">
+                            <span class="slider-value" id="heq-strength-value">0.60</span>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="temporal-smoothing">Temporal Smoothing Alpha</label>
+                        <div class="slider-container">
+                            <input type="range" id="temporal-smoothing" min="0" max="1" step="0.01" value="0.75">
+                            <span class="slider-value" id="temporal-smoothing-value">0.75</span>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="lower-contrast-limit">Lower Contrast Limit</label>
+                        <div class="slider-container">
+                            <input type="range" id="lower-contrast-limit" min="0" max="1" step="0.0001" value="0.0625">
+                            <span class="slider-value" id="lower-contrast-limit-value">0.0625</span>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="upper-contrast-limit">Upper Contrast Limit</label>
+                        <div class="slider-container">
+                            <input type="range" id="upper-contrast-limit" min="1" max="10" step="0.1" value="4.0">
+                            <span class="slider-value" id="upper-contrast-limit-value">4.00</span>
+                        </div>
+                    </div>
+                    <div class="form-control">
+                        <label for="gamma">Gamma</label>
+                        <div class="slider-container">
+                            <input type="range" id="gamma" min="0.1" max="2" step="0.01" value="0.8">
+                            <span class="slider-value" id="gamma-value">0.80</span>
+                        </div>
+                    </div>
+                    <div class="checkbox-control">
+                        <input type="checkbox" id="draw-histogram" checked>
+                        <label for="draw-histogram">Draw Histogram</label>
+                    </div>
+                    <div class="form-control">
+                        <label for="curtain-position">Curtain Position</label>
+                        <div class="slider-container">
+                            <input type="range" id="curtain-position" min="0" max="1" step="0.01" value="1.0">
+                            <span class="slider-value" id="curtain-position-value">1.00</span>
+                        </div>
+                    </div>
+                    <div class="checkbox-control">
+                        <input type="checkbox" id="rolling-curtain" checked>
+                        <label for="rolling-curtain">Rolling Curtain</label>
+                    </div>
+                    <div class="form-control">
+                        <label for="rolling-curtain-period">Rolling Curtain Period (seconds)</label>
+                        <div class="slider-container">
+                            <input type="range" id="rolling-curtain-period" min="1" max="20" step="1" value="8">
+                            <span class="slider-value" id="rolling-curtain-period-value">8.0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="apply-btn">Apply Settings</button>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const tabName = this.dataset.tab;
+            console.log("Tab clicked:", tabName);
+            
+            // Update active tab button
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Show selected tab content
+            tabContents.forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+          });
+        });
+      });
+    </script>
+    <script src="js/segmentation-panel.js"></script>
+</body>
+</html>

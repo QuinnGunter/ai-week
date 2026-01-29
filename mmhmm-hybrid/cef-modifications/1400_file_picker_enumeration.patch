@@ -1,0 +1,125 @@
+diff --git a/libcef/browser/file_dialog_manager.cc b/libcef/browser/file_dialog_manager.cc
+index a302ebae0..3856245ae 100644
+--- a/libcef/browser/file_dialog_manager.cc
++++ b/libcef/browser/file_dialog_manager.cc
+@@ -146,16 +146,10 @@ FileChooserParams SelectFileToFileChooserParams(
+     // |file_types| comes from FileSelectHelper::GetFileTypesFromAcceptType.
+     // |extensions| is a list of allowed extensions. For example, it might be
+     //   { { "htm", "html" }, { "txt" } }
+-    for (size_t i = 0; i < file_types->extensions.size(); ++i) {
+-      if (file_types->extension_mimetypes.size() > i &&
+-          !file_types->extension_mimetypes[i].empty()) {
+-        // Use the original mime type.
+-        params.accept_types.push_back(file_types->extension_mimetypes[i]);
+-      } else if (file_types->extensions[i].size() == 1) {
+-        // Use the single file extension. We ignore the "Custom Files" filter
+-        // which is the only instance of multiple file extensions.
+-        params.accept_types.push_back(FilePathTypeToString16(
+-            FILE_PATH_LITERAL(".") + file_types->extensions[i][0]));
++    for (auto& vec : file_types->extensions) {
++      for (auto& ext : vec) {
++        params.accept_types.push_back(
++            FilePathTypeToString16(FILE_PATH_LITERAL(".") + ext));
+       }
+     }
+   }
+diff --git a/patch/patches/chrome_browser_dialogs_native.patch b/patch/patches/chrome_browser_dialogs_native.patch
+index 9d7b02b0e..4164ac3a9 100644
+--- a/patch/patches/chrome_browser_dialogs_native.patch
++++ b/patch/patches/chrome_browser_dialogs_native.patch
+@@ -15,95 +15,6 @@ index 5f5e671978830a0d9044a4c9ec68ba40a5323228..802171258704046336f151a6b72d2e71
+      auto model = CreateConfirmationDialog(
+          entry->display_name_, std::move(chooser_files),
+          base::BindOnce(&FileSelectHelper::PerformContentAnalysisIfNeeded,
+-@@ -455,31 +461,51 @@ FileSelectHelper::GetFileTypesFromAcceptType(
+-   std::vector<base::FilePath::StringType>* extensions =
+-       &file_type->extensions.back();
+- 
+-+  // Create individual filters for each accept type.
+-+  std::vector<std::vector<base::FilePath::StringType>> all_extensions;
+-+  std::vector<std::u16string> all_overrides;
+-+  std::vector<std::u16string> all_mimetypes;
+-+
+-   // Find the corresponding extensions.
+-   int valid_type_count = 0;
+-   int description_id = 0;
+-+  std::string ascii_type;
+-   for (const auto& accept_type : accept_types) {
+-+    std::vector<base::FilePath::StringType> current_extensions;
+-+    description_id = 0;
+-+    ascii_type.clear();
+-+
+-     size_t old_extension_size = extensions->size();
+-     if (accept_type[0] == '.') {
+-       // If the type starts with a period it is assumed to be a file extension
+-       // so we just have to add it to the list.
+-       base::FilePath::StringType ext =
+-           base::FilePath::FromUTF16Unsafe(accept_type).value();
+--      extensions->push_back(ext.substr(1));
+-+      current_extensions.push_back(ext.substr(1));
+-     } else {
+-       if (!base::IsStringASCII(accept_type))
+-         continue;
+--      std::string ascii_type = base::UTF16ToASCII(accept_type);
+-+      ascii_type = base::UTF16ToASCII(accept_type);
+-       if (ascii_type == "image/*")
+-         description_id = IDS_IMAGE_FILES;
+-       else if (ascii_type == "audio/*")
+-         description_id = IDS_AUDIO_FILES;
+-       else if (ascii_type == "video/*")
+-         description_id = IDS_VIDEO_FILES;
+--
+--      net::GetExtensionsForMimeType(ascii_type, extensions);
+-+      net::GetExtensionsForMimeType(ascii_type, &current_extensions);
+-     }
+- 
+-+    if (!current_extensions.empty()) {
+-+      all_extensions.push_back(current_extensions);
+-+      all_overrides.push_back(description_id != 0 ?
+-+                              l10n_util::GetStringUTF16(description_id) :
+-+                              std::u16string());
+-+      all_mimetypes.push_back(ascii_type.empty() ?
+-+                              std::u16string() : accept_type);
+-+
+-+      extensions->insert(extensions->end(), current_extensions.begin(),
+-+                         current_extensions.end());
+-+    }
+-     if (extensions->size() > old_extension_size)
+-       valid_type_count++;
+-   }
+-@@ -496,12 +522,28 @@ FileSelectHelper::GetFileTypesFromAcceptType(
+-   //    dialog uses the first extension in the list to form the description,
+-   //    like "EHTML Files". This is not what we want.
+-   if (valid_type_count > 1 ||
+--      (valid_type_count == 1 && description_id == 0 && extensions->size() > 1))
+-+      (valid_type_count == 1 && description_id == 0 && extensions->size() > 1)) {
+-     description_id = IDS_CUSTOM_FILES;
+-+    ascii_type.clear();
+-+  }
+- 
+--  if (description_id) {
+--    file_type->extension_description_overrides.push_back(
+--        l10n_util::GetStringUTF16(description_id));
+-+  file_type->extension_description_overrides.push_back(
+-+      description_id != 0 ?
+-+          l10n_util::GetStringUTF16(description_id) :
+-+          std::u16string());
+-+  file_type->extension_mimetypes.push_back(
+-+      ascii_type.empty() ? std::u16string() : base::ASCIIToUTF16(ascii_type));
+-+
+-+  if (all_extensions.size() > 1) {
+-+    // Insert filters for the specific accept types at the beginning.
+-+    file_type->extensions.insert(file_type->extensions.begin(),
+-+        all_extensions.begin(), all_extensions.end());
+-+    file_type->extension_description_overrides.insert(
+-+        file_type->extension_description_overrides.begin(),
+-+        all_overrides.begin(), all_overrides.end());
+-+    file_type->extension_mimetypes.insert(
+-+        file_type->extension_mimetypes.begin(),
+-+        all_mimetypes.begin(), all_mimetypes.end());
+-   }
+- 
+-   return file_type;
+ @@ -511,7 +553,8 @@ FileSelectHelper::GetFileTypesFromAcceptType(
+  void FileSelectHelper::RunFileChooser(
+      content::RenderFrameHost* render_frame_host,

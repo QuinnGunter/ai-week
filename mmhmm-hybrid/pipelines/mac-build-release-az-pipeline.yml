@@ -1,0 +1,33 @@
+# mac-build-release-az-pipeline.yml
+#
+# This pipeline builds the mmhmm hybrid macOS release build configuration and publishes the unnotarized app bundle build artifact to the pipeline.
+#
+# Use this pipeline as a basic build check.
+
+parameters:
+  - name: debugMode
+    displayName: Pipeline Debug Mode and Verbose Logs
+    type: boolean
+    default: false
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#ci-triggers
+trigger: none
+
+# https://learn.microsoft.com/en-us/azure/devops/pipelines/repos/github?view=azure-devops&tabs=yaml#pr-triggers
+# Important: Don't use path filters when requiring this pipeline to run as a GitHub PR check, see
+# https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/collaborating-on-repositories-with-code-quality-features/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+pr:
+  autoCancel: true
+  branches:
+    include:
+      - main
+  drafts: true
+
+variables:
+  - template: templates/mac-az-pipeline-variables.yml
+
+jobs:
+  - template: templates/mac-az-pipeline.yml
+    parameters:
+      mode: publish
+      debugMode: ${{ parameters.debugMode }}

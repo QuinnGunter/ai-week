@@ -1,0 +1,5 @@
+**/third_party/*
+**/assets/*
+
+teleport/workers/seglibweb.js
+deploy/*

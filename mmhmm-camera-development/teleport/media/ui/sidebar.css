@@ -1,0 +1,177 @@
+div#sidebar_pane div.media {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+/* Customize spacing when there's nothing above the layout div */
+div#sidebar_pane div.media div.header + div.layout {
+    border-top: unset;
+    padding-top: unset;
+    margin-top: unset;
+}
+
+div#sidebar_pane div.media div.layout {
+    display: flex;
+    flex-direction: column;
+    padding-top: 12px !important;
+    margin: 6px 0px 12px;
+    border-top: 1px solid var(--border-secondary);
+    row-gap: 8px;
+}
+
+div#sidebar_pane div.contents div.media input[type="checkbox"] {
+  border-color: var(--border-primary);
+}
+
+div#sidebar_pane div.contents div.media input[type="checkbox"]:checked {
+  border-color: var(--border-primary);
+  background-color: var(--action-primary);
+}
+
+div#sidebar_pane div.contents div.media div.header {
+  margin: 0;
+  gap: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--background-tertiary);
+}
+
+div#sidebar_pane div.contents div.media div.layout div.header{
+  padding: 0;
+  border: none;
+}
+
+div#sidebar_pane div.contents div.media div.header button {
+  flex: none;
+  height: 24px;
+  width: 24px;
+  border-radius: 6px;
+}
+
+div#sidebar_pane div.media div.header:nth-child(n + 2) {
+    margin-top: 8px;
+    margin-bottom: 0px !important;
+}
+
+div#sidebar_pane div.media div.row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 4px;
+}
+
+div#sidebar_pane div.media div.row label {
+    flex-grow: 1;
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 400;
+}
+
+div#sidebar_pane div.media div.row.text_format_bar button {
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+div#sidebar_pane div.media div.checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+div#sidebar_pane div.media div.checkbox label {
+    font-size: 11px;
+    font-weight: 400;
+}
+
+
+div#sidebar_pane div.media div.slider {
+    margin: 4px 0px 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+div#sidebar_pane div.media div.slider input[type=range] {
+    flex-grow: 1;
+}
+
+div#sidebar_pane div.media div.slider button {
+    border: 0px none;
+    background-color: transparent;
+}
+
+div#sidebar_pane div.media div.slider button svg {
+    fill: var(--content-primary);
+}
+
+div#sidebar_pane div.media button.remove {
+    color: var(--action-destructive);
+}
+
+div#sidebar_pane div.media button.dropdown {
+   display: flex;
+   flex-direction: row;
+   padding: 4px 8px;
+}
+
+div#sidebar_pane div.media button.dropdown span {
+    flex-grow: 1;
+    text-align: left;
+}
+
+div#sidebar_pane div.media button.dropdown svg {
+    flex-grow: 0;
+}
+
+div.resize_grid {
+    padding: 8px 8px 4px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    justify-items: start;
+}
+
+div.resize_grid button {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 0px none;
+    background-color: transparent;
+}
+
+div.resize_grid button div.label {
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 400;
+    color: var(--content-secondary);
+    width: 100%;
+    text-align: center;
+}
+
+div.resize_preview {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--border-primary);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+div.resize_preview img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: auto;
+    border-radius: 0px;
+    z-index: 0;
+}
+
+div.resize_preview canvas {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: auto;
+    z-index: 1;
+}

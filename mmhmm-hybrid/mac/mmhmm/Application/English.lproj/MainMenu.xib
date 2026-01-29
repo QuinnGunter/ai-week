@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24412" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24412"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AppDelegate" customModule="Airtime" customModuleProvider="target">
+            <connections>
+                <outlet property="performanceMenuItem" destination="2Uq-XF-LUk" id="TnW-Lw-feS"/>
+                <outlet property="testsMenuItem" destination="Yv2-Jq-Amk" id="jsH-Dt-qpG"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <menu title="AMainMenu" systemMenu="main" id="29" userLabel="MainMenu">
+            <items>
+                <menuItem title="mmhmm" tag="1" id="56">
+                    <menu key="submenu" title="mmhmm" systemMenu="apple" id="57">
+                        <items>
+                            <menuItem title="About mmhmm" id="58">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showAboutPanel:" target="-2" id="AlN-w5-yaa"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Check for Updates" id="7PS-j4-ekG">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkForUpdates:" target="-2" id="xvr-f6-YJG"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Join the mmhmm Beta" id="pjV-uE-6xO">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleBetaOptIn:" target="-2" id="f1A-Hb-SvY"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="236">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Preferences…" hidden="YES" keyEquivalent="," id="129" userLabel="121"/>
+                            <menuItem title="activateCameraExtension" hidden="YES" id="wrA-dc-bbd">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="activateCameraExtension:" target="-2" id="iwu-KT-Ubn"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="deactivateCameraExtension" hidden="YES" id="SDE-bD-Ipr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="deactivateCameraExtension:" target="-2" id="326-k4-man"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Install Menu Bar Login Item" hidden="YES" id="dcj-pb-yVa" userLabel="menuBarLoginItemAction">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="switchMenuBarAppState:" target="-2" id="v0m-BS-Dqf"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="143">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Services" id="131">
+                                <menu key="submenu" title="Services" systemMenu="services" id="130"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="149">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Hide Airtime" keyEquivalent="h" id="134">
+                                <connections>
+                                    <action selector="hide:" target="-1" id="367"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Hide Others" keyEquivalent="h" id="145">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="hideOtherApplications:" target="-1" id="368"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show All" id="150">
+                                <connections>
+                                    <action selector="unhideAllApplications:" target="-1" id="370"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="144">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Quit mmhmm" keyEquivalent="q" id="136" userLabel="Quit">
+                                <connections>
+                                    <action selector="menuQuit:" target="-2" id="5Ho-Gv-ZLK"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="File" tag="2" id="83">
+                    <menu key="submenu" title="File" id="81">
+                        <items>
+                            <menuItem title="Open Clipboard URL" id="a8o-lP-OKl">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="openPasteboardURL:" target="-2" id="Wge-ZG-X59"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="79" userLabel="7">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Close Window" keyEquivalent="w" id="73">
+                                <connections>
+                                    <action selector="menuCloseWindow:" target="-2" id="mod-jS-6YE"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Edit" tag="3" id="217">
+                    <menu key="submenu" title="Edit" id="205">
+                        <items>
+                            <menuItem title="Undo" keyEquivalent="z" id="207">
+                                <connections>
+                                    <action selector="menuUndo:" target="-2" id="1xl-kw-93c"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Redo" keyEquivalent="Z" id="215">
+                                <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                <connections>
+                                    <action selector="menuRedo:" target="-2" id="5aG-9x-zh8"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="206">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Cut" keyEquivalent="x" id="199">
+                                <connections>
+                                    <action selector="cut:" target="-1" id="228"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy" keyEquivalent="c" id="197">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="224"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="203">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="226"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete" id="202">
+                                <connections>
+                                    <action selector="delete:" target="-1" id="235"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Select All" keyEquivalent="a" id="198">
+                                <connections>
+                                    <action selector="selectAll:" target="-1" id="232"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="214">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Find" id="218">
+                                <menu key="submenu" title="Find" id="220">
+                                    <items>
+                                        <menuItem title="Find…" tag="1" keyEquivalent="f" id="209">
+                                            <connections>
+                                                <action selector="performFindPanelAction:" target="-1" id="241"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Find Next" tag="2" keyEquivalent="g" id="208"/>
+                                        <menuItem title="Find Previous" tag="3" keyEquivalent="G" id="213">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                        </menuItem>
+                                        <menuItem title="Use Selection for Find" tag="7" keyEquivalent="e" id="221"/>
+                                        <menuItem title="Jump to Selection" keyEquivalent="j" id="210">
+                                            <connections>
+                                                <action selector="centerSelectionInVisibleArea:" target="-1" id="245"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Spelling and Grammar" id="216">
+                                <menu key="submenu" title="Spelling and Grammar" id="200">
+                                    <items>
+                                        <menuItem title="Show Spelling…" keyEquivalent=":" id="204">
+                                            <connections>
+                                                <action selector="showGuessPanel:" target="-1" id="230"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Spelling" keyEquivalent=";" id="201">
+                                            <connections>
+                                                <action selector="checkSpelling:" target="-1" id="225"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Spelling While Typing" id="219">
+                                            <connections>
+                                                <action selector="toggleContinuousSpellChecking:" target="-1" id="222"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Check Grammar With Spelling" id="346">
+                                            <connections>
+                                                <action selector="toggleGrammarChecking:" target="-1" id="347"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Substitutions" id="348">
+                                <menu key="submenu" title="Substitutions" id="349">
+                                    <items>
+                                        <menuItem title="Smart Copy/Paste" tag="1" keyEquivalent="f" id="350">
+                                            <connections>
+                                                <action selector="toggleSmartInsertDelete:" target="-1" id="355"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Smart Quotes" tag="2" keyEquivalent="g" id="351">
+                                            <connections>
+                                                <action selector="toggleAutomaticQuoteSubstitution:" target="-1" id="356"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Smart Links" tag="3" keyEquivalent="G" id="354">
+                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="toggleAutomaticLinkDetection:" target="-1" id="357"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Speech" id="211">
+                                <menu key="submenu" title="Speech" id="212">
+                                    <items>
+                                        <menuItem title="Start Speaking" id="196">
+                                            <connections>
+                                                <action selector="startSpeaking:" target="-1" id="233"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Stop Speaking" id="195">
+                                            <connections>
+                                                <action selector="stopSpeaking:" target="-1" id="227"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Performance" tag="4" id="2Uq-XF-LUk" userLabel="Performance">
+                    <menu key="submenu" title="Performance" systemMenu="apple" id="c4Y-Z6-kmn">
+                        <items>
+                            <menuItem title="Balanced Mode" id="hg9-Dn-zrQ">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleBalancedMode:" target="-2" id="MSd-J2-KVR"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="View" tag="5" id="DQv-gw-s4c">
+                    <menu key="submenu" title="View" identifier="ViewMenu" id="EZX-bv-DDg">
+                        <items>
+                            <menuItem title="Reload" tag="1" id="9cN-og-jmj">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="reload:" target="-2" id="BR4-IJ-Sgx"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Force Reload" tag="1" hidden="YES" keyEquivalent="R" id="BoZ-X9-0v0" userLabel="Force Reload">
+                                <connections>
+                                    <action selector="reloadIgnoringCache:" target="-2" id="AL0-E0-28T"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="S3N-0r-YOn"/>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Window" tag="6" id="19">
+                    <menu key="submenu" title="Window" systemMenu="window" id="24">
+                        <items>
+                            <menuItem title="Minimize" keyEquivalent="m" id="23">
+                                <connections>
+                                    <action selector="performMiniaturize:" target="-1" id="37"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Zoom" id="239">
+                                <connections>
+                                    <action selector="performZoom:" target="-1" id="240"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="92">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Bring All to Front" id="5">
+                                <connections>
+                                    <action selector="arrangeInFront:" target="-1" id="39"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="wtf-LR-AbW">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Show Broadcast Window" keyEquivalent="b" id="Gy3-HO-JMY">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="toggleBroadcastMode:" target="-2" id="SDo-7Q-De6"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Speaker Notes" keyEquivalent="r" id="BM4-DI-b73" userLabel="Show Speaker Notes">
+                                <connections>
+                                    <action selector="toggleRemoteControl:" target="-2" id="Su0-J9-RVv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Toolbox" keyEquivalent="t" id="meJ-ph-ZGV" userLabel="Show Toolbox">
+                                <connections>
+                                    <action selector="showToolbox:" target="-2" id="wZn-7H-QcJ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show DevTools" hidden="YES" keyEquivalent="D" id="pfu-JE-Jg9" userLabel="Show DevTools">
+                                <connections>
+                                    <action selector="showDevTools:" target="-2" id="ZFI-WZ-5Ik"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Help" tag="7" id="103">
+                    <menu key="submenu" title="Help" id="106">
+                        <items>
+                            <menuItem title="Submit a Help Request…" keyEquivalent="?" id="111">
+                                <connections>
+                                    <action selector="showHelpRequest:" target="-2" id="kfP-la-Hes"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export Log Files…" id="Rzq-gk-kmL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportLogFiles:" target="-2" id="z7n-Cw-cj3"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Copy Log Files to Clipboard" alternate="YES" id="SwO-Od-hLk">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="copyLogFilesToPasteboard:" target="-2" id="DF1-ce-awR"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="D5U-gS-jWp"/>
+                            <menuItem title="Release Notes" id="WU9-ol-naw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showReleaseNotes:" target="-2" id="ohQ-I7-9oH"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Tests" tag="8" id="Yv2-Jq-Amk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Tests" id="CkQ-OF-S73">
+                        <items>
+                            <menuItem title="Reset Capture Device Permissions and Relaunch" id="4am-wS-FLo" userLabel="Reset Capture Device Permissions and Relaunch">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="resetCaptureDevicePermissionsAndRelaunch:" target="-2" id="Taa-fS-Yj8"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="XVv-e9-Uec"/>
+                            <menuItem title="Toggle Main App Window Floating Style" id="gEm-RB-2g9" userLabel="Toggle Main App Window Floating Style">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleMainAppWindowFloating:" target="-2" id="uGm-84-N3d"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Emit Test Event in Frontmost Web App" id="oJh-VP-QBa" userLabel="Emit Test Event in Frontmost Web App">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="emitTestEventInKeyWindowWebApp:" target="-2" id="jum-NH-JM1"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="tFg-iO-Bp6"/>
+                            <menuItem title="Submit Message to Sentry 💸" id="hlb-7o-YnB" userLabel="Submit Message to Sentry">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="submitLoggerTestMessage:" target="-2" id="lxX-rE-cPd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Submit Error to Sentry 💸" id="jco-V3-Qjb" userLabel="Submit Error to Sentry">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="submitLoggerTestError:" target="-2" id="JpY-wT-o8m"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log Info and Error Test Messages" id="iaO-ix-Geo" userLabel="Log Info and Error Test Messages">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logInfoAndErrorTestMessages:" target="-2" id="9Bj-YX-2iD"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log Info and Error Test Messages (No Assert)" id="4mC-di-LBG" userLabel="Log Info and Error Test Messages (No Assert)">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logInfoAndErrorTestMessagesNotAsserting:" target="-2" id="Qss-3Z-Jhc"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log Info Message and Error" id="2a4-MK-nuP" userLabel="Log Info Message and Error">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logInfoMessageAndError:" target="-2" id="9YQ-b1-9rU"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log Info Message and Error (No Assert)" id="QYj-eP-5rR" userLabel="Log Info Message and Error (No Assert)">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logInfoMessageAndErrorNotAsserting:" target="-2" id="NZz-yW-2TY"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log and Clear Throttled Errors" id="ekV-1L-1b3" userLabel="Log and Clear Throttled Errors">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logAndClearThrottledErrors:" target="-2" id="DH4-8H-q9H"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log and Clear Throttled Messages" id="PIL-BT-06H" userLabel="Log and Clear Throttled Messages">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logAndClearThrottledMessages:" target="-2" id="a1I-68-rAL"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Log 1 Mebibyte Worth of Messages" id="vgQ-dh-oeC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="logOneMebibyteWorthOfMessagesToFile:" target="-2" id="CNb-64-7RS"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="lJd-Ri-B1T"/>
+                            <menuItem title="Copy App Version" keyEquivalent="C" id="PH4-ax-bcg" userLabel="Copy App Version">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="copyAppVersion:" target="-2" id="D8e-UT-LoW"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Activity Log" keyEquivalent="s" id="qi1-Dt-g46" userLabel="Show Activity Log">
+                                <connections>
+                                    <action selector="showActivityLog:" target="-2" id="uFa-2c-daZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Hybrid API Tester" keyEquivalent="T" id="KZP-sI-hIf" userLabel="Show Hybrid API Tester">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                <connections>
+                                    <action selector="showHybridAPITester:" target="-2" id="woX-dL-SJq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show Segmentation Panel" id="NSD-Lz-8m1" userLabel="Show Segmentation Panel">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showSegmentationPanel:" target="-2" id="wWz-Zm-XLc"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="139" y="135"/>
+        </menu>
+        <userDefaultsController representsSharedInstance="YES" id="389"/>
+        <menuItem isSeparatorItem="YES" id="jXg-XU-vLD"/>
+    </objects>
+</document>
