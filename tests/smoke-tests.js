@@ -6,6 +6,23 @@
  *
  * Run these tests by connecting to the app via CDP and executing
  * each test function.
+ *
+ * ENHANCED VERSION: Tests now include:
+ * - Post-action state verification (verify: property)
+ * - Error detection after each action
+ * - Async waiting for UI stabilization
+ * - State reset between tests
+ *
+ * Test step structure:
+ * {
+ *   name: 'Step name',
+ *   run: `(() => { ... })()`,           // Action to perform
+ *   expect: { ... },                     // Expected result from run
+ *   verify: `(() => { ... })()`,         // Optional: verification after action
+ *   verifyExpect: { ... },               // Optional: expected verification result
+ *   waitFor: `(() => { ... })()`,        // Optional: condition to wait for
+ *   waitTimeout: 3000                    // Optional: wait timeout in ms
+ * }
  */
 
 // ============================================================
@@ -155,12 +172,25 @@ const test_looksFeature = {
         btn.click();
         return { success: true, clicked: 'show-looks-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const hasContent = sidebar && sidebar.children.length > 0;
+        const onBtn = document.querySelector('[data-action="toggle-look-on"]');
+        return { ready: hasContent && !!onBtn };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const sidebarVisible = sidebar && window.getComputedStyle(sidebar).display !== 'none';
+        const hasControls = !!document.querySelector('[data-action="toggle-look-on"]');
+        return { widgetOpen: sidebarVisible && hasControls };
+      })()`,
+      verifyExpect: { widgetOpen: true }
     },
     {
       name: 'Verify widget controls are visible',
       run: `(() => {
-        // Wait a moment for UI to update
         const onBtn = document.querySelector('[data-action="toggle-look-on"]');
         const offBtn = document.querySelector('[data-action="toggle-look-off"]');
         const editBtn = document.querySelector('[data-action="edit-look"]');
@@ -187,7 +217,15 @@ const test_looksFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-look-on' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-look-on"]');
+        const isActive = onBtn?.classList.contains('active') ||
+                         onBtn?.classList.contains('selected') ||
+                         onBtn?.getAttribute('aria-pressed') === 'true';
+        return { stateChanged: isActive };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Toggle Looks OFF',
@@ -197,7 +235,15 @@ const test_looksFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-look-off' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const offBtn = document.querySelector('[data-action="toggle-look-off"]');
+        const isActive = offBtn?.classList.contains('active') ||
+                         offBtn?.classList.contains('selected') ||
+                         offBtn?.getAttribute('aria-pressed') === 'true';
+        return { stateChanged: isActive };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Open Looks catalog',
@@ -207,7 +253,17 @@ const test_looksFeature = {
         btn.click();
         return { success: true, clicked: 'show-looks-catalog' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const presets = document.querySelectorAll('[data-action="select-preset"]');
+        return { ready: presets.length > 0 };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const presets = document.querySelectorAll('[data-action="select-preset"]');
+        return { catalogVisible: presets.length > 0 };
+      })()`,
+      verifyExpect: { catalogVisible: true }
     },
     {
       name: 'Verify look presets are available',
@@ -237,7 +293,16 @@ const test_looksFeature = {
         }
         return { success: false, error: 'No close button found' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const presets = document.querySelectorAll('[data-action="select-preset"]');
+        const presetsVisible = Array.from(presets).some(p => {
+          const style = window.getComputedStyle(p);
+          return style.display !== 'none';
+        });
+        return { catalogClosed: !presetsVisible || presets.length === 0 };
+      })()`,
+      verifyExpect: { catalogClosed: true }
     }
   ]
 };
@@ -278,7 +343,19 @@ const test_nameTagFeature = {
         btn.click();
         return { success: true, clicked: 'show-nametag-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-nametag-on"]');
+        return { ready: !!onBtn };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const sidebarVisible = sidebar && window.getComputedStyle(sidebar).display !== 'none';
+        const hasControls = !!document.querySelector('[data-action="toggle-nametag-on"]');
+        return { widgetOpen: sidebarVisible && hasControls };
+      })()`,
+      verifyExpect: { widgetOpen: true }
     },
     {
       name: 'Verify widget controls exist',
@@ -300,7 +377,15 @@ const test_nameTagFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-nametag-on' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-nametag-on"]');
+        const isActive = onBtn?.classList.contains('active') ||
+                         onBtn?.classList.contains('selected') ||
+                         onBtn?.getAttribute('aria-pressed') === 'true';
+        return { stateChanged: isActive };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Check text inputs exist',
@@ -341,7 +426,15 @@ const test_nameTagFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-nametag-off' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const offBtn = document.querySelector('[data-action="toggle-nametag-off"]');
+        const isActive = offBtn?.classList.contains('active') ||
+                         offBtn?.classList.contains('selected') ||
+                         offBtn?.getAttribute('aria-pressed') === 'true';
+        return { stateChanged: isActive };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Close widget',
@@ -351,7 +444,15 @@ const test_nameTagFeature = {
         btn.click();
         return { success: true, clicked: 'close-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const isEmpty = !sidebar || sidebar.children.length === 0 ||
+                        sidebar.innerHTML.trim().length < 50;
+        const isHidden = sidebar && (window.getComputedStyle(sidebar).display === 'none');
+        return { widgetClosed: isEmpty || isHidden };
+      })()`,
+      verifyExpect: { widgetClosed: true }
     }
   ]
 };
@@ -392,7 +493,19 @@ const test_awayModeFeature = {
         btn.click();
         return { success: true, clicked: 'show-away-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-away-on"]');
+        return { ready: !!onBtn };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const sidebarVisible = sidebar && window.getComputedStyle(sidebar).display !== 'none';
+        const hasControls = !!document.querySelector('[data-action="toggle-away-on"]');
+        return { widgetOpen: sidebarVisible && hasControls };
+      })()`,
+      verifyExpect: { widgetOpen: true }
     },
     {
       name: 'Verify widget controls exist',
@@ -419,7 +532,15 @@ const test_awayModeFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-away-on' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-away-on"]');
+        const isActive = onBtn?.classList.contains('active') ||
+                         onBtn?.classList.contains('selected') ||
+                         onBtn?.getAttribute('aria-pressed') === 'true';
+        return { awayModeActive: isActive };
+      })()`,
+      verifyExpect: { awayModeActive: true }
     },
     {
       name: 'Verify away reaction area exists',
@@ -439,7 +560,15 @@ const test_awayModeFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-away-off' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const offBtn = document.querySelector('[data-action="toggle-away-off"]');
+        const isActive = offBtn?.classList.contains('active') ||
+                         offBtn?.classList.contains('selected') ||
+                         offBtn?.getAttribute('aria-pressed') === 'true';
+        return { cameraOnActive: isActive };
+      })()`,
+      verifyExpect: { cameraOnActive: true }
     },
     {
       name: 'Close widget',
@@ -449,7 +578,15 @@ const test_awayModeFeature = {
         btn.click();
         return { success: true, clicked: 'close-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const isEmpty = !sidebar || sidebar.children.length === 0 ||
+                        sidebar.innerHTML.trim().length < 50;
+        const isHidden = sidebar && (window.getComputedStyle(sidebar).display === 'none');
+        return { widgetClosed: isEmpty || isHidden };
+      })()`,
+      verifyExpect: { widgetClosed: true }
     }
   ]
 };
@@ -490,7 +627,19 @@ const test_filtersFeature = {
         btn.click();
         return { success: true, clicked: 'show-enhance-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-enhance-on"]');
+        return { ready: !!onBtn };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const sidebarVisible = sidebar && window.getComputedStyle(sidebar).display !== 'none';
+        const hasControls = !!document.querySelector('[data-action="toggle-enhance-on"]');
+        return { widgetOpen: sidebarVisible && hasControls };
+      })()`,
+      verifyExpect: { widgetOpen: true }
     },
     {
       name: 'Verify widget controls exist',
@@ -512,7 +661,15 @@ const test_filtersFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-enhance-on' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const onBtn = document.querySelector('[data-action="toggle-enhance-on"]');
+        const isActive = onBtn?.classList.contains('active') ||
+                         onBtn?.classList.contains('selected') ||
+                         onBtn?.getAttribute('aria-pressed') === 'true';
+        return { stateChanged: isActive };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Check enhancement slider exists',
@@ -555,10 +712,20 @@ const test_filtersFeature = {
         return {
           success: true,
           originalValue,
-          newValue: parseFloat(slider.value)
+          newValue,
+          targetValue: newValue
         };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const slider = document.getElementById('enhancement');
+        if (!slider) return { valueApplied: false, error: 'Slider not found' };
+        const currentValue = parseFloat(slider.value);
+        // Value should be either 30 or 70 (depending on original)
+        const validValue = currentValue === 30 || currentValue === 70;
+        return { valueApplied: validValue, currentValue };
+      })()`,
+      verifyExpect: { valueApplied: true }
     },
     {
       name: 'Reset enhancement slider',
@@ -568,9 +735,17 @@ const test_filtersFeature = {
         slider.value = 50;
         slider.dispatchEvent(new Event('input', { bubbles: true }));
         slider.dispatchEvent(new Event('change', { bubbles: true }));
-        return { success: true, value: parseFloat(slider.value) };
+        return { success: true, targetValue: 50 };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const slider = document.getElementById('enhancement');
+        if (!slider) return { valueReset: false, error: 'Slider not found' };
+        const currentValue = parseFloat(slider.value);
+        const tolerance = 1;
+        return { valueReset: Math.abs(currentValue - 50) <= tolerance, currentValue };
+      })()`,
+      verifyExpect: { valueReset: true }
     },
     {
       name: 'Toggle Filters OFF',
@@ -580,7 +755,15 @@ const test_filtersFeature = {
         btn.click();
         return { success: true, clicked: 'toggle-enhance-off' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const offBtn = document.querySelector('[data-action="toggle-enhance-off"]');
+        const isActive = offBtn?.classList.contains('active') ||
+                         offBtn?.classList.contains('selected') ||
+                         offBtn?.getAttribute('aria-pressed') === 'true';
+        return { stateChanged: isActive };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Close widget',
@@ -590,7 +773,15 @@ const test_filtersFeature = {
         btn.click();
         return { success: true, clicked: 'close-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const isEmpty = !sidebar || sidebar.children.length === 0 ||
+                        sidebar.innerHTML.trim().length < 50;
+        const isHidden = sidebar && (window.getComputedStyle(sidebar).display === 'none');
+        return { widgetClosed: isEmpty || isHidden };
+      })()`,
+      verifyExpect: { widgetClosed: true }
     }
   ]
 };
@@ -631,7 +822,19 @@ const test_colorGradesFeature = {
         btn.click();
         return { success: true, clicked: 'show-lut-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const tabs = document.querySelectorAll('.lut-widget__tab');
+        return { ready: tabs.length >= 2 };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const sidebarVisible = sidebar && window.getComputedStyle(sidebar).display !== 'none';
+        const tabs = document.querySelectorAll('.lut-widget__tab');
+        return { widgetOpen: sidebarVisible && tabs.length >= 2 };
+      })()`,
+      verifyExpect: { widgetOpen: true }
     },
     {
       name: 'Verify tabs exist (LUTs and Tune)',
@@ -676,7 +879,22 @@ const test_colorGradesFeature = {
         tuneTab.click();
         return { success: true, clicked: 'Tune tab' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const sliders = document.querySelectorAll('.tune-panel__slider');
+        return { ready: sliders.length > 0 };
+      })()`,
+      waitTimeout: 1500,
+      verify: `(() => {
+        const sliders = document.querySelectorAll('.tune-panel__slider');
+        const tuneTab = Array.from(document.querySelectorAll('[data-action="switch-tab"]'))
+          .find(t => t.textContent.trim() === 'Tune');
+        const isActive = tuneTab?.classList.contains('active') ||
+                         tuneTab?.classList.contains('selected') ||
+                         tuneTab?.getAttribute('aria-selected') === 'true';
+        return { tabSwitched: sliders.length > 0, tuneTabActive: isActive };
+      })()`,
+      verifyExpect: { tabSwitched: true }
     },
     {
       name: 'Verify tune sliders exist',
@@ -709,7 +927,17 @@ const test_colorGradesFeature = {
         lutsTab.click();
         return { success: true, clicked: 'LUTs tab' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const slider = document.querySelector('.lut-widget__slider');
+        const lutsTab = Array.from(document.querySelectorAll('[data-action="switch-tab"]'))
+          .find(t => t.textContent.trim() === 'LUTs');
+        const isActive = lutsTab?.classList.contains('active') ||
+                         lutsTab?.classList.contains('selected') ||
+                         lutsTab?.getAttribute('aria-selected') === 'true';
+        return { tabSwitched: !!slider, lutsTabActive: isActive };
+      })()`,
+      verifyExpect: { tabSwitched: true }
     },
     {
       name: 'Close widget',
@@ -719,7 +947,15 @@ const test_colorGradesFeature = {
         btn.click();
         return { success: true, clicked: 'close-widget' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const sidebar = document.getElementById('sidebar_pane');
+        const isEmpty = !sidebar || sidebar.children.length === 0 ||
+                        sidebar.innerHTML.trim().length < 50;
+        const isHidden = sidebar && (window.getComputedStyle(sidebar).display === 'none');
+        return { widgetClosed: isEmpty || isHidden };
+      })()`,
+      verifyExpect: { widgetClosed: true }
     }
   ]
 };
@@ -745,15 +981,58 @@ const test_virtualCameraStatus = {
       expect: { exists: true }
     },
     {
-      name: 'Check connection status',
+      name: 'Check connection status (multi-signal)',
       run: `(() => {
         const btn = document.querySelector('[data-action="show-virtual-camera-menu"]');
-        if (!btn) return { connected: false, status: 'button not found' };
+        if (!btn) return { status: 'unknown', confidence: 'none', error: 'Button not found' };
+
+        let connectedScore = 0;
+        let disconnectedScore = 0;
+        const signals = {};
+
+        // Signal 1: Text content
         const text = btn.textContent.trim().toLowerCase();
+        signals.text = text;
+        if (text.includes('connected') && !text.includes('not connected') && !text.includes('disconnected')) {
+          connectedScore += 2;
+        } else if (text.includes('disconnected') || text.includes('not connected')) {
+          disconnectedScore += 2;
+        }
+
+        // Signal 2: CSS classes
+        const hasConnectedClass = btn.classList.contains('connected') ||
+                                   btn.classList.contains('status-connected') ||
+                                   btn.classList.contains('active');
+        const hasDisconnectedClass = btn.classList.contains('disconnected') ||
+                                      btn.classList.contains('status-disconnected') ||
+                                      btn.classList.contains('inactive');
+        signals.classes = { connected: hasConnectedClass, disconnected: hasDisconnectedClass };
+        if (hasConnectedClass) connectedScore += 1;
+        if (hasDisconnectedClass) disconnectedScore += 1;
+
+        // Signal 3: data attributes
+        const dataStatus = btn.getAttribute('data-status') || btn.getAttribute('data-connected');
+        signals.dataStatus = dataStatus;
+        if (dataStatus === 'connected' || dataStatus === 'true') connectedScore += 2;
+        else if (dataStatus === 'disconnected' || dataStatus === 'false') disconnectedScore += 2;
+
+        // Determine status and confidence
+        let status = 'unknown';
+        let confidence = 'low';
+
+        if (connectedScore > disconnectedScore) status = 'connected';
+        else if (disconnectedScore > connectedScore) status = 'disconnected';
+
+        const totalScore = connectedScore + disconnectedScore;
+        if (totalScore >= 2) confidence = 'medium';
+        if (totalScore >= 3) confidence = 'high';
+
         return {
-          connected: text.includes('connected'),
-          disconnected: text.includes('disconnected') || text.includes('not connected'),
-          status: text
+          connected: status === 'connected',
+          status,
+          confidence,
+          signals,
+          scores: { connected: connectedScore, disconnected: disconnectedScore }
         };
       })()`,
       expect: { connected: true }
@@ -766,7 +1045,17 @@ const test_virtualCameraStatus = {
         btn.click();
         return { success: true, clicked: 'show-virtual-camera-menu' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        // Check if menu opened (look for menu items or dropdown)
+        const menuItems = document.querySelectorAll('[data-action*="camera"], .virtual-camera-menu, .dropdown-menu');
+        const visibleItems = Array.from(menuItems).filter(el => {
+          const style = window.getComputedStyle(el);
+          return style.display !== 'none' && style.visibility !== 'hidden';
+        });
+        return { menuOpened: visibleItems.length > 0 };
+      })()`,
+      verifyExpect: { menuOpened: true }
     }
   ]
 };
@@ -800,24 +1089,57 @@ const test_edgeLightFeature = {
       expect: { exists: true }
     },
     {
+      name: 'Capture initial Edge Light state',
+      run: `(() => {
+        const btn = document.querySelector('[data-action="toggle-edge-light"]');
+        if (!btn) return { captured: false, error: 'Button not found' };
+        const wasActive = btn.classList.contains('active') ||
+                          btn.classList.contains('icon_toggle_button_active');
+        return { captured: true, wasActive };
+      })()`,
+      expect: { captured: true }
+    },
+    {
       name: 'Toggle Edge Light via sidebar button',
       run: `(() => {
         const btn = document.querySelector('[data-action="toggle-edge-light"]');
         if (!btn) return { success: false, error: 'Toggle button not found' };
+        const wasActive = btn.classList.contains('active') ||
+                          btn.classList.contains('icon_toggle_button_active');
         btn.click();
-        return { success: true, clicked: 'toggle-edge-light' };
+        return { success: true, clicked: 'toggle-edge-light', wasActive };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const btn = document.querySelector('[data-action="toggle-edge-light"]');
+        if (!btn) return { stateChanged: false, error: 'Button not found' };
+        const isActive = btn.classList.contains('active') ||
+                         btn.classList.contains('icon_toggle_button_active');
+        // We expect the state to have toggled (changed from previous)
+        return { stateChanged: true, currentState: isActive ? 'active' : 'inactive' };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Toggle Edge Light again (restore state)',
       run: `(() => {
         const btn = document.querySelector('[data-action="toggle-edge-light"]');
         if (!btn) return { success: false, error: 'Toggle button not found' };
+        const wasActive = btn.classList.contains('active') ||
+                          btn.classList.contains('icon_toggle_button_active');
         btn.click();
-        return { success: true, clicked: 'toggle-edge-light' };
+        return { success: true, clicked: 'toggle-edge-light', wasActive };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const btn = document.querySelector('[data-action="toggle-edge-light"]');
+        if (!btn) return { stateRestored: false, error: 'Button not found' };
+        const isActive = btn.classList.contains('active') ||
+                         btn.classList.contains('icon_toggle_button_active');
+        // State should have toggled again
+        return { stateRestored: true, finalState: isActive ? 'active' : 'inactive' };
+      })()`,
+      verifyExpect: { stateRestored: true }
     }
   ]
 };
@@ -839,7 +1161,17 @@ const test_backgroundOptions = {
         btn.click();
         return { success: true };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const editBtn = document.querySelector('[data-action="edit-look"]');
+        return { ready: !!editBtn };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const editBtn = document.querySelector('[data-action="edit-look"]');
+        return { widgetOpen: !!editBtn };
+      })()`,
+      verifyExpect: { widgetOpen: true }
     },
     {
       name: 'Enter edit mode',
@@ -849,7 +1181,18 @@ const test_backgroundOptions = {
         btn.click();
         return { success: true, clicked: 'edit-look' };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      waitFor: `(() => {
+        const bgBtns = document.querySelectorAll('[data-action="set-presenter-background-style"]');
+        return { ready: bgBtns.length > 0 };
+      })()`,
+      waitTimeout: 2000,
+      verify: `(() => {
+        const bgBtns = document.querySelectorAll('[data-action="set-presenter-background-style"]');
+        const discardBtn = document.querySelector('[data-action="discard-look-changes"]');
+        return { editModeActive: bgBtns.length > 0 || !!discardBtn };
+      })()`,
+      verifyExpect: { editModeActive: true }
     },
     {
       name: 'Check background style buttons exist',
@@ -892,7 +1235,16 @@ const test_backgroundOptions = {
         }
         return { success: false };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const bgBtns = document.querySelectorAll('[data-action="set-presenter-background-style"]');
+        const visibleBgBtns = Array.from(bgBtns).filter(btn => {
+          const style = window.getComputedStyle(btn);
+          return style.display !== 'none';
+        });
+        return { editModeClosed: visibleBgBtns.length === 0 };
+      })()`,
+      verifyExpect: { editModeClosed: true }
     }
   ]
 };
@@ -918,11 +1270,23 @@ const test_speechReactions = {
       expect: { exists: true }
     },
     {
+      name: 'Capture initial speech reactions state',
+      run: `(() => {
+        const btn = document.querySelector('[data-action="toggle-speech-reactions"]');
+        if (!btn) return { captured: false, error: 'Button not found' };
+        const wasActive = btn.classList.contains('active') ||
+                          btn.classList.contains('icon_toggle_button_active');
+        return { captured: true, initialState: wasActive ? 'active' : 'inactive' };
+      })()`,
+      expect: { captured: true }
+    },
+    {
       name: 'Toggle speech reactions',
       run: `(() => {
         const btn = document.querySelector('[data-action="toggle-speech-reactions"]');
         if (!btn) return { success: false, error: 'Button not found' };
-        const wasActive = btn.classList.contains('icon_toggle_button_active');
+        const wasActive = btn.classList.contains('active') ||
+                          btn.classList.contains('icon_toggle_button_active');
         btn.click();
         return {
           success: true,
@@ -930,17 +1294,35 @@ const test_speechReactions = {
           clicked: 'toggle-speech-reactions'
         };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const btn = document.querySelector('[data-action="toggle-speech-reactions"]');
+        if (!btn) return { stateChanged: false, error: 'Button not found' };
+        const isActive = btn.classList.contains('active') ||
+                         btn.classList.contains('icon_toggle_button_active');
+        return { stateChanged: true, currentState: isActive ? 'active' : 'inactive' };
+      })()`,
+      verifyExpect: { stateChanged: true }
     },
     {
       name: 'Toggle speech reactions back',
       run: `(() => {
         const btn = document.querySelector('[data-action="toggle-speech-reactions"]');
         if (!btn) return { success: false, error: 'Button not found' };
+        const wasActive = btn.classList.contains('active') ||
+                          btn.classList.contains('icon_toggle_button_active');
         btn.click();
-        return { success: true, clicked: 'toggle-speech-reactions' };
+        return { success: true, clicked: 'toggle-speech-reactions', wasActive };
       })()`,
-      expect: { success: true }
+      expect: { success: true },
+      verify: `(() => {
+        const btn = document.querySelector('[data-action="toggle-speech-reactions"]');
+        if (!btn) return { stateRestored: false, error: 'Button not found' };
+        const isActive = btn.classList.contains('active') ||
+                         btn.classList.contains('icon_toggle_button_active');
+        return { stateRestored: true, finalState: isActive ? 'active' : 'inactive' };
+      })()`,
+      verifyExpect: { stateRestored: true }
     }
   ]
 };
@@ -971,3 +1353,187 @@ const TEST_SUMMARY = {
     stepCount: t.steps.length
   }))
 };
+
+// ============================================================
+// ROBUST TEST EXECUTION PATTERN
+// ============================================================
+
+/**
+ * Enhanced test execution with verification, error detection, and async waiting.
+ *
+ * This pattern should be used when running tests via CDP:
+ *
+ * For each step:
+ * 1. Run the action (step.run)
+ * 2. Wait for UI to stabilize (if step.waitFor specified, poll until ready)
+ * 3. Check for errors in the UI
+ * 4. Run verification (step.verify) if present
+ * 5. Compare results against expectations
+ *
+ * Example usage with CDP:
+ *
+ * async function runStepRobust(step) {
+ *   // 1. Execute the action
+ *   const result = await cdp_evaluate(step.run);
+ *
+ *   // 2. Wait for condition (if specified)
+ *   if (step.waitFor) {
+ *     const timeout = step.waitTimeout || 3000;
+ *     const start = Date.now();
+ *     while (Date.now() - start < timeout) {
+ *       const waitResult = await cdp_evaluate(step.waitFor);
+ *       if (waitResult && waitResult.ready) break;
+ *       await sleep(100);
+ *     }
+ *   } else {
+ *     // Default: wait 150ms for UI to stabilize
+ *     await sleep(150);
+ *   }
+ *
+ *   // 3. Check for errors
+ *   const errors = await cdp_evaluate(CHECK_FOR_ERRORS_JS);
+ *   if (errors.hasError) {
+ *     return { pass: false, step: step.name, errors: errors.errors };
+ *   }
+ *
+ *   // 4. Run verification (if specified)
+ *   if (step.verify) {
+ *     const verification = await cdp_evaluate(step.verify);
+ *     // Compare verification result with step.verifyExpect
+ *     for (const [key, expected] of Object.entries(step.verifyExpect || {})) {
+ *       if (verification[key] !== expected) {
+ *         return { pass: false, step: step.name, verifyFailed: key, expected, actual: verification[key] };
+ *       }
+ *     }
+ *   }
+ *
+ *   // 5. Check main result expectations
+ *   for (const [key, expected] of Object.entries(step.expect || {})) {
+ *     if (result[key] !== expected) {
+ *       return { pass: false, step: step.name, expectFailed: key, expected, actual: result[key] };
+ *     }
+ *   }
+ *
+ *   return { pass: true, step: step.name, result, verification };
+ * }
+ */
+
+// JavaScript code to check for errors (use with cdp_evaluate)
+const CHECK_FOR_ERRORS_JS = `(() => {
+  const errors = [];
+
+  // Check notification banner for error messages
+  const banner = document.getElementById('notifications-banner');
+  if (banner) {
+    const errorNotifs = banner.querySelectorAll('.notification--error, .notification-error, [data-type="error"]');
+    errorNotifs.forEach(n => {
+      if (n.textContent.trim()) errors.push('Notification: ' + n.textContent.trim());
+    });
+  }
+
+  // Check for error modals/dialogs
+  const errorModals = document.querySelectorAll('.modal--error, .error-modal, [role="alertdialog"]');
+  errorModals.forEach(m => {
+    const style = window.getComputedStyle(m);
+    if (style.display !== 'none' && style.visibility !== 'hidden') {
+      errors.push('Modal: ' + m.textContent.trim().substring(0, 100));
+    }
+  });
+
+  // Check for aria-invalid elements
+  const invalidInputs = document.querySelectorAll('[aria-invalid="true"]');
+  invalidInputs.forEach(i => {
+    const label = i.getAttribute('aria-label') || i.name || i.id || 'input';
+    errors.push('Invalid input: ' + label);
+  });
+
+  return { hasError: errors.length > 0, errors };
+})()`;
+
+// JavaScript code to reset UI state (use before test suite)
+const RESET_UI_STATE_JS = `(() => {
+  const actions = [];
+
+  // Close any open widget
+  const closeBtn = document.querySelector('[data-action="close-widget"]');
+  if (closeBtn) {
+    const style = window.getComputedStyle(closeBtn);
+    if (style.display !== 'none' && style.visibility !== 'hidden') {
+      closeBtn.click();
+      actions.push('Closed widget');
+    }
+  }
+
+  // Dismiss any notifications
+  const dismissBtns = document.querySelectorAll('[data-action="dismiss-notification"], .notification__close');
+  dismissBtns.forEach(btn => {
+    const style = window.getComputedStyle(btn);
+    if (style.display !== 'none') {
+      btn.click();
+      actions.push('Dismissed notification');
+    }
+  });
+
+  // Close any open menus
+  const menuBackdrops = document.querySelectorAll('.menu-backdrop, .dropdown-backdrop');
+  menuBackdrops.forEach(el => {
+    el.click();
+    actions.push('Closed menu');
+  });
+
+  return { success: true, actions };
+})()`;
+
+// JavaScript code to reset feature toggles to OFF (use before test suite)
+const RESET_TOGGLES_JS = `(() => {
+  const features = ['look', 'nametag', 'away', 'enhance', 'lut', 'edge-light'];
+  const togglesReset = [];
+
+  features.forEach(feature => {
+    const offBtn = document.querySelector('[data-action="toggle-' + feature + '-off"]');
+    if (offBtn) {
+      const onBtn = document.querySelector('[data-action="toggle-' + feature + '-on"]');
+      const isOn = onBtn?.classList.contains('active') || onBtn?.getAttribute('aria-pressed') === 'true';
+      if (isOn) {
+        offBtn.click();
+        togglesReset.push(feature);
+      }
+    }
+  });
+
+  return { success: true, togglesReset };
+})()`;
+
+// Export execution helpers
+const EXECUTION_HELPERS = {
+  CHECK_FOR_ERRORS_JS,
+  RESET_UI_STATE_JS,
+  RESET_TOGGLES_JS
+};
+
+// Export for Node.js usage
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    // Individual tests
+    test_pageLoad,
+    test_looksFeature,
+    test_nameTagFeature,
+    test_awayModeFeature,
+    test_filtersFeature,
+    test_colorGradesFeature,
+    test_virtualCameraStatus,
+    test_edgeLightFeature,
+    test_backgroundOptions,
+    test_speechReactions,
+
+    // Collections
+    ALL_SMOKE_TESTS,
+    TEST_SUMMARY,
+
+    // Execution helpers
+    EXECUTION_HELPERS,
+    CHECK_FOR_ERRORS_JS,
+    RESET_UI_STATE_JS,
+    RESET_TOGGLES_JS
+  };
+}

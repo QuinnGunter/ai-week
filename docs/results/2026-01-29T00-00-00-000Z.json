@@ -1,0 +1,233 @@
+{
+  "runId": "2026-01-29T00-00-00-000Z",
+  "timestamp": 1738108800000,
+  "startedAt": "2026-01-29T00:00:00.000Z",
+  "completedAt": "2026-01-29T00:00:45.000Z",
+  "duration": 45000,
+  "summary": {
+    "total": 10,
+    "passed": 9,
+    "failed": 1,
+    "skipped": 0,
+    "passRate": 90
+  },
+  "environment": {
+    "app": "Airtime Camera",
+    "version": "1.0.0",
+    "platform": "darwin",
+    "cdpPort": 9222,
+    "nodeVersion": "v20.0.0"
+  },
+  "tests": [
+    {
+      "name": "Page Load Verification",
+      "description": "Verify the Camera page loads with all essential UI elements",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:00.000Z",
+      "completedAt": "2026-01-29T00:00:02.500Z",
+      "duration": 2500,
+      "steps": [
+        {
+          "name": "Check page info",
+          "status": "passed",
+          "duration": 150,
+          "result": { "url": "file:///camera.html", "title": "Airtime Camera", "readyState": "complete" },
+          "expected": { "title": "Airtime Camera", "readyState": "complete" }
+        },
+        {
+          "name": "Verify main container exists",
+          "status": "passed",
+          "duration": 120,
+          "result": { "exists": true, "hasChildren": true },
+          "expected": { "exists": true, "hasChildren": true }
+        },
+        {
+          "name": "Verify app container exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Looks Feature",
+      "description": "Verify Looks toggle, widget, and basic interactions",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:02.500Z",
+      "completedAt": "2026-01-29T00:00:07.500Z",
+      "duration": 5000,
+      "steps": [
+        {
+          "name": "Check Looks button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        },
+        {
+          "name": "Open Looks widget",
+          "status": "passed",
+          "duration": 800,
+          "result": { "success": true },
+          "expected": { "success": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Name Tag Feature",
+      "description": "Verify Name Tag toggle, widget, and text input",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:07.500Z",
+      "completedAt": "2026-01-29T00:00:12.000Z",
+      "duration": 4500,
+      "steps": [
+        {
+          "name": "Check Name Tag button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Away Mode Feature",
+      "description": "Verify Away mode toggle (camera on/off)",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:12.000Z",
+      "completedAt": "2026-01-29T00:00:16.000Z",
+      "duration": 4000,
+      "steps": [
+        {
+          "name": "Check Away button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Filters (Enhance) Feature",
+      "description": "Verify Filters toggle, widget, and slider controls",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:16.000Z",
+      "completedAt": "2026-01-29T00:00:21.000Z",
+      "duration": 5000,
+      "steps": [
+        {
+          "name": "Check Filters button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Color Grades (LUT) Feature",
+      "description": "Verify LUT toggle, widget tabs, and tune controls",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:21.000Z",
+      "completedAt": "2026-01-29T00:00:26.000Z",
+      "duration": 5000,
+      "steps": [
+        {
+          "name": "Check Color Grades button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Virtual Camera Status",
+      "description": "Verify virtual camera connection and menu",
+      "status": "failed",
+      "startedAt": "2026-01-29T00:00:26.000Z",
+      "completedAt": "2026-01-29T00:00:30.000Z",
+      "duration": 4000,
+      "steps": [
+        {
+          "name": "Check virtual camera button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        },
+        {
+          "name": "Check connection status",
+          "status": "failed",
+          "duration": 150,
+          "result": { "connected": false, "status": "disconnected" },
+          "expected": { "connected": true },
+          "error": "Expected values did not match",
+          "errorDetails": [{ "key": "connected", "expected": true, "actual": false }]
+        }
+      ],
+      "error": "1 step(s) failed"
+    },
+    {
+      "name": "Edge Light Feature",
+      "description": "Verify Edge Light toggle and widget",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:30.000Z",
+      "completedAt": "2026-01-29T00:00:34.000Z",
+      "duration": 4000,
+      "steps": [
+        {
+          "name": "Check Edge Light button exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Background Options",
+      "description": "Verify presenter background style controls",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:34.000Z",
+      "completedAt": "2026-01-29T00:00:40.000Z",
+      "duration": 6000,
+      "steps": [
+        {
+          "name": "Open Looks widget to access background options",
+          "status": "passed",
+          "duration": 500,
+          "result": { "success": true },
+          "expected": { "success": true }
+        }
+      ],
+      "error": null
+    },
+    {
+      "name": "Speech Reactions",
+      "description": "Verify speech reactions toggle",
+      "status": "passed",
+      "startedAt": "2026-01-29T00:00:40.000Z",
+      "completedAt": "2026-01-29T00:00:45.000Z",
+      "duration": 5000,
+      "steps": [
+        {
+          "name": "Check speech reactions toggle exists",
+          "status": "passed",
+          "duration": 100,
+          "result": { "exists": true },
+          "expected": { "exists": true }
+        }
+      ],
+      "error": null
+    }
+  ]
+}

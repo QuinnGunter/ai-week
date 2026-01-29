@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Results Dashboard</title>
+  <style>
+    :root {
+      --color-bg: #0d1117;
+      --color-bg-secondary: #161b22;
+      --color-border: #30363d;
+      --color-text: #c9d1d9;
+      --color-text-muted: #8b949e;
+      --color-success: #3fb950;
+      --color-success-bg: rgba(63, 185, 80, 0.1);
+      --color-failure: #f85149;
+      --color-failure-bg: rgba(248, 81, 73, 0.1);
+      --color-warning: #d29922;
+      --color-link: #58a6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .header-meta {
+      color: var(--color-text-muted);
+      font-size: 14px;
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 16px;
+    }
+
+    .card-label {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .card-value {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .card-value.success { color: var(--color-success); }
+    .card-value.failure { color: var(--color-failure); }
+
+    .trend-chart {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .chart-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .chart-container {
+      height: 150px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 8px 0;
+    }
+
+    .chart-bar {
+      flex: 1;
+      min-width: 20px;
+      max-width: 40px;
+      border-radius: 3px 3px 0 0;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      position: relative;
+    }
+
+    .chart-bar:hover {
+      opacity: 0.8;
+    }
+
+    .chart-bar.success { background: var(--color-success); }
+    .chart-bar.partial { background: var(--color-warning); }
+    .chart-bar.failure { background: var(--color-failure); }
+
+    .chart-bar-tooltip {
+      display: none;
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 8px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10;
+    }
+
+    .chart-bar:hover .chart-bar-tooltip {
+      display: block;
+    }
+
+    .run-selector {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    .run-selector select {
+      background: var(--color-bg);
+      color: var(--color-text);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      padding: 8px 12px;
+      font-size: 14px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--color-border);
+      color: var(--color-text);
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--color-border);
+    }
+
+    .test-list {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .test-item {
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .test-item:last-child {
+      border-bottom: none;
+    }
+
+    .test-header {
+      display: flex;
+      align-items: center;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .test-header:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .test-status {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+      font-size: 14px;
+    }
+
+    .test-status.passed {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .test-status.failed {
+      background: var(--color-failure-bg);
+      color: var(--color-failure);
+    }
+
+    .test-name {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .test-duration {
+      color: var(--color-text-muted);
+      font-size: 13px;
+      margin-left: 12px;
+    }
+
+    .test-expand {
+      color: var(--color-text-muted);
+      margin-left: 8px;
+    }
+
+    .test-details {
+      display: none;
+      padding: 0 16px 16px 52px;
+    }
+
+    .test-item.expanded .test-details {
+      display: block;
+    }
+
+    .test-item.expanded .test-expand {
+      transform: rotate(90deg);
+    }
+
+    .step-list {
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      padding: 8px 12px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .step-item:last-child {
+      border-bottom: none;
+    }
+
+    .step-status {
+      width: 16px;
+      margin-right: 8px;
+    }
+
+    .step-status.passed { color: var(--color-success); }
+    .step-status.failed { color: var(--color-failure); }
+
+    .step-name {
+      flex: 1;
+    }
+
+    .step-duration {
+      color: var(--color-text-muted);
+    }
+
+    .error-message {
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--color-failure-bg);
+      border: 1px solid var(--color-failure);
+      border-radius: 4px;
+      font-size: 13px;
+      color: var(--color-failure);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: var(--color-text-muted);
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 60px;
+      color: var(--color-text-muted);
+    }
+
+    .no-data h2 {
+      margin-bottom: 12px;
+      color: var(--color-text);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--color-link);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧪 Test Results Dashboard</h1>
+      <div class="header-meta" id="lastUpdated">Loading...</div>
+    </header>
+
+    <div id="content">
+      <div class="loading">Loading test results...</div>
+    </div>
+
+    <footer>
+      <p>Powered by <a href="https://claude.ai/code" target="_blank">Claude Code</a> &amp; CDP MCP Tools</p>
+    </footer>
+  </div>
+
+  <script>
+    const RESULTS_BASE = './results';
+
+    // Utility functions
+    function formatDuration(ms) {
+      if (!ms) return '0ms';
+      if (ms < 1000) return `${ms}ms`;
+      if (ms < 60000) return `${(ms / 1000).toFixed(1)}s`;
+      const minutes = Math.floor(ms / 60000);
+      const seconds = Math.round((ms % 60000) / 1000);
+      return `${minutes}m ${seconds}s`;
+    }
+
+    function formatDate(timestamp) {
+      return new Date(timestamp).toLocaleString();
+    }
+
+    function getBarClass(passRate) {
+      if (passRate === 100) return 'success';
+      if (passRate >= 50) return 'partial';
+      return 'failure';
+    }
+
+    // State
+    let resultsIndex = null;
+    let currentRun = null;
+    let filter = 'all';
+
+    // Fetch results index
+    async function loadResultsIndex() {
+      try {
+        const response = await fetch(`${RESULTS_BASE}/index.json`);
+        if (!response.ok) throw new Error('No results found');
+        return await response.json();
+      } catch (error) {
+        console.error('Failed to load results index:', error);
+        return null;
+      }
+    }
+
+    // Fetch a specific run
+    async function loadRun(filename) {
+      try {
+        const response = await fetch(`${RESULTS_BASE}/${filename}`);
+        if (!response.ok) throw new Error('Run not found');
+        return await response.json();
+      } catch (error) {
+        console.error('Failed to load run:', error);
+        return null;
+      }
+    }
+
+    // Render summary cards
+    function renderSummaryCards(summary) {
+      return `
+        <div class="summary-cards">
+          <div class="card">
+            <div class="card-label">Total Tests</div>
+            <div class="card-value">${summary.total}</div>
+          </div>
+          <div class="card">
+            <div class="card-label">Passed</div>
+            <div class="card-value success">${summary.passed}</div>
+          </div>
+          <div class="card">
+            <div class="card-label">Failed</div>
+            <div class="card-value failure">${summary.failed}</div>
+          </div>
+          <div class="card">
+            <div class="card-label">Pass Rate</div>
+            <div class="card-value ${summary.passRate === 100 ? 'success' : summary.passRate < 50 ? 'failure' : ''}">${summary.passRate}%</div>
+          </div>
+          <div class="card">
+            <div class="card-label">Duration</div>
+            <div class="card-value">${formatDuration(currentRun?.duration)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render trend chart
+    function renderTrendChart(files) {
+      const recentRuns = files.slice(0, 20).reverse(); // Last 20 runs, oldest first
+
+      if (recentRuns.length === 0) {
+        return '';
+      }
+
+      const maxHeight = 120;
+      const bars = recentRuns.map(run => {
+        const height = Math.max(10, (run.summary.passRate / 100) * maxHeight);
+        const barClass = getBarClass(run.summary.passRate);
+        return `
+          <div class="chart-bar ${barClass}"
+               style="height: ${height}px"
+               data-filename="${run.filename}"
+               onclick="selectRun('${run.filename}')">
+            <div class="chart-bar-tooltip">
+              <div>${formatDate(run.timestamp)}</div>
+              <div>${run.summary.passed}/${run.summary.total} passed (${run.summary.passRate}%)</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="trend-chart">
+          <div class="chart-header">
+            <div class="chart-title">Pass Rate Trend (Last ${recentRuns.length} runs)</div>
+          </div>
+          <div class="chart-container">
+            ${bars}
+          </div>
+        </div>
+      `;
+    }
+
+    // Render run selector
+    function renderRunSelector(files, currentFilename) {
+      const options = files.map(run => {
+        const selected = run.filename === currentFilename ? 'selected' : '';
+        return `<option value="${run.filename}" ${selected}>
+          ${formatDate(run.timestamp)} - ${run.summary.passed}/${run.summary.total} passed (${run.summary.passRate}%)
+        </option>`;
+      }).join('');
+
+      return `
+        <div class="run-selector">
+          <label for="runSelect">Select Test Run: </label>
+          <select id="runSelect" onchange="selectRun(this.value)">
+            ${options}
+          </select>
+        </div>
+      `;
+    }
+
+    // Render test list
+    function renderTestList(tests) {
+      const filteredTests = tests.filter(test => {
+        if (filter === 'all') return true;
+        if (filter === 'passed') return test.status === 'passed';
+        if (filter === 'failed') return test.status === 'failed';
+        return true;
+      });
+
+      if (filteredTests.length === 0) {
+        return '<div class="no-data"><p>No tests match the current filter.</p></div>';
+      }
+
+      const items = filteredTests.map(test => {
+        const statusIcon = test.status === 'passed' ? '✓' : '✗';
+        const stepsHtml = test.steps?.map(step => {
+          const stepIcon = step.status === 'passed' ? '✓' : '✗';
+          return `
+            <div class="step-item">
+              <span class="step-status ${step.status}">${stepIcon}</span>
+              <span class="step-name">${step.name}</span>
+              <span class="step-duration">${formatDuration(step.duration)}</span>
+            </div>
+          `;
+        }).join('') || '';
+
+        const errorHtml = test.error ? `
+          <div class="error-message">
+            <strong>Error:</strong> ${test.error}
+            ${test.steps?.filter(s => s.error).map(s => `<div>• ${s.name}: ${s.error}</div>`).join('') || ''}
+          </div>
+        ` : '';
+
+        return `
+          <div class="test-item" data-status="${test.status}">
+            <div class="test-header" onclick="toggleTest(this)">
+              <span class="test-status ${test.status}">${statusIcon}</span>
+              <span class="test-name">${test.name}</span>
+              <span class="test-duration">${formatDuration(test.duration)}</span>
+              <span class="test-expand">▶</span>
+            </div>
+            <div class="test-details">
+              ${test.description ? `<p style="margin-bottom: 12px; color: var(--color-text-muted);">${test.description}</p>` : ''}
+              <div class="step-list">
+                ${stepsHtml}
+              </div>
+              ${errorHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      return `
+        <div class="filters">
+          <button class="filter-btn ${filter === 'all' ? 'active' : ''}" onclick="setFilter('all')">All (${tests.length})</button>
+          <button class="filter-btn ${filter === 'passed' ? 'active' : ''}" onclick="setFilter('passed')">Passed (${tests.filter(t => t.status === 'passed').length})</button>
+          <button class="filter-btn ${filter === 'failed' ? 'active' : ''}" onclick="setFilter('failed')">Failed (${tests.filter(t => t.status === 'failed').length})</button>
+        </div>
+        <div class="test-list">
+          ${items}
+        </div>
+      `;
+    }
+
+    // Render full dashboard
+    function renderDashboard() {
+      if (!resultsIndex || resultsIndex.files.length === 0) {
+        document.getElementById('content').innerHTML = `
+          <div class="no-data">
+            <h2>No Test Results Yet</h2>
+            <p>Run some tests and save the results to see them here.</p>
+            <p style="margin-top: 16px;">
+              <code>node tests/reporter/save-results.js results.json</code>
+            </p>
+          </div>
+        `;
+        document.getElementById('lastUpdated').textContent = '';
+        return;
+      }
+
+      const currentFilename = currentRun?.runId
+        ? resultsIndex.files.find(f => f.runId === currentRun.runId)?.filename
+        : resultsIndex.files[0].filename;
+
+      const html = `
+        ${renderSummaryCards(currentRun?.summary || resultsIndex.files[0].summary)}
+        ${renderTrendChart(resultsIndex.files)}
+        ${renderRunSelector(resultsIndex.files, currentFilename)}
+        ${currentRun ? renderTestList(currentRun.tests) : '<div class="loading">Loading test details...</div>'}
+      `;
+
+      document.getElementById('content').innerHTML = html;
+      document.getElementById('lastUpdated').textContent = `Updated: ${formatDate(resultsIndex.updatedAt)}`;
+    }
+
+    // Event handlers
+    window.toggleTest = function(header) {
+      header.parentElement.classList.toggle('expanded');
+    };
+
+    window.setFilter = function(newFilter) {
+      filter = newFilter;
+      renderDashboard();
+    };
+
+    window.selectRun = async function(filename) {
+      currentRun = await loadRun(filename);
+      renderDashboard();
+    };
+
+    // Initialize
+    async function init() {
+      resultsIndex = await loadResultsIndex();
+
+      if (resultsIndex && resultsIndex.files.length > 0) {
+        currentRun = await loadRun(resultsIndex.files[0].filename);
+      }
+
+      renderDashboard();
+    }
+
+    init();
+  </script>
+</body>
+</html>

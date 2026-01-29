@@ -1,0 +1,1718 @@
+{
+  "runId": "2026-01-29T22-21-24-971Z",
+  "timestamp": 1769725284971,
+  "startedAt": "2026-01-29T22:21:24.971Z",
+  "completedAt": "2026-01-29T22:21:28.749Z",
+  "duration": 3778,
+  "summary": {
+    "total": 10,
+    "passed": 0,
+    "failed": 10,
+    "skipped": 0,
+    "passRate": 0
+  },
+  "environment": {
+    "app": "Airtime Camera",
+    "version": "unknown",
+    "platform": "darwin",
+    "cdpPort": 9222,
+    "nodeVersion": "v25.3.0"
+  },
+  "tests": [
+    {
+      "name": "Page Load Verification",
+      "description": "Verify the Camera page loads with all essential UI elements",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:24.972Z",
+      "completedAt": "2026-01-29T22:21:25.380Z",
+      "duration": 400,
+      "steps": [
+        {
+          "name": "Check page info",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:24.972Z",
+          "completedAt": "2026-01-29T22:21:25.024Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "title": "Airtime Camera",
+            "readyState": "complete"
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "title",
+              "expected": "Airtime Camera"
+            },
+            {
+              "key": "readyState",
+              "expected": "complete"
+            }
+          ]
+        },
+        {
+          "name": "Verify main container exists",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.024Z",
+          "completedAt": "2026-01-29T22:21:25.075Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true,
+            "hasChildren": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasChildren",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Verify app container exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.075Z",
+          "completedAt": "2026-01-29T22:21:25.126Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify stage (video area) exists",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.126Z",
+          "completedAt": "2026-01-29T22:21:25.177Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "stageExists": true,
+            "wrapperExists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "stageExists",
+              "expected": true
+            },
+            {
+              "key": "wrapperExists",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Verify toolbar sections exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.177Z",
+          "completedAt": "2026-01-29T22:21:25.227Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "top": true,
+            "bottom": true,
+            "left": true,
+            "right": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "top",
+              "expected": true
+            },
+            {
+              "key": "bottom",
+              "expected": true
+            },
+            {
+              "key": "left",
+              "expected": true
+            },
+            {
+              "key": "right",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Verify notifications banner exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.227Z",
+          "completedAt": "2026-01-29T22:21:25.278Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify essential action buttons are present",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.278Z",
+          "completedAt": "2026-01-29T22:21:25.329Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "show-looks-widget": true,
+            "show-nametag-widget": true,
+            "show-away-widget": true,
+            "show-enhance-widget": true,
+            "show-lut-widget": true,
+            "show-virtual-camera-menu": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "show-looks-widget",
+              "expected": true
+            },
+            {
+              "key": "show-nametag-widget",
+              "expected": true
+            },
+            {
+              "key": "show-away-widget",
+              "expected": true
+            },
+            {
+              "key": "show-enhance-widget",
+              "expected": true
+            },
+            {
+              "key": "show-lut-widget",
+              "expected": true
+            },
+            {
+              "key": "show-virtual-camera-menu",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Verify sidebar pane exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.329Z",
+          "completedAt": "2026-01-29T22:21:25.380Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "5 step(s) failed"
+    },
+    {
+      "name": "Looks Feature",
+      "description": "Verify Looks toggle, widget, and basic interactions",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:25.380Z",
+      "completedAt": "2026-01-29T22:21:25.839Z",
+      "duration": 450,
+      "steps": [
+        {
+          "name": "Check Looks button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.380Z",
+          "completedAt": "2026-01-29T22:21:25.430Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check toggle-look button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.430Z",
+          "completedAt": "2026-01-29T22:21:25.482Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Open Looks widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.482Z",
+          "completedAt": "2026-01-29T22:21:25.532Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetOpen": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify widget controls are visible",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.532Z",
+          "completedAt": "2026-01-29T22:21:25.583Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "toggleOnExists": true,
+            "toggleOffExists": true,
+            "editExists": true,
+            "catalogExists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "toggleOnExists",
+              "expected": true
+            },
+            {
+              "key": "toggleOffExists",
+              "expected": true
+            },
+            {
+              "key": "editExists",
+              "expected": true
+            },
+            {
+              "key": "catalogExists",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle Looks ON",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.583Z",
+          "completedAt": "2026-01-29T22:21:25.634Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Toggle Looks OFF",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.634Z",
+          "completedAt": "2026-01-29T22:21:25.685Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Open Looks catalog",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.685Z",
+          "completedAt": "2026-01-29T22:21:25.736Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "catalogVisible": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify look presets are available",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.736Z",
+          "completedAt": "2026-01-29T22:21:25.788Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "hasPresets": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasPresets",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Close catalog / go back",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.788Z",
+          "completedAt": "2026-01-29T22:21:25.839Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "catalogClosed": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "2 step(s) failed"
+    },
+    {
+      "name": "Name Tag Feature",
+      "description": "Verify Name Tag toggle, widget, and text input",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:25.839Z",
+      "completedAt": "2026-01-29T22:21:26.350Z",
+      "duration": 500,
+      "steps": [
+        {
+          "name": "Check Name Tag button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.839Z",
+          "completedAt": "2026-01-29T22:21:25.889Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check toggle-name-tag button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.889Z",
+          "completedAt": "2026-01-29T22:21:25.941Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Open Name Tag widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:25.941Z",
+          "completedAt": "2026-01-29T22:21:25.992Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetOpen": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify widget controls exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:25.992Z",
+          "completedAt": "2026-01-29T22:21:26.043Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "toggleOnExists": true,
+            "toggleOffExists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "toggleOnExists",
+              "expected": true
+            },
+            {
+              "key": "toggleOffExists",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle Name Tag ON",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.043Z",
+          "completedAt": "2026-01-29T22:21:26.094Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check text inputs exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:26.094Z",
+          "completedAt": "2026-01-29T22:21:26.145Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "hasInputs": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasInputs",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Check font selector exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.145Z",
+          "completedAt": "2026-01-29T22:21:26.197Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check style selector exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.197Z",
+          "completedAt": "2026-01-29T22:21:26.248Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Toggle Name Tag OFF",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.248Z",
+          "completedAt": "2026-01-29T22:21:26.299Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Close widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.299Z",
+          "completedAt": "2026-01-29T22:21:26.350Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetClosed": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "2 step(s) failed"
+    },
+    {
+      "name": "Away Mode Feature",
+      "description": "Verify Away mode toggle (camera on/off)",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:26.350Z",
+      "completedAt": "2026-01-29T22:21:26.759Z",
+      "duration": 400,
+      "steps": [
+        {
+          "name": "Check Away button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.350Z",
+          "completedAt": "2026-01-29T22:21:26.401Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check toggle-away button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.401Z",
+          "completedAt": "2026-01-29T22:21:26.452Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Open Away widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.452Z",
+          "completedAt": "2026-01-29T22:21:26.503Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetOpen": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify widget controls exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:26.503Z",
+          "completedAt": "2026-01-29T22:21:26.554Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "awayButtonExists": true,
+            "cameraOnButtonExists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "awayButtonExists",
+              "expected": true
+            },
+            {
+              "key": "cameraOnButtonExists",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle to Away (camera off)",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.554Z",
+          "completedAt": "2026-01-29T22:21:26.605Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "awayModeActive": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify away reaction area exists",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:26.605Z",
+          "completedAt": "2026-01-29T22:21:26.656Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "reactionAreaExists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "reactionAreaExists",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle to Camera On",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.656Z",
+          "completedAt": "2026-01-29T22:21:26.708Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "cameraOnActive": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Close widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.708Z",
+          "completedAt": "2026-01-29T22:21:26.759Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetClosed": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "2 step(s) failed"
+    },
+    {
+      "name": "Filters (Enhance) Feature",
+      "description": "Verify Filters toggle, widget, and slider controls",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:26.759Z",
+      "completedAt": "2026-01-29T22:21:27.321Z",
+      "duration": 550,
+      "steps": [
+        {
+          "name": "Check Filters button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.759Z",
+          "completedAt": "2026-01-29T22:21:26.810Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check toggle-enhance button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.810Z",
+          "completedAt": "2026-01-29T22:21:26.861Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Open Enhance widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.861Z",
+          "completedAt": "2026-01-29T22:21:26.912Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetOpen": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify widget controls exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:26.912Z",
+          "completedAt": "2026-01-29T22:21:26.964Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "toggleOnExists": true,
+            "toggleOffExists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "toggleOnExists",
+              "expected": true
+            },
+            {
+              "key": "toggleOffExists",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle Filters ON",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:26.964Z",
+          "completedAt": "2026-01-29T22:21:27.014Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check enhancement slider exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.014Z",
+          "completedAt": "2026-01-29T22:21:27.065Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check complements slider exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.065Z",
+          "completedAt": "2026-01-29T22:21:27.116Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Modify enhancement slider",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.116Z",
+          "completedAt": "2026-01-29T22:21:27.167Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "valueApplied": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Reset enhancement slider",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.167Z",
+          "completedAt": "2026-01-29T22:21:27.218Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "valueReset": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Toggle Filters OFF",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.218Z",
+          "completedAt": "2026-01-29T22:21:27.270Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Close widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.270Z",
+          "completedAt": "2026-01-29T22:21:27.321Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetClosed": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "1 step(s) failed"
+    },
+    {
+      "name": "Color Grades (LUT) Feature",
+      "description": "Verify LUT toggle, widget tabs, and tune controls",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:27.321Z",
+      "completedAt": "2026-01-29T22:21:27.881Z",
+      "duration": 550,
+      "steps": [
+        {
+          "name": "Check Color Grades button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.321Z",
+          "completedAt": "2026-01-29T22:21:27.372Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check toggle-lut button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.372Z",
+          "completedAt": "2026-01-29T22:21:27.422Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Open LUT widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.422Z",
+          "completedAt": "2026-01-29T22:21:27.473Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetOpen": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify tabs exist (LUTs and Tune)",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:27.473Z",
+          "completedAt": "2026-01-29T22:21:27.524Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "hasLutsTab": true,
+            "hasTuneTab": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasLutsTab",
+              "expected": true
+            },
+            {
+              "key": "hasTuneTab",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Check LUT intensity slider exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.524Z",
+          "completedAt": "2026-01-29T22:21:27.575Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check import LUT button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.575Z",
+          "completedAt": "2026-01-29T22:21:27.626Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Switch to Tune tab",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.626Z",
+          "completedAt": "2026-01-29T22:21:27.677Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "tabSwitched": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Verify tune sliders exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:27.677Z",
+          "completedAt": "2026-01-29T22:21:27.729Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "hasSliders": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasSliders",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Check Reset All button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.729Z",
+          "completedAt": "2026-01-29T22:21:27.779Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Switch back to LUTs tab",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.779Z",
+          "completedAt": "2026-01-29T22:21:27.830Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "tabSwitched": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Close widget",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.830Z",
+          "completedAt": "2026-01-29T22:21:27.881Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetClosed": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "2 step(s) failed"
+    },
+    {
+      "name": "Virtual Camera Status",
+      "description": "Verify virtual camera connection and menu",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:27.881Z",
+      "completedAt": "2026-01-29T22:21:28.034Z",
+      "duration": 150,
+      "steps": [
+        {
+          "name": "Check virtual camera button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.881Z",
+          "completedAt": "2026-01-29T22:21:27.932Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check connection status (multi-signal)",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:27.932Z",
+          "completedAt": "2026-01-29T22:21:27.983Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "connected": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "connected",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Open virtual camera menu",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:27.983Z",
+          "completedAt": "2026-01-29T22:21:28.034Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "menuOpened": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "1 step(s) failed"
+    },
+    {
+      "name": "Edge Light Feature",
+      "description": "Verify Edge Light toggle and widget",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:28.035Z",
+      "completedAt": "2026-01-29T22:21:28.289Z",
+      "duration": 250,
+      "steps": [
+        {
+          "name": "Check Edge Light button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.035Z",
+          "completedAt": "2026-01-29T22:21:28.086Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check toggle button exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.086Z",
+          "completedAt": "2026-01-29T22:21:28.137Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Capture initial Edge Light state",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:28.137Z",
+          "completedAt": "2026-01-29T22:21:28.188Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "captured": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "captured",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle Edge Light via sidebar button",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.188Z",
+          "completedAt": "2026-01-29T22:21:28.238Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Toggle Edge Light again (restore state)",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.238Z",
+          "completedAt": "2026-01-29T22:21:28.289Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateRestored": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "1 step(s) failed"
+    },
+    {
+      "name": "Background Options",
+      "description": "Verify presenter background style controls",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:28.289Z",
+      "completedAt": "2026-01-29T22:21:28.544Z",
+      "duration": 250,
+      "steps": [
+        {
+          "name": "Open Looks widget to access background options",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.289Z",
+          "completedAt": "2026-01-29T22:21:28.340Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "widgetOpen": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Enter edit mode",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.340Z",
+          "completedAt": "2026-01-29T22:21:28.391Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "editModeActive": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Check background style buttons exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:28.391Z",
+          "completedAt": "2026-01-29T22:21:28.442Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "hasVisible": true,
+            "hasBlurred": true,
+            "hasHidden": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasVisible",
+              "expected": true
+            },
+            {
+              "key": "hasBlurred",
+              "expected": true
+            },
+            {
+              "key": "hasHidden",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Check presenter shape buttons exist",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:28.442Z",
+          "completedAt": "2026-01-29T22:21:28.494Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "hasShapes": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "hasShapes",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Cancel edit and close",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.494Z",
+          "completedAt": "2026-01-29T22:21:28.544Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "editModeClosed": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "2 step(s) failed"
+    },
+    {
+      "name": "Speech Reactions",
+      "description": "Verify speech reactions toggle",
+      "status": "failed",
+      "startedAt": "2026-01-29T22:21:28.544Z",
+      "completedAt": "2026-01-29T22:21:28.748Z",
+      "duration": 200,
+      "steps": [
+        {
+          "name": "Check speech reactions toggle exists",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.544Z",
+          "completedAt": "2026-01-29T22:21:28.595Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "exists": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Capture initial speech reactions state",
+          "status": "failed",
+          "startedAt": "2026-01-29T22:21:28.595Z",
+          "completedAt": "2026-01-29T22:21:28.646Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "captured": true
+          },
+          "verification": null,
+          "verifyExpected": null,
+          "error": "Expected values did not match",
+          "errorDetails": [
+            {
+              "key": "captured",
+              "expected": true
+            }
+          ]
+        },
+        {
+          "name": "Toggle speech reactions",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.646Z",
+          "completedAt": "2026-01-29T22:21:28.697Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateChanged": true
+          },
+          "error": null,
+          "errorDetails": null
+        },
+        {
+          "name": "Toggle speech reactions back",
+          "status": "passed",
+          "startedAt": "2026-01-29T22:21:28.697Z",
+          "completedAt": "2026-01-29T22:21:28.748Z",
+          "duration": 50,
+          "result": {
+            "exists": true,
+            "success": true
+          },
+          "expected": {
+            "success": true
+          },
+          "verification": null,
+          "verifyExpected": {
+            "stateRestored": true
+          },
+          "error": null,
+          "errorDetails": null
+        }
+      ],
+      "error": "1 step(s) failed"
+    }
+  ]
+}
