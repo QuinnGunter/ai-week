@@ -1,0 +1,492 @@
+{
+  "runId": "2026-01-30T09-35-00-000Z",
+  "timestamp": 1738233300000,
+  "startedAt": "2026-01-30T09:35:00.000Z",
+  "completedAt": "2026-01-30T09:38:00.000Z",
+  "duration": 180000,
+  "summary": {
+    "total": 10,
+    "passed": 6,
+    "failed": 3,
+    "partial": 1,
+    "passRate": 60
+  },
+  "environment": {
+    "app": "Airtime Camera",
+    "appUrl": "https://app.airtimetools.com/camera/development/index.html",
+    "platform": "darwin",
+    "cdpPort": 9222
+  },
+  "tests": [
+    {
+      "name": "Page Load Verification",
+      "description": "Verify the Camera page loads with all essential UI elements",
+      "status": "partial",
+      "stepsTotal": 8,
+      "stepsPassed": 7,
+      "steps": [
+        {
+          "name": "Check page info",
+          "pass": true,
+          "result": {
+            "title": "Airtime Camera",
+            "readyState": "complete"
+          }
+        },
+        {
+          "name": "Verify main container exists",
+          "pass": true,
+          "result": {
+            "exists": true,
+            "hasChildren": true
+          }
+        },
+        {
+          "name": "Verify app container exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Verify stage exists",
+          "pass": true,
+          "result": {
+            "stageExists": true,
+            "wrapperExists": true
+          }
+        },
+        {
+          "name": "Verify toolbar sections",
+          "pass": true,
+          "result": {
+            "top": true,
+            "bottom": true,
+            "left": true,
+            "right": true
+          }
+        },
+        {
+          "name": "Verify notifications banner",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Verify essential action buttons",
+          "pass": false,
+          "result": {
+            "show-looks-widget": true,
+            "show-nametag-widget": true,
+            "show-away-widget": true,
+            "show-enhance-widget": true,
+            "show-lut-widget": false,
+            "show-virtual-camera-menu": true
+          }
+        },
+        {
+          "name": "Verify sidebar pane exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Looks Feature",
+      "description": "Verify Looks toggle, widget, and basic interactions",
+      "status": "passed",
+      "stepsTotal": 6,
+      "stepsPassed": 6,
+      "steps": [
+        {
+          "name": "Check Looks button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Check toggle-look button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Verify widget controls visible",
+          "pass": true,
+          "result": {
+            "toggleOnExists": true,
+            "toggleOffExists": true,
+            "editExists": true,
+            "catalogExists": true
+          }
+        },
+        {
+          "name": "Toggle Looks ON",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Toggle Looks OFF",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Close widget",
+          "pass": true,
+          "result": {
+            "closed": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Name Tag Feature",
+      "description": "Verify Name Tag toggle, widget, and text input",
+      "status": "passed",
+      "stepsTotal": 9,
+      "stepsPassed": 9,
+      "steps": [
+        {
+          "name": "Check Name Tag button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Check toggle-name-tag button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Verify widget controls exist",
+          "pass": true,
+          "result": {
+            "toggleOnExists": true,
+            "toggleOffExists": true
+          }
+        },
+        {
+          "name": "Toggle Name Tag ON",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Check text inputs exist",
+          "pass": true,
+          "result": {
+            "inputCount": 7,
+            "hasInputs": true
+          }
+        },
+        {
+          "name": "Check font selector exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Check style selector exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Toggle Name Tag OFF",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Close widget",
+          "pass": true,
+          "result": {
+            "closed": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Away Mode Feature",
+      "description": "Verify Away mode toggle (camera on/off)",
+      "status": "passed",
+      "stepsTotal": 6,
+      "stepsPassed": 6,
+      "steps": [
+        {
+          "name": "Check Away button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Check toggle-away button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Verify widget controls exist",
+          "pass": true,
+          "result": {
+            "awayButtonExists": true,
+            "cameraOnButtonExists": true
+          }
+        },
+        {
+          "name": "Toggle to Away (camera off)",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Toggle to Camera On",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Close widget",
+          "pass": true,
+          "result": {
+            "closed": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Filters (Enhance) Feature",
+      "description": "Verify Filters toggle, widget, and slider controls",
+      "status": "passed",
+      "stepsTotal": 10,
+      "stepsPassed": 10,
+      "steps": [
+        {
+          "name": "Check Filters button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Check toggle-enhance button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Verify widget controls exist",
+          "pass": true,
+          "result": {
+            "toggleOnExists": true,
+            "toggleOffExists": true
+          }
+        },
+        {
+          "name": "Toggle Filters ON",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Check enhancement slider exists",
+          "pass": true,
+          "result": {
+            "exists": true,
+            "value": 0.5
+          }
+        },
+        {
+          "name": "Check complements slider exists",
+          "pass": true,
+          "result": {
+            "exists": true,
+            "value": 0.5
+          }
+        },
+        {
+          "name": "Modify enhancement slider",
+          "pass": true,
+          "result": {
+            "originalValue": 0.5,
+            "newValue": 70
+          }
+        },
+        {
+          "name": "Reset enhancement slider",
+          "pass": true,
+          "result": {
+            "resetTo": 50
+          }
+        },
+        {
+          "name": "Toggle Filters OFF",
+          "pass": true,
+          "result": {
+            "clicked": true
+          }
+        },
+        {
+          "name": "Close widget",
+          "pass": true,
+          "result": {
+            "closed": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Color Grades (LUT) Feature",
+      "description": "Verify LUT toggle, widget tabs, and tune controls",
+      "status": "failed",
+      "stepsTotal": 2,
+      "stepsPassed": 0,
+      "steps": [
+        {
+          "name": "Check Color Grades button exists",
+          "pass": false,
+          "result": {
+            "exists": false,
+            "note": "show-lut-widget button not found in UI"
+          }
+        },
+        {
+          "name": "Check toggle-lut button exists",
+          "pass": false,
+          "result": {
+            "exists": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Virtual Camera Status",
+      "description": "Verify virtual camera connection and menu",
+      "status": "passed",
+      "stepsTotal": 2,
+      "stepsPassed": 2,
+      "steps": [
+        {
+          "name": "Check virtual camera button exists",
+          "pass": true,
+          "result": {
+            "exists": true,
+            "text": "Airtime"
+          }
+        },
+        {
+          "name": "Check connection status",
+          "pass": true,
+          "result": {
+            "text": "Airtime",
+            "connected": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Edge Light Feature",
+      "description": "Verify Edge Light toggle and widget",
+      "status": "failed",
+      "stepsTotal": 2,
+      "stepsPassed": 0,
+      "steps": [
+        {
+          "name": "Check Edge Light button exists",
+          "pass": false,
+          "result": {
+            "exists": false
+          }
+        },
+        {
+          "name": "Check toggle button exists",
+          "pass": false,
+          "result": {
+            "exists": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "Background Options",
+      "description": "Verify presenter background style controls",
+      "status": "passed",
+      "stepsTotal": 4,
+      "stepsPassed": 4,
+      "steps": [
+        {
+          "name": "Check edit button exists",
+          "pass": true,
+          "result": {
+            "exists": true
+          }
+        },
+        {
+          "name": "Check background style buttons exist",
+          "pass": true,
+          "result": {
+            "buttonCount": 3,
+            "options": [
+              "Visible",
+              "Blurred",
+              "Hidden"
+            ]
+          }
+        },
+        {
+          "name": "Check presenter shape buttons exist",
+          "pass": true,
+          "result": {
+            "shapeCount": 4,
+            "hasShapes": true
+          }
+        },
+        {
+          "name": "Cancel edit mode",
+          "pass": true,
+          "result": {
+            "cancelled": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Speech Reactions",
+      "description": "Verify speech reactions toggle",
+      "status": "failed",
+      "stepsTotal": 1,
+      "stepsPassed": 0,
+      "steps": [
+        {
+          "name": "Check speech reactions toggle exists",
+          "pass": false,
+          "result": {
+            "exists": false
+          }
+        }
+      ]
+    }
+  ]
+}
