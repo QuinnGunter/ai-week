@@ -415,11 +415,12 @@
 
     // Render summary cards
     function renderSummaryCards(summary) {
+      const total = summary.total || summary.totalFlows || 0;
       return `
         <div class="summary-cards">
           <div class="card">
             <div class="card-label">Total Tests</div>
-            <div class="card-value">${summary.total}</div>
+            <div class="card-value">${total}</div>
           </div>
           <div class="card">
             <div class="card-label">Passed</div>
@@ -460,7 +461,7 @@
                onclick="selectRun('${run.filename}')">
             <div class="chart-bar-tooltip">
               <div>${formatDate(run.timestamp)}</div>
-              <div>${run.summary.passed}/${run.summary.total} passed (${run.summary.passRate}%)</div>
+              <div>${run.summary.passed}/${run.summary.total || run.summary.totalFlows} passed (${run.summary.passRate}%)</div>
             </div>
           </div>
         `;
@@ -513,11 +514,13 @@
       const items = filteredTests.map(test => {
         const statusIcon = test.status === 'passed' ? '✓' : '✗';
         const stepsHtml = test.steps?.map(step => {
-          const stepIcon = step.status === 'passed' ? '✓' : '✗';
+          const stepPassed = step.status === 'passed' || step.pass === true || step.passed === true;
+          const stepIcon = stepPassed ? '✓' : '✗';
+          const stepStatus = stepPassed ? 'passed' : 'failed';
           return `
             <div class="step-item">
-              <span class="step-status ${step.status}">${stepIcon}</span>
-              <span class="step-name">${step.name}</span>
+              <span class="step-status ${stepStatus}">${stepIcon}</span>
+              <span class="step-name">${step.name || step.action}</span>
               <span class="step-duration">${formatDuration(step.duration)}</span>
             </div>
           `;
@@ -585,7 +588,7 @@
         ${renderSummaryCards(currentRun?.summary || resultsIndex.files[0].summary)}
         ${renderTrendChart(resultsIndex.files)}
         ${renderRunSelector(resultsIndex.files, currentFilename)}
-        ${currentRun ? renderTestList(currentRun.tests) : '<div class="loading">Loading test details...</div>'}
+        ${currentRun ? renderTestList(currentRun.tests || currentRun.flows) : '<div class="loading">Loading test details...</div>'}
       `;
 
       document.getElementById('content').innerHTML = html;
