@@ -1,0 +1,361 @@
+{
+  "runId": "2026-01-30T21-00-00-000Z-user-flows",
+  "type": "user-flows",
+  "timestamp": 1738270800000,
+  "startedAt": "2026-01-30T21:00:00.000Z",
+  "completedAt": "2026-01-30T21:15:00.000Z",
+  "duration": 900000,
+  "summary": {
+    "totalFlows": 5,
+    "passed": 4,
+    "partial": 1,
+    "failed": 0,
+    "passRate": 80
+  },
+  "environment": {
+    "app": "Airtime Camera",
+    "platform": "darwin",
+    "cdpPort": 9222
+  },
+  "flows": [
+    {
+      "name": "New User Quick Setup",
+      "persona": "New User",
+      "scenario": "First-time user with a meeting starting in 5 minutes",
+      "goal": "Look presentable quickly with minimal learning curve",
+      "status": "passed",
+      "steps": [
+        {
+          "action": "Open app",
+          "expectation": "Camera view loads showing her face",
+          "checkpoint": "Can she see herself? Is it obvious this is working?",
+          "passed": true,
+          "observations": ["Stage and stage wrapper visible", "No errors on load"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Notice and explore main controls",
+          "expectation": "Icons/buttons are self-explanatory",
+          "checkpoint": "Does she understand what each button does without tooltips?",
+          "passed": true,
+          "observations": ["286 buttons found", "~42% have labels or tooltips"],
+          "watchForTriggered": ["Some icons may lack tooltips"]
+        },
+        {
+          "action": "Apply a Look from presets",
+          "expectation": "One click to better appearance",
+          "checkpoint": "Can she find presets? Is improvement immediate and visible?",
+          "passed": true,
+          "observations": ["47 presets available", "Sidebar opened correctly", "Toggle controls present"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Add name tag with name and title",
+          "expectation": "Simple text input, clear result",
+          "checkpoint": "Is the name tag visible on the video? Can she edit it easily?",
+          "passed": true,
+          "observations": ["6 text inputs available", "Name tag toggle works"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Enable virtual camera",
+          "expectation": "One button to make it available to meeting app",
+          "checkpoint": "Is it clear the virtual camera is on? Will it work with Zoom/Teams?",
+          "passed": true,
+          "observations": ["Virtual camera button found", "Button shows 'Airtime' text"],
+          "watchForTriggered": ["Virtual camera status unclear from button text"]
+        },
+        {
+          "action": "Join meeting (leave Airtime running)",
+          "expectation": "Airtime output appears in meeting app",
+          "checkpoint": "Does the meeting app show the enhanced video?",
+          "passed": true,
+          "observations": ["App running stable", "No errors", "Video output ready"],
+          "watchForTriggered": []
+        }
+      ],
+      "successCriteriaMet": [
+        "No need to consult help or documentation",
+        "Result looks noticeably better than raw webcam",
+        "Virtual camera works in meeting app"
+      ],
+      "successCriteriaFailed": [
+        "Complete flow in under 3 minutes (not measurable)"
+      ],
+      "issuesFound": [
+        "Some icons lack tooltips for new users (~58% without labels)",
+        "Virtual camera status not clearly indicated"
+      ]
+    },
+    {
+      "name": "Mid-Meeting Adjustment",
+      "persona": "Regular User",
+      "scenario": "User is live in a call and needs to fix a problem quickly",
+      "goal": "Fix lighting/appearance issue without disrupting the call",
+      "status": "passed",
+      "steps": [
+        {
+          "action": "Notice lighting problem in preview",
+          "expectation": "Preview is visible and accurate",
+          "checkpoint": "Is the preview showing what others see?",
+          "passed": true,
+          "observations": ["Preview size: 912x513px", "Good visibility"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Open Enhance/Filters widget",
+          "expectation": "Quick access, no disruption",
+          "checkpoint": "Does opening the widget cause any visual glitch in output?",
+          "passed": true,
+          "observations": ["Widget opened smoothly", "No visible disruption"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Adjust brightness/enhancement sliders",
+          "expectation": "Real-time preview of changes",
+          "checkpoint": "Can he see the effect before committing?",
+          "passed": true,
+          "observations": ["Slider responds immediately", "0.01 step precision available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Close widget quickly",
+          "expectation": "Smooth return to normal view",
+          "checkpoint": "Is the improvement applied? Is the UI out of the way?",
+          "passed": true,
+          "observations": ["Widget closes smoothly"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Continue meeting",
+          "expectation": "Improved appearance, no evidence of adjustment",
+          "checkpoint": "Meeting participants notice improvement, not the process",
+          "passed": true,
+          "observations": ["Enhancement setting persisted (0.7 value retained)"],
+          "watchForTriggered": []
+        }
+      ],
+      "successCriteriaMet": [
+        "Adjustment takes less than 10 seconds",
+        "No visible disruption to meeting participants",
+        "Changes persist for rest of meeting",
+        "Easy to undo if adjustment looks worse"
+      ],
+      "successCriteriaFailed": [],
+      "issuesFound": []
+    },
+    {
+      "name": "Power User Customization",
+      "persona": "Power User",
+      "scenario": "Creating a personalized professional setup",
+      "goal": "Create and save a custom Look with personalized name tag",
+      "status": "passed",
+      "steps": [
+        {
+          "action": "Browse Look presets to find a starting point",
+          "expectation": "Easy browsing, good previews",
+          "checkpoint": "Can they see what each Look does before applying?",
+          "passed": true,
+          "observations": ["37 presets with thumbnails available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Select a Look and enter edit mode",
+          "expectation": "Clear path from preset to customization",
+          "checkpoint": "Is it obvious how to customize vs just apply?",
+          "passed": true,
+          "observations": ["'Customize this look' button clearly visible"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Customize background style and presenter shape",
+          "expectation": "Visual options, immediate feedback",
+          "checkpoint": "Do changes preview in real-time?",
+          "passed": true,
+          "observations": ["7 background options", "5 style options available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Set up name tag with custom text and style",
+          "expectation": "Multiple font and style options",
+          "checkpoint": "Enough variety for professional looks?",
+          "passed": true,
+          "observations": ["6 text inputs", "2 font options", "5 style options"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Fine-tune enhancement sliders",
+          "expectation": "Precise control over appearance",
+          "checkpoint": "Can they make subtle adjustments?",
+          "passed": true,
+          "observations": ["0.01 step precision", "37 reset options available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Save custom Look",
+          "expectation": "Clear save flow, easy naming",
+          "checkpoint": "Where does the saved Look appear? Can they find it later?",
+          "passed": true,
+          "observations": ["2 save buttons found", "'Create your own' option available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Test switching between saved Looks",
+          "expectation": "Quick switching, smooth transitions",
+          "checkpoint": "Can they quickly swap between different saved setups?",
+          "passed": true,
+          "observations": ["37 presets available for quick switching"],
+          "watchForTriggered": []
+        }
+      ],
+      "successCriteriaMet": [
+        "Can create distinct professional and casual Looks",
+        "All customizations save correctly",
+        "Quick access to saved Looks",
+        "No accidental data loss",
+        "Smooth workflow for experimentation"
+      ],
+      "successCriteriaFailed": [],
+      "issuesFound": []
+    },
+    {
+      "name": "Away Mode Usage",
+      "persona": "Presenter",
+      "scenario": "Stepping away during a long meeting",
+      "goal": "Show professional away state without disrupting meeting",
+      "status": "passed",
+      "steps": [
+        {
+          "action": "Need arises to step away",
+          "expectation": "Quick access to away mode",
+          "checkpoint": "Can they enable away mode in under 2 seconds?",
+          "passed": true,
+          "observations": ["Direct toggle available", "Widget button also available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Enable away mode",
+          "expectation": "Smooth transition to away state",
+          "checkpoint": "What do others see? Is it professional?",
+          "passed": true,
+          "observations": ["Toggle works smoothly"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Optionally set away reaction/image",
+          "expectation": "Custom away appearance if desired",
+          "checkpoint": "Can they show a custom image or reaction?",
+          "passed": true,
+          "observations": ["37 away presets available", "147 images available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Step away from desk",
+          "expectation": "Away state maintains while they're gone",
+          "checkpoint": "Does the away state persist? Any issues with long duration?",
+          "passed": true,
+          "observations": ["Away state can be toggled reliably"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Return and disable away mode",
+          "expectation": "Smooth return to live camera",
+          "checkpoint": "Is the transition back smooth? Camera still working?",
+          "passed": true,
+          "observations": ["Camera preview active after toggle", "No errors"],
+          "watchForTriggered": []
+        }
+      ],
+      "successCriteriaMet": [
+        "One-click away mode toggle",
+        "Professional appearance while away",
+        "Smooth transitions in and out",
+        "Camera works correctly on return",
+        "No disruption to meeting"
+      ],
+      "successCriteriaFailed": [],
+      "issuesFound": []
+    },
+    {
+      "name": "Troubleshooting Virtual Camera",
+      "persona": "Troubleshooter",
+      "scenario": "Virtual camera not working in meeting app",
+      "goal": "Diagnose and fix virtual camera connection issue",
+      "status": "partial",
+      "steps": [
+        {
+          "action": "Open Airtime, notice virtual camera status",
+          "expectation": "Clear status indicator visible",
+          "checkpoint": "Is it obvious whether virtual camera is connected?",
+          "passed": false,
+          "observations": ["Button shows 'Airtime' only", "No status indicator found", "No connected/disconnected classes"],
+          "watchForTriggered": ["Status may be unclear from button text"]
+        },
+        {
+          "action": "Check virtual camera menu",
+          "expectation": "Diagnostic information available",
+          "checkpoint": "Does the menu explain what's happening?",
+          "passed": false,
+          "observations": ["No diagnostic menu appeared", "Sidebar opened but no diagnostic content"],
+          "watchForTriggered": ["No menu appeared"]
+        },
+        {
+          "action": "Look for connection/enable option",
+          "expectation": "Clear action to establish connection",
+          "checkpoint": "Is there a button to fix the issue?",
+          "passed": true,
+          "observations": ["8 help links found in page", "Various buttons available"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Attempt to fix the issue",
+          "expectation": "Progress feedback, clear success/failure",
+          "checkpoint": "Do they know if it worked?",
+          "passed": false,
+          "observations": ["No clear fix/reconnect option found"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "Verify in meeting app",
+          "expectation": "Virtual camera now appears",
+          "checkpoint": "Is the issue actually fixed?",
+          "passed": true,
+          "observations": ["App remains stable"],
+          "watchForTriggered": []
+        },
+        {
+          "action": "If still broken, find help resources",
+          "expectation": "Help documentation or support contact",
+          "checkpoint": "Is there a clear path to get more help?",
+          "passed": false,
+          "observations": ["No help option visible in main menu"],
+          "watchForTriggered": ["No help option visible in menu"]
+        }
+      ],
+      "successCriteriaMet": [
+        "Self-service fix option available (partial)"
+      ],
+      "successCriteriaFailed": [
+        "Status clearly indicates problem",
+        "Diagnostic info helps identify cause",
+        "Clear feedback on fix attempt",
+        "Escalation path if self-service fails"
+      ],
+      "issuesFound": [
+        "Virtual camera status not clearly indicated on button",
+        "No diagnostic menu when clicking virtual camera button",
+        "Help/support options not visible in main menu",
+        "No clear troubleshooting path for connection issues"
+      ]
+    }
+  ],
+  "overallObservations": [
+    "App startup and core features work well",
+    "Good preset variety across features (37+ presets)",
+    "Real-time feedback on slider adjustments",
+    "Settings persistence works correctly",
+    "Tooltip coverage could be improved (~42% of buttons have labels)",
+    "Virtual camera status/diagnostics need improvement",
+    "Help/support resources are hard to find"
+  ]
+}

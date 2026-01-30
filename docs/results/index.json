@@ -1,7 +1,32 @@
 {
-  "updatedAt": "2026-01-30T16:48:10.216Z",
-  "count": 4,
+  "updatedAt": "2026-01-30T21:15:00.000Z",
+  "count": 6,
   "files": [
+    {
+      "filename": "2026-01-30T21-00-00-000Z-user-flows.json",
+      "runId": "2026-01-30T21-00-00-000Z-user-flows",
+      "type": "user-flows",
+      "timestamp": 1738270800000,
+      "summary": {
+        "total": 5,
+        "passed": 4,
+        "failed": 0,
+        "partial": 1,
+        "passRate": 80
+      }
+    },
+    {
+      "filename": "2026-01-30T20-34-01-000Z.json",
+      "runId": "2026-01-30T20-34-01-000Z",
+      "timestamp": 1738269241000,
+      "summary": {
+        "total": 10,
+        "passed": 7,
+        "failed": 2,
+        "partial": 1,
+        "passRate": 70
+      }
+    },
     {
       "filename": "2026-01-30T09-35-00-000Z.json",
       "runId": "2026-01-30T09-35-00-000Z",
